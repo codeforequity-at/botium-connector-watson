@@ -30,7 +30,6 @@ class BotiumConnectorWatson {
   Validate () {
     debug('Validate called')
     this.caps = Object.assign({}, Defaults, this.caps)
-    debug(this.caps)
 
     if (!this.caps[Capabilities.WATSON_URL]) throw new Error('WATSON_URL capability required')
     if (!this.caps[Capabilities.WATSON_USER]) throw new Error('WATSON_USER capability required')
