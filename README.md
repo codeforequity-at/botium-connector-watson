@@ -1,1 +1,2 @@
-# botium-connector-echo
+# Botium Connector for IBM Watson Assistant
+
