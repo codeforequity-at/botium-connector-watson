@@ -131,7 +131,7 @@ class BotiumConnectorWatson {
         context: this.conversationContext || {},
         input: { text: msg.messageText }
       }
-      if (this.caps[Capabilities.WATSONCONVERSATION_USE_INTENT]) {
+      if (this.caps[Capabilities.WATSON_USE_INTENT]) {
         payload.alternate_intents = true
       }
       this.assistant.message(payload, (err, data) => {
@@ -140,14 +140,14 @@ class BotiumConnectorWatson {
         debug(`Watson response: ${util.inspect(data)}`)
         this.conversationContext = data.context
 
-        if (this.caps[Capabilities.WATSONCONVERSATION_USE_INTENT]) {
+        if (this.caps[Capabilities.WATSON_USE_INTENT]) {
           if (data.intents.length > 1 && data.intents[0].confidence === data.intents[1].confidence) {
             return reject(new Error(`Got duplicate intent confidence ${util.inspect(data.intents[0])} vs ${util.inspect(data.intents[1])}`))
           }
         }
         resolve(this)
 
-        if (this.caps[Capabilities.WATSONCONVERSATION_USE_INTENT]) {
+        if (this.caps[Capabilities.WATSON_USE_INTENT]) {
           if (data.intents && data.intents.length > 0) {
             const botMsg = { sender: 'bot', sourceData: data, messageText: data.intents[0].intent }
             setTimeout(() => this.queueBotSays(botMsg), 0)
@@ -179,7 +179,7 @@ class BotiumConnectorWatson {
       async.series([
 
         (workspaceDeleteReady) => {
-          if (this.caps[Capabilities.WATSONCONVERSATION_COPY_WORKSPACE]) {
+          if (this.caps[Capabilities.WATSON_COPY_WORKSPACE]) {
             this.assistant.deleteWorkspace({ workspace_id: this.useWorkspaceId }, (err) => {
               if (err) {
                 debug(`Watson workspace delete copy failed: ${util.inspect(err)}`)
