@@ -33,7 +33,7 @@ class BotiumConnectorWatson {
     this.caps = Object.assign({}, Defaults, this.caps)
 
     if (!this.caps[Capabilities.WATSON_URL]) throw new Error('WATSON_URL capability required')
-    if (!this.caps[Capabilities.WATSON_APIKEY]){
+    if (!this.caps[Capabilities.WATSON_APIKEY]) {
       if (!this.caps[Capabilities.WATSON_USER]) throw new Error('WATSON_USER capability required (or use WATSON_APIKEY)')
       if (!this.caps[Capabilities.WATSON_PASSWORD]) throw new Error('WATSON_PASSWORD capability required (or use WATSON_APIKEY)')
     }
@@ -49,13 +49,13 @@ class BotiumConnectorWatson {
       async.series([
         (assistantReady) => {
           const opts = {
-              url: this.caps[Capabilities.WATSON_URL],
-              version: this.caps[Capabilities.WATSON_VERSION]
+            url: this.caps[Capabilities.WATSON_URL],
+            version: this.caps[Capabilities.WATSON_VERSION]
           }
-          if( this.caps[Capabilities.WATSON_APIKEY] ){
-            Object.assign( opts, {iam_apikey: this.caps[Capabilities.WATSON_APIKEY]} )
-          }else{
-            Object.assign( opts, {
+          if (this.caps[Capabilities.WATSON_APIKEY]) {
+            Object.assign(opts, {iam_apikey: this.caps[Capabilities.WATSON_APIKEY]})
+          } else {
+            Object.assign(opts, {
               username: this.caps[Capabilities.WATSON_USER],
               password: this.caps[Capabilities.WATSON_PASSWORD]
             })
