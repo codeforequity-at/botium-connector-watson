@@ -7,6 +7,7 @@ const debug = require('debug')('botium-connector-watson')
 const Capabilities = {
   WATSON_URL: 'WATSON_URL',
   WATSON_VERSION: 'WATSON_VERSION',
+  WATSON_APIKEY: 'WATSON_APIKEY',
   WATSON_USER: 'WATSON_USER',
   WATSON_PASSWORD: 'WATSON_PASSWORD',
   WATSON_WORKSPACE_ID: 'WATSON_WORKSPACE_ID',
@@ -32,8 +33,10 @@ class BotiumConnectorWatson {
     this.caps = Object.assign({}, Defaults, this.caps)
 
     if (!this.caps[Capabilities.WATSON_URL]) throw new Error('WATSON_URL capability required')
-    if (!this.caps[Capabilities.WATSON_USER]) throw new Error('WATSON_USER capability required')
-    if (!this.caps[Capabilities.WATSON_PASSWORD]) throw new Error('WATSON_PASSWORD capability required')
+    if (!this.caps[Capabilities.WATSON_APIKEY]) {
+      if (!this.caps[Capabilities.WATSON_USER]) throw new Error('WATSON_USER capability required (or use WATSON_APIKEY)')
+      if (!this.caps[Capabilities.WATSON_PASSWORD]) throw new Error('WATSON_PASSWORD capability required (or use WATSON_APIKEY)')
+    }
     if (!this.caps[Capabilities.WATSON_WORKSPACE_ID]) throw new Error('WATSON_WORKSPACE_ID capability required')
     if (!this.caps[Capabilities.WATSON_VERSION]) throw new Error('WATSON_VERSION capability required')
 
@@ -45,12 +48,19 @@ class BotiumConnectorWatson {
     return new Promise((resolve, reject) => {
       async.series([
         (assistantReady) => {
-          this.assistant = new AssistantV1({
+          const opts = {
             url: this.caps[Capabilities.WATSON_URL],
-            username: this.caps[Capabilities.WATSON_USER],
-            password: this.caps[Capabilities.WATSON_PASSWORD],
             version: this.caps[Capabilities.WATSON_VERSION]
-          })
+          }
+          if (this.caps[Capabilities.WATSON_APIKEY]) {
+            Object.assign(opts, {iam_apikey: this.caps[Capabilities.WATSON_APIKEY]})
+          } else {
+            Object.assign(opts, {
+              username: this.caps[Capabilities.WATSON_USER],
+              password: this.caps[Capabilities.WATSON_PASSWORD]
+            })
+          }
+          this.assistant = new AssistantV1(opts)
           assistantReady()
         },
 
