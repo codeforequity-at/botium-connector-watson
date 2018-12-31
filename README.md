@@ -10,6 +10,71 @@ This is a [Botium](https://github.com/codeforequity-at/botium-core) connector fo
 
 __Did you read the [Botium in a Nutshell](https://medium.com/@floriantreml/botium-in-a-nutshell-part-1-overview-f8d0ceaf8fb4) articles ? Be warned, without prior knowledge of Botium you won't be able to properly use this library!__
 
+## How it works ?
+Botium uses the IBM Watson Assistant API to run conversations.
+
+It can be used as any other Botium connector with all Botium Stack components:
+* [Botium CLI](https://github.com/codeforequity-at/botium-cli/)
+* [Botium Bindings](https://github.com/codeforequity-at/botium-bindings/)
+* [Botium Box](https://www.botium.at)
+
+## Requirements
+
+* __Node.js and NPM__
+* a __IBM Watson Assistant__ chatbot, and user account with administrative rights
+* a __project directory__ on your workstation to hold test cases and Botium configuration
+
+## Install Botium and Watson Connector
+
+When using __Botium CLI__:
+
+```
+> npm install -g botium-cli
+> npm install -g botium-connector-watson
+> botium-cli init
+> botium-cli run
+```
+
+When using __Botium Bindings__:
+
+```
+> npm install -g botium-bindings
+> npm install -g botium-connector-watson
+> botium-bindings init mocha
+> npm install && npm run mocha
+```
+
+When using __Botium Box__:
+
+_Already integrated into Botium Box, no setup required_
+
+## Connecting IBM Watson Assistant to Botium
+You need IBM Cloud credentials (Username/Password or API Key) - see [this article](https://chatbotsmagazine.com/10-minutes-codeless-test-automation-for-ibm-watson-chatbots-d71eac9626d7) on how to get it.
+
+Open the file _botium.json_ in your working directory and add the secret:
+
+```
+{
+  "botium": {
+    "Capabilities": {
+      "PROJECTNAME": "<whatever>",
+      "CONTAINERMODE": "watson",
+      "WATSON_WORKSPACE_ID": "<watson workspace id>",
+      "WATSON_APIKEY": "<ibm cloud api key>"
+    }
+  }
+}
+```
+
+To check the configuration, run the emulator (Botium CLI required) to bring up a chat interface in your terminal window:
+
+```
+> botium-cli emulator
+```
+
+Botium setup is ready, you can begin to write your [BotiumScript](https://github.com/codeforequity-at/botium-core/wiki/Botium-Scripting) files.
+
+
 ## Supported Capabilities
 
 Set the capability __CONTAINERMODE__ to __watson__ to activate this connector.
