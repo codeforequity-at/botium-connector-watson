@@ -147,7 +147,7 @@ class BotiumConnectorWatson {
       this.assistant.message(payload, (err, data) => {
         if (err) return reject(new Error(`Cannot send message to watson container: ${util.inspect(err)}`))
 
-        debug(`Watson response: ${util.inspect(data)}`)
+        debug(`Watson response: ${JSON.stringify(data, null, 2)}`)
         this.conversationContext = data.context
 
         if (this.caps[Capabilities.WATSON_USE_INTENT]) {
@@ -162,17 +162,45 @@ class BotiumConnectorWatson {
             const botMsg = { sender: 'bot', sourceData: data, messageText: data.intents[0].intent }
             setTimeout(() => this.queueBotSays(botMsg), 0)
           }
-        } else {
-          if (data.output && data.output.text) {
-            const messageTexts = (_.isArray(data.output.text) ? data.output.text : [ data.output.text ])
-
-            messageTexts.forEach((messageText) => {
-              if (!messageText) return
-
-              const botMsg = { sender: 'bot', sourceData: data, messageText }
-              setTimeout(() => this.queueBotSays(botMsg), 0)
-            })
+        } else if (data.output) {
+          let texts = data.output.generic && data.output.generic
+            .filter(g => g.response_type === 'text')
+            .reduce((acc, g) => {
+              if (_.isArray(g.text)) {
+                return acc.concat(g.text.filter(t => t))
+              } else if (g.text) {
+                return acc.concat([g.text])
+              } else {
+                return acc
+              }
+            }, [])
+          if (!texts || texts.length === 0) {
+            texts = data.output.text && (_.isArray(data.output.text) ? data.output.text.filter(t => t) : [ data.output.text ])
           }
+          if (!texts || texts.length === 0) {
+            texts = [ undefined ]
+          }
+
+          const media = data.output.generic && data.output.generic
+            .filter(g => g.response_type === 'image')
+            .map(g => ({
+              mediaUri: g.source,
+              altText: g.title
+            }))
+
+          const buttons = data.output.generic && data.output.generic
+            .filter(g => g.response_type === 'option')
+            .reduce((acc, g) => {
+              return g.options && acc.concat(g.options.map(o => ({
+                text: o.label,
+                payload: o.value && o.value.input && o.value.input.text
+              })))
+            }, [])
+
+          texts.forEach((messageText) => {
+            const botMsg = { sender: 'bot', sourceData: data, messageText, media, buttons }
+            setTimeout(() => this.queueBotSays(botMsg), 0)
+          })
         }
       })
     })
