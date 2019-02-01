@@ -12,14 +12,14 @@ const Capabilities = {
   WATSON_PASSWORD: 'WATSON_PASSWORD',
   WATSON_WORKSPACE_ID: 'WATSON_WORKSPACE_ID',
   WATSON_COPY_WORKSPACE: 'WATSON_COPY_WORKSPACE',
-  WATSON_USE_INTENT: 'WATSON_USE_INTENT'
+  WATSON_FORCE_INTENT_RESOLUTION: 'WATSON_FORCE_INTENT_RESOLUTION'
 }
 
 const Defaults = {
   [Capabilities.WATSON_URL]: 'https://gateway.watsonplatform.net/assistant/api',
   [Capabilities.WATSON_VERSION]: '2018-09-20',
   [Capabilities.WATSON_COPY_WORKSPACE]: false,
-  [Capabilities.WATSON_USE_INTENT]: false
+  [Capabilities.WATSON_FORCE_INTENT_RESOLUTION]: false
 }
 
 class BotiumConnectorWatson {
@@ -139,30 +139,32 @@ class BotiumConnectorWatson {
       const payload = {
         workspace_id: this.useWorkspaceId,
         context: this.conversationContext || {},
-        input: { text: msg.messageText }
+        input: { text: msg.messageText },
+        // Whether to return more than one intent. Set to true to return all matching intents.
+        alternate_intents: true
       }
-      if (this.caps[Capabilities.WATSON_USE_INTENT]) {
-        payload.alternate_intents = true
-      }
+
       this.assistant.message(payload, (err, data) => {
         if (err) return reject(new Error(`Cannot send message to watson container: ${util.inspect(err)}`))
 
         debug(`Watson response: ${JSON.stringify(data, null, 2)}`)
         this.conversationContext = data.context
 
-        if (this.caps[Capabilities.WATSON_USE_INTENT]) {
-          if (data.intents.length > 1 && data.intents[0].confidence === data.intents[1].confidence) {
-            return reject(new Error(`Got duplicate intent confidence ${util.inspect(data.intents[0])} vs ${util.inspect(data.intents[1])}`))
-          }
+        if (data.intents.length > 1 && data.intents[0].confidence === data.intents[1].confidence) {
+          return reject(new Error(`Got duplicate intent confidence ${util.inspect(data.intents[0])} vs ${util.inspect(data.intents[1])}`))
         }
         resolve(this)
+        const nlp = {
+          intent: data.intents ? {
+            name: data.intents[0].intent,
+            confidence: data.intents[0].confidence,
+            intents: data.intents.map((intent) => { return { name: intent.intent, confidence: intent.confidence } })
+          } : {},
+          entities: data.entities ? data.entities.map((entity) => { return {name: entity.entity, value: entity.value, confidence: entity.confidence} }) : []
+        }
 
-        if (this.caps[Capabilities.WATSON_USE_INTENT]) {
-          if (data.intents && data.intents.length > 0) {
-            const botMsg = { sender: 'bot', sourceData: data, messageText: data.intents[0].intent }
-            setTimeout(() => this.queueBotSays(botMsg), 0)
-          }
-        } else if (data.output) {
+        let forceIntentResolution = this.caps[Capabilities.WATSON_FORCE_INTENT_RESOLUTION]
+        if (data.output) {
           let texts = data.output.generic && data.output.generic
             .filter(g => g.response_type === 'text')
             .reduce((acc, g) => {
@@ -197,10 +199,20 @@ class BotiumConnectorWatson {
               })))
             }, [])
 
+            // ceData: data, messageText: data.intents[0].intent }
+            //             setTimeout(() => this.queueBotSays(b
+
           texts.forEach((messageText) => {
-            const botMsg = { sender: 'bot', sourceData: data, messageText, media, buttons }
+            const botMsg = { sender: 'bot', sourceData: data, messageText, media, buttons, nlp }
             setTimeout(() => this.queueBotSays(botMsg), 0)
+            forceIntentResolution = false
           })
+        }
+
+        if (forceIntentResolution) {
+          const botMsg = {sender: 'bot', sourceData: data, nlp}
+          setTimeout(() => this.queueBotSays(botMsg), 0)
+          forceIntentResolution = false
         }
       })
     })
