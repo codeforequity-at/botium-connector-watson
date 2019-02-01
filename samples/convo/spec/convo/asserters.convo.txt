@@ -1,0 +1,10 @@
+asserters
+
+#me
+play some jazz music
+
+#bot
+INTENT turn_on
+INTENT_CONFIDENCE 50
+ENTITIES appliance|genre
+ENTITY_VALUES jazz|music

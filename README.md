@@ -18,6 +18,8 @@ It can be used as any other Botium connector with all Botium Stack components:
 * [Botium Bindings](https://github.com/codeforequity-at/botium-bindings/)
 * [Botium Box](https://www.botium.at)
 
+This connector processes info about NLP. So Intent/Entity asserters can be used.
+
 ## Requirements
 
 * __Node.js and NPM__
@@ -94,9 +96,9 @@ Service credentials for your IBM Watson instance - see [here](https://console.bl
 ### WATSON_WORKSPACE_ID *
 The Workspace ID to use. You can find it in the IBM Watson Assistant Dashboard when clicking on "View Details" in the popup menu of a workspace.
 
-### WATSON_USE_INTENT
-_Default: false_
-If this capability is enabled, Botium will use the resolved intent as text output instead of the actual text output from IBM Watson.
+### WATSON_FORCE_INTENT_RESOLUTION
+_Default: true_
+If this capability is enabled, then a response will be dropped if the connector does not recognizes any component like text or button in it. But the dropped message has NLP recognition info like intent and entities, which could be checked.
 
 ### WATSON_COPY_WORKSPACE
 _Default: false_
