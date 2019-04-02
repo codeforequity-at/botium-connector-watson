@@ -1,0 +1,13 @@
+show me pictures
+
+#me
+start
+
+#bot
+Hi. It looks like a nice drive today. What would you like me to do?
+
+#me
+show me pictures
+
+#bot
+MEDIA angry-birds

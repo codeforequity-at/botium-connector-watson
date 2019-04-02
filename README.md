@@ -81,6 +81,13 @@ Botium setup is ready, you can begin to write your [BotiumScript](https://github
 
 Set the capability __CONTAINERMODE__ to __watson__ to activate this connector.
 
+### WATSON_ASSISTANT_VERSION
+_Default: V1_
+
+Watson supports two Assistant SDK versions, V1 and V2.
+* With **V1**, Botium accesses a workspace (or _Skill_) directly
+* With **V2**, Botium accesses an assistant wrapping a versioned skill
+
 ### WATSON_URL
 _Default: "https://gateway.watsonplatform.net/assistant/api"_
 
@@ -94,7 +101,14 @@ IAM API Key for IBM Watson - see [here](https://cloud.ibm.com/docs/services/wats
 Service credentials for your IBM Watson instance - see [here](https://console.bluemix.net/docs/services/watson/getting-started-credentials.html#service-credentials-for-watson-services) how to create them for your IBM Watson account.
 
 ### WATSON_WORKSPACE_ID *
-The Workspace ID to use. You can find it in the IBM Watson Assistant Dashboard when clicking on "View Details" in the popup menu of a workspace.
+The Workspace ID to use. You can find it in the IBM Watson Assistant Dashboard when clicking on "View API Details" in the popup menu of a workspace.
+
+_This is only supported for Assistant SDK V1_
+
+### WATSON_ASSISTANT_ID *
+The Assistant ID to use. You can find it in the IBM Watson Assistant Dashboard when clicking on "View API Details" in the popup menu of an assistant.
+
+_This is only supported for Assistant SDK V2_
 
 ### WATSON_FORCE_INTENT_RESOLUTION
 _Default: true_
@@ -104,4 +118,7 @@ If this capability is enabled, then a response will be dropped if the connector 
 _Default: false_
 
 This capability will copy the Watson workspace and run the Botium script on the new workspace (and delete it afterwards). Typically, when running a large amount of tests on production conversation service, the Watson workspace should not get "polluted" with test data - enabling this capability will prevent that. 
+
+_This is only supported for Assistant SDK V1_
+
 _Attention: as the copied workspace will run through Watson training session, it could take some time until the copied workspace is available. Botium will only continue after training is complete_
