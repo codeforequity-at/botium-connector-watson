@@ -74,7 +74,7 @@ class BotiumConnectorWatson {
             version: this.caps[Capabilities.WATSON_VERSION]
           }
           if (this.caps[Capabilities.WATSON_APIKEY]) {
-            Object.assign(opts, {iam_apikey: this.caps[Capabilities.WATSON_APIKEY]})
+            Object.assign(opts, { iam_apikey: this.caps[Capabilities.WATSON_APIKEY] })
           } else {
             Object.assign(opts, {
               username: this.caps[Capabilities.WATSON_USER],
@@ -239,7 +239,7 @@ class BotiumConnectorWatson {
         confidence: intents[0].confidence,
         intents: intents.map((intent) => { return { name: intent.intent, confidence: intent.confidence } })
       } : {},
-      entities: entities ? entities.map((entity) => { return {name: entity.entity, value: entity.value, confidence: entity.confidence} }) : []
+      entities: entities ? entities.map((entity) => { return { name: entity.entity, value: entity.value, confidence: entity.confidence } }) : []
     }
 
     let forceIntentResolution = this.caps[Capabilities.WATSON_FORCE_INTENT_RESOLUTION]
@@ -283,7 +283,7 @@ class BotiumConnectorWatson {
     })
 
     if (forceIntentResolution) {
-      const botMsg = {sender: 'bot', sourceData: sendMessageResponse, nlp}
+      const botMsg = { sender: 'bot', sourceData: sendMessageResponse, nlp }
       setTimeout(() => this.queueBotSays(botMsg), 0)
       forceIntentResolution = false
     }
