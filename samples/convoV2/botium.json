@@ -1,0 +1,11 @@
+{
+  "botium": {
+    "Capabilities": {
+      "PROJECTNAME": "IBM Watson Plugin Sample",
+      "CONTAINERMODE": "watson",
+      "WATSON_ASSISTANT_VERSION": "V2",
+      "WATSON_APIKEY": "...",
+      "WATSON_ASSISTANT_ID": "..."
+    }
+  }
+}
