@@ -4,6 +4,7 @@ const _ = require('lodash')
 const AssistantV1 = require('watson-developer-cloud/assistant/v1')
 const AssistantV2 = require('watson-developer-cloud/assistant/v2')
 const debug = require('debug')('botium-connector-watson')
+const jsonpath = require('jsonpath');
 
 const Capabilities = {
   WATSON_ASSISTANT_VERSION: 'WATSON_ASSISTANT_VERSION',
@@ -178,10 +179,30 @@ class BotiumConnectorWatson {
     if (!this.assistant) throw new Error('not built')
 
     const getInputPayload = () => {
+
+      this.conversationContext = this.conversationContext || {};
+
+      if (msg.messageText.startsWith('UPDATE_CONTEXT ')) {
+
+        const parsedMessage = msg.messageText.split(' ');
+        parsedMessage.shift(); // remove first item
+        const [path, value, type] = parsedMessage;
+
+        if (!type || type === 'string') {
+          jsonpath.value(this.conversationContext, path, value);
+        } else if (type === 'boolean') {
+          jsonpath.value(this.conversationContext, path, value.toLowerCase() == 'true' ? true : false);
+        } else if (type === 'integer') {
+          jsonpath.value(this.conversationContext, path, parseInt(value, 10));
+        }
+
+        msg.messageText = null;
+      }
+
       if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V1') {
         return {
           workspace_id: this.useWorkspaceId,
-          context: this.conversationContext || {},
+          context: this.conversationContext,
           input: { text: msg.messageText },
           alternate_intents: true
         }
@@ -196,7 +217,7 @@ class BotiumConnectorWatson {
               return_context: true
             }
           },
-          context: this.conversationContext || {}
+          context: this.conversationContext
         }
       }
     }
@@ -234,7 +255,7 @@ class BotiumConnectorWatson {
       throw new Error(`Got duplicate intent confidence ${util.inspect(intents[0])} vs ${util.inspect(intents[1])}`)
     }
     const nlp = {
-      intent: intents ? {
+      intent: intents && intents.length ? {
         name: intents[0].intent,
         confidence: intents[0].confidence,
         intents: intents.map((intent) => { return { name: intent.intent, confidence: intent.confidence } })
