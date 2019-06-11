@@ -4,6 +4,9 @@
   "description": "Botium Connector for IBM Watson Assistant",
   "main": "dist/botium-connector-watson-cjs.js",
   "module": "dist/botium-connector-watson-es.js",
+  "engines": {
+    "node": ">=8.3"
+  },
   "bin": {
     "botium-connector-watson-cli": "./bin/cli.js"
   },
