@@ -1,0 +1,7 @@
+information_request
+
+#me
+information_request_input
+
+#bot
+INTENT information_request

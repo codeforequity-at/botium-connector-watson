@@ -76,6 +76,24 @@ To check the configuration, run the emulator (Botium CLI required) to bring up a
 
 Botium setup is ready, you can begin to write your [BotiumScript](https://github.com/codeforequity-at/botium-core/wiki/Botium-Scripting) files.
 
+## Using the botium-connector-watson-cli
+
+This connector provides a CLI interface for importing convos and utterances from your Watson workspace and convert it to BotiumScript.
+
+* Intents and Utterances are converted to BotiumScript utterances files (using the _watson-intents_ option)
+* User Conversations are downloaded and converted to BotiumScript convos or just a plain list for analytics (using the _watson-logs_ option)
+
+You can either run the CLI with botium-cli (it is integrated there), or directly from this connector (see samples/convoV1/package.json for some examples):
+
+    > botium-connector-watson-cli watsonimport watson-intents
+    > botium-connector-watson-cli watsonimport watson-logs --watsonformat convo
+    > botium-connector-watson-cli watsonimport watson-logs --watsonformat intent
+
+_Please note that a botium-core installation is required_
+
+For getting help on the available CLI options and switches, run:
+
+    > botium-connector-watson-cli watsonimport --help
 
 ## Supported Capabilities
 

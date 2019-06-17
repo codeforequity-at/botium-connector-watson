@@ -1,0 +1,7 @@
+goodbyes
+
+#me
+goodbyes_input
+
+#bot
+INTENT goodbyes

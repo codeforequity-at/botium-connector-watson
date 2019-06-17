@@ -1,0 +1,7 @@
+picture
+
+#me
+picture_input
+
+#bot
+INTENT picture

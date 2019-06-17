@@ -1,0 +1,7 @@
+buttons
+
+#me
+buttons_input
+
+#bot
+INTENT buttons

@@ -1,0 +1,7 @@
+duplicate_user_example_2
+
+#me
+duplicate_user_example_2_input
+
+#bot
+INTENT duplicate_user_example_2

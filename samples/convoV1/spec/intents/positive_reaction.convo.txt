@@ -1,0 +1,7 @@
+positive_reaction
+
+#me
+positive_reaction_input
+
+#bot
+INTENT positive_reaction

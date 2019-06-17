@@ -1,0 +1,7 @@
+weather
+
+#me
+weather_input
+
+#bot
+INTENT weather
