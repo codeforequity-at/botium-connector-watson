@@ -1,0 +1,7 @@
+greetings
+
+#me
+greetings_input
+
+#bot
+INTENT greetings

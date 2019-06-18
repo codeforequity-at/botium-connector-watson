@@ -1,0 +1,7 @@
+phone
+
+#me
+phone_input
+
+#bot
+INTENT phone

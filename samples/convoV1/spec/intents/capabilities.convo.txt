@@ -1,0 +1,7 @@
+capabilities
+
+#me
+capabilities_input
+
+#bot
+INTENT capabilities

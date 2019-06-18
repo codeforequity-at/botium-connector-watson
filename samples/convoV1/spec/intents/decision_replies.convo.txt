@@ -1,0 +1,7 @@
+decision_replies
+
+#me
+decision_replies_input
+
+#bot
+INTENT decision_replies

@@ -1,0 +1,7 @@
+turn_on
+
+#me
+turn_on_input
+
+#bot
+INTENT turn_on

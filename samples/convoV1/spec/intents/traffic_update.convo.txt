@@ -1,0 +1,7 @@
+traffic_update
+
+#me
+traffic_update_input
+
+#bot
+INTENT traffic_update

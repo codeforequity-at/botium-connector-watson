@@ -1,0 +1,7 @@
+out_of_scope
+
+#me
+out_of_scope_input
+
+#bot
+INTENT out_of_scope

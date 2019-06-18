@@ -1,0 +1,7 @@
+system_reliance
+
+#me
+system_reliance_input
+
+#bot
+INTENT system_reliance

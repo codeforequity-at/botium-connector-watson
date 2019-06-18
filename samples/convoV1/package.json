@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "mocha spec"
+    "test": "mocha spec",
+    "import-intents": "botium-connector-watson-cli watsonimport watson-intents",
+    "import-logs-convo": "botium-connector-watson-cli watsonimport watson-logs --watsonformat convo",
+    "import-logs-intent": "botium-connector-watson-cli watsonimport watson-logs --watsonformat intent"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "botium": {
     "convodirs": [
-      "spec\\convo"
+      "spec\\convo",
+      "spec\\intents"
     ],
     "expandConvos": true,
     "expandUtterancesToConvos": false

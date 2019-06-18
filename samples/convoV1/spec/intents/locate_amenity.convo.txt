@@ -1,0 +1,7 @@
+locate_amenity
+
+#me
+locate_amenity_input
+
+#bot
+INTENT locate_amenity
