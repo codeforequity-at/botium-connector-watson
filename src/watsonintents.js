@@ -14,7 +14,7 @@ const getCaps = (caps) => {
   return result
 }
 
-const importWatsonIntents = async (caps) => {
+const importWatsonIntents = async ({ caps, buildconvos }) => {
   const driver = new botium.BotDriver(getCaps(caps))
   const container = await driver.Build()
   const compiler = await driver.BuildCompiler()
@@ -46,29 +46,31 @@ const importWatsonIntents = async (caps) => {
 
   for (const intent of workspace.intents) {
     const inputUtterances = (intent.examples && intent.examples.map((e) => e.text)) || []
-    const utterancesRef = slug(intent.intent + '_input')
+    const utterancesRef = slug(intent.intent)
 
-    const convo = {
-      header: {
-        name: intent.intent
-      },
-      conversation: [
-        {
-          sender: 'me',
-          messageText: utterancesRef
+    if (buildconvos) {
+      const convo = {
+        header: {
+          name: intent.intent
         },
-        {
-          sender: 'bot',
-          asserters: [
-            {
-              name: 'INTENT',
-              args: [intent.intent]
-            }
-          ]
-        }
-      ]
+        conversation: [
+          {
+            sender: 'me',
+            messageText: utterancesRef
+          },
+          {
+            sender: 'bot',
+            asserters: [
+              {
+                name: 'INTENT',
+                args: [intent.intent]
+              }
+            ]
+          }
+        ]
+      }
+      convos.push(convo)
     }
-    convos.push(convo)
     utterances.push({
       name: utterancesRef,
       utterances: inputUtterances
@@ -77,7 +79,7 @@ const importWatsonIntents = async (caps) => {
   return { convos, utterances, driver, container, compiler }
 }
 
-const importWatsonLogs = async (caps, filter, conversion) => {
+const importWatsonLogs = async ({ caps, watsonfilter }, conversion) => {
   const driver = new botium.BotDriver(getCaps(caps))
   const container = await driver.Build()
   const compiler = await driver.BuildCompiler()
@@ -107,7 +109,7 @@ const importWatsonLogs = async (caps, filter, conversion) => {
     workspace_id: driver.caps['WATSON_WORKSPACE_ID'],
     page_limit: 1000,
     sort: 'request_timestamp',
-    filter
+    watsonfilter
   }
   while (hasMore) {
     debug(`Watson workspace gettings logs page: ${pageParams.cursor}`)
@@ -131,6 +133,11 @@ const importWatsonLogs = async (caps, filter, conversion) => {
   debug(`Watson workspace got ${logs.length} log entries`)
   if (logs.length === 0) {
     throw new Error('Watson conversation returned no logs')
+  }
+  try {
+    await container.Clean()
+  } catch (err) {
+    debug(`Error container cleanup: ${util.inspect(err)}`)
   }
 
   const data = conversion(logs)
@@ -191,7 +198,7 @@ const handler = (argv) => {
   const outputDir = (argv.convos && argv.convos[0]) || '.'
 
   if (argv.source === 'watson-intents') {
-    module.exports.importWatsonIntents({})
+    importWatsonIntents(argv)
       .then(({ convos, utterances, compiler }) => {
         convos && convos.forEach(convo => {
           try {
@@ -215,7 +222,7 @@ const handler = (argv) => {
       })
   } else if (argv.source === 'watson-logs') {
     if (argv.watsonformat === 'intent') {
-      importWatsonLogs({}, argv.watsonfilter, convertLogToList)
+      importWatsonLogs(argv, convertLogToList)
         .then(({ workspace, data }) => {
           const wb = XLSX.utils.book_new()
           const ws = XLSX.utils.json_to_sheet(data, { header: ['conversation_id', 'date', 'last_intent', 'last_input', 'last_output'] })
@@ -234,7 +241,7 @@ const handler = (argv) => {
           console.log(`FAILED: ${err.message}`)
         })
     } else {
-      importWatsonLogs({}, argv.watsonfilter, convertLogToConvos)
+      importWatsonLogs(argv, convertLogToConvos)
         .then(({ workspace, data, compiler }) => {
           try {
             const filename = helpers.writeConvosExcel(compiler, data, outputDir, workspace.name)
@@ -251,9 +258,9 @@ const handler = (argv) => {
 }
 
 module.exports = {
-  importWatsonIntents: (caps) => importWatsonIntents(caps),
-  importWatsonLogConvos: (caps, filter) => importWatsonLogs(caps, filter, convertLogToConvos),
-  importWatsonLogIntents: (caps, filter) => importWatsonLogs(caps, filter, convertLogToList),
+  importWatsonIntents: (args) => importWatsonIntents(args),
+  importWatsonLogConvos: (args, filter) => importWatsonLogs(args, convertLogToConvos),
+  importWatsonLogIntents: (args, filter) => importWatsonLogs(args, convertLogToList),
   args: {
     command: 'watsonimport [source]',
     describe: 'Importing conversations for Botium',
@@ -261,6 +268,10 @@ module.exports = {
       yargs.positional('source', {
         describe: 'Specify the source of the conversations for the configured chatbot',
         choices: [ 'watson-intents', 'watson-logs' ]
+      })
+      yargs.option('buildconvos', {
+        describe: 'Build convo files for intent assertions (otherwise, just write utterances files) - use --no-buildconvos to disable',
+        default: true
       })
       yargs.option('watsonfilter', {
         describe: 'Filter for downloading the watson logs, for example "response_timestamp>=2018-08-20,response_timestamp<2018-08-22"'
