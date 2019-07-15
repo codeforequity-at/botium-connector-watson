@@ -45,9 +45,9 @@
     "@babel/runtime": "^7.4.5",
     "async": "^3.0.1",
     "debug": "^4.1.1",
+    "ibm-watson": "^4.2.2",
     "lodash": "^4.17.11",
     "slug": "1.1.0",
-    "watson-developer-cloud": "^4.0.1",
     "xlsx": "^0.14.3",
     "yargs": "13.2.4"
   },

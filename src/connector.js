@@ -1,8 +1,8 @@
 const util = require('util')
 const async = require('async')
 const _ = require('lodash')
-const AssistantV1 = require('watson-developer-cloud/assistant/v1')
-const AssistantV2 = require('watson-developer-cloud/assistant/v2')
+const AssistantV1 = require('ibm-watson/assistant/v1')
+const AssistantV2 = require('ibm-watson/assistant/v2')
 const debug = require('debug')('botium-connector-watson')
 
 const Capabilities = {
