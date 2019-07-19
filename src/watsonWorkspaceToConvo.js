@@ -99,14 +99,18 @@ const _processJSON = (filename) => {
     if (!buttonsConvoStep) {
       buttonsConvoStep = []
     }
-    if (!convoStep) {
-      convoStep = {
+    const _createBotConvoStep = () => {
+      return {
         sender: 'bot',
         sourceData: [node],
         stepTag: `Node ${id}`,
         messageTexts: [],
         asserters: []
       }
+    }
+
+    if (!convoStep) {
+      convoStep = _createBotConvoStep()
     } else {
       convoStep.sourceData.push(node)
       convoStep.stepTag += id
@@ -178,10 +182,31 @@ const _processJSON = (filename) => {
       return null
     }
 
+    const _finishBotConvoStep = () => {
+      debug(`Convo step finished`)
+
+      // dealing with bot message
+      if (convoStep.messageTexts.length || convoStep.asserters.length) {
+        if (convoStep.messageTexts.length) {
+          convoStep.messageText = convoStep.messageTexts.join('\n')
+        }
+        delete convoStep.messageTexts
+        conversation.push(convoStep)
+      } else {
+        debug(`Convo step is not created for '${convoStep.stepTag}' because there are no messages and asserters`)
+      }
+    }
+
     // extracting convoStep
+    let lastResponseType
     for (const msg of node.output.generic) {
       switch (msg.response_type) {
         case 'text':
+          // two msgs are sometimes one response, sometimes two for Watson. Trying to follow its behavior. Maybe two text responses after each other?
+          if (lastResponseType === 'text') {
+            _finishBotConvoStep()
+            convoStep = _createBotConvoStep()
+          }
           // they have one random, but it has just one random selection, but there is just one message
           if (msg.selection_policy !== 'sequential' && msg.length > 1) {
             throw new Error(`FAILED: node ${id}, field node.output.generic.selection_policy value (${msg.selection_policy} with more responses is not supported!`)
@@ -198,15 +223,20 @@ const _processJSON = (filename) => {
           })
           convoStep.asserters.push({ name: 'BUTTONS', args: buttonsLocal.map(button => button.text) })
           buttonsConvoStep = buttonsConvoStep.concat(buttonsLocal)
+          _finishBotConvoStep()
+          convoStep = _createBotConvoStep()
           break
         case 'image':
           convoStep.asserters.push({ name: 'MEDIA', args: [msg.source] })
+          _finishBotConvoStep()
+          convoStep = _createBotConvoStep()
           break
         case 'pause':
           break
         default:
           throw new Error(`FAILED: node ${id}, field node.output.generic.response_type value (${msg.response_type} is not supported!`)
       }
+      lastResponseType = msg.response_type
     }
 
     // processed overall (are not processed nodes?)
@@ -215,20 +245,6 @@ const _processJSON = (filename) => {
     processedIds.push(id)
     log.push({ processedNode: { nodeId: id, nodeTitle: node.title } })
 
-    const _finishBotConvoStep = () => {
-      debug(`Convo step finished`)
-
-      // dealing with bot message
-      if (convoStep.messageTexts.length || convoStep.asserters.length) {
-        if (convoStep.messageTexts.length) {
-          convoStep.messageText = convoStep.messageTexts.join('\n')
-        }
-        delete convoStep.messageTexts
-        conversation.push(convoStep)
-      } else {
-        debug(`Convo step is not created for '${convoStep.stepTag}' because there are no messages and asserters`)
-      }
-    }
     // deciding what to do next
     if (!node.next_step) {
       // if next_step is not set, it means wait for user input
