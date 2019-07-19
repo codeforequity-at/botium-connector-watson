@@ -15,7 +15,8 @@ const Capabilities = {
   WATSON_WORKSPACE_ID: 'WATSON_WORKSPACE_ID',
   WATSON_ASSISTANT_ID: 'WATSON_ASSISTANT_ID',
   WATSON_COPY_WORKSPACE: 'WATSON_COPY_WORKSPACE',
-  WATSON_FORCE_INTENT_RESOLUTION: 'WATSON_FORCE_INTENT_RESOLUTION'
+  WATSON_FORCE_INTENT_RESOLUTION: 'WATSON_FORCE_INTENT_RESOLUTION',
+  WATSON_BOT_STARTS: 'WATSON_BOT_STARTS'
 }
 
 const Defaults = {
@@ -23,7 +24,8 @@ const Defaults = {
   [Capabilities.WATSON_URL]: 'https://gateway.watsonplatform.net/assistant/api',
   [Capabilities.WATSON_VERSION]: '2019-02-28',
   [Capabilities.WATSON_COPY_WORKSPACE]: false,
-  [Capabilities.WATSON_FORCE_INTENT_RESOLUTION]: false
+  [Capabilities.WATSON_FORCE_INTENT_RESOLUTION]: false,
+  [Capabilities.WATSON_BOT_STARTS]: false
 }
 
 class BotiumConnectorWatson {
@@ -162,9 +164,17 @@ class BotiumConnectorWatson {
         throw new Error(`Failed to create Watson session: ${util.inspect(err)}`)
       }
     }
+
+    if (this.caps[Capabilities.WATSON_BOT_STARTS]) {
+      return this._sendWatsonRequest({})
+    }
   }
 
   async UserSays (msg) {
+    return this._sendWatsonRequest(msg)
+  }
+
+  async _sendWatsonRequest (msg) {
     debug('UserSays called')
     if (!this.assistant) throw new Error('not built')
 
@@ -225,7 +235,7 @@ class BotiumConnectorWatson {
       throw new Error(`Got duplicate intent confidence ${util.inspect(intents[0])} vs ${util.inspect(intents[1])}`)
     }
     const nlp = {
-      intent: intents ? {
+      intent: (intents && intents[0]) ? {
         name: intents[0].intent,
         confidence: intents[0].confidence,
         intents: intents.map((intent) => { return { name: intent.intent, confidence: intent.confidence } })

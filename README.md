@@ -140,3 +140,8 @@ This capability will copy the Watson workspace and run the Botium script on the 
 _This is only supported for Assistant SDK V1_
 
 _Attention: as the copied workspace will run through Watson training session, it could take some time until the copied workspace is available. Botium will only continue after training is complete_
+
+### WATSON_BOT_STARTS
+_Default: false_
+
+Set this capability to true if the watson bot starts the conversation. (You have a node with welcome condition) 
