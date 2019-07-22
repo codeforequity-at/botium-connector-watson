@@ -74,6 +74,13 @@ const _processJSON = (filename) => {
    * @param id: node id
    * @param convoStep: because jump more nodes can be oollected to one convoStep
    * @param buttonsConvoStep: because jump more nodes can be oollected to one convoStep. Collect they buttons here
+   * @param lastResponseType If two "messages" (entries of node.output.generic array)
+   * coming after each other (in same node, or different nodes but with jump)
+   * Then watson send them sometimes in same sometimes in separate response.
+   * Here are some rules I found and implemented using this variable:
+   * - text + text => 2 response
+   * - text + button => 1 nodes
+   * - text - pause - text => two responses
    * @param conversation: array of ConvoSteps in JSON format
    * @param processedIds: used nodes for this convo
    * @param log: how this convo is created (Can be used to reproduce it by human)
@@ -81,7 +88,7 @@ const _processJSON = (filename) => {
    * @param entities: same as watson entities
    * @private
    */
-  const _processRecursive = ({ id, convoStep, buttonsConvoStep = [], conversation = [], processedIds = [], log = [], context = {} }) => {
+  const _processRecursive = ({ id, convoStep, buttonsConvoStep = [], lastResponseType, conversation = [], processedIds = [], log = [], context = {} }) => {
     const nodeStruct = mapIdToNode.get(id)
     if (processedIds.includes(id)) {
       debug(`Node ${id} skipped because already found on path '${processedIds}'`)
@@ -185,7 +192,7 @@ const _processJSON = (filename) => {
     const _finishBotConvoStep = () => {
       debug(`Convo step finished`)
 
-      // dealing with bot message
+      // it is easier to put the messages into array first, as collecting in Stirng and separate them with \n
       if (convoStep.messageTexts.length || convoStep.asserters.length) {
         if (convoStep.messageTexts.length) {
           convoStep.messageText = convoStep.messageTexts.join('\n')
@@ -198,7 +205,6 @@ const _processJSON = (filename) => {
     }
 
     // extracting convoStep
-    let lastResponseType
     for (const msg of node.output.generic) {
       switch (msg.response_type) {
         case 'text':
@@ -213,6 +219,7 @@ const _processJSON = (filename) => {
           }
 
           convoStep.messageTexts.push(...msg.values.map(value => value.text))
+          lastResponseType = msg.response_type
           break
         case 'option':
           const buttonsLocal = msg.options.map(o => {
@@ -225,18 +232,19 @@ const _processJSON = (filename) => {
           buttonsConvoStep = buttonsConvoStep.concat(buttonsLocal)
           _finishBotConvoStep()
           convoStep = _createBotConvoStep()
+          lastResponseType = msg.response_type
           break
         case 'image':
           convoStep.asserters.push({ name: 'MEDIA', args: [msg.source] })
           _finishBotConvoStep()
           convoStep = _createBotConvoStep()
+          lastResponseType = msg.response_type
           break
         case 'pause':
           break
         default:
           throw new Error(`FAILED: node ${id}, field node.output.generic.response_type value (${msg.response_type} is not supported!`)
       }
-      lastResponseType = msg.response_type
     }
 
     // processed overall (are not processed nodes?)
@@ -305,7 +313,6 @@ const _processJSON = (filename) => {
     } else {
       switch (node.next_step.behavior) {
         case 'jump_to':
-          // jump does not finishes the current ConvoStep
           if (node.next_step.selector !== 'body') {
             throw new Error(`FAILED: node ${id}, jump_to selector (${node.next_step.selector}) is not supported!`)
           }
@@ -315,6 +322,7 @@ const _processJSON = (filename) => {
             convoStep,
             buttonsConvoStep,
             conversation,
+            lastResponseType,
             // clone is not required here
             processedIds: [...processedIds],
             log: [...log],
@@ -380,7 +388,7 @@ const handler = ({ inputJson, outputDir }) => {
       const convoAsJson = {
         header: {
           name: `${workspace.name}${convoId}`,
-          description: '[\n' + log.map(entry => JSON.stringify(entry)).join(',\n') + ']'
+          // description: '[\n' + log.map(entry => JSON.stringify(entry)).join(',\n') + ']'
         },
         conversation
       }

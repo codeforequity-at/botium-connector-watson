@@ -45,6 +45,7 @@
     "@babel/runtime": "^7.4.5",
     "async": "^3.0.1",
     "debug": "^4.1.1",
+    "jexl": "^2.1.1",
     "lodash": "^4.17.11",
     "slug": "1.1.0",
     "watson-developer-cloud": "^4.0.1",
