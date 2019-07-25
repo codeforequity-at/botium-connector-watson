@@ -244,12 +244,12 @@ class BotiumConnectorWatson {
       throw new Error(`Got duplicate intent confidence ${util.inspect(intents[0])} vs ${util.inspect(intents[1])}`)
     }
     const nlp = {
-      intent: intents && intents.length ? {
+      intent: intents && intents.length > 1 ? {
         name: intents[0].intent,
         confidence: intents[0].confidence,
         intents: intents.map((intent) => { return { name: intent.intent, confidence: intent.confidence } })
       } : {},
-      entities: entities ? entities.map((entity) => { return { name: entity.entity, value: entity.value, confidence: entity.confidence } }) : []
+      entities: entities && entities.length > 1 ? entities.map((entity) => { return { name: entity.entity, value: entity.value, confidence: entity.confidence } }) : []
     }
 
     let forceIntentResolution = this.caps[Capabilities.WATSON_FORCE_INTENT_RESOLUTION]
