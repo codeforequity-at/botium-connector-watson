@@ -169,6 +169,24 @@ class BotiumConnectorWatson {
     if (!this.assistant) throw new Error('not built')
 
     const getInputPayload = () => {
+      if (msg.messageText.startsWith('UPDATE_CONTEXT ')) {
+        const parsedMessage = msg.messageText.split(' ')
+        parsedMessage.shift() // remove first item
+        const [path, value, type] = parsedMessage
+
+        this.conversationContext = this.conversationContext || {}
+
+        if (!type || type === 'string') {
+          jsonpath.value(this.conversationContext, path, value)
+        } else if (type === 'boolean') {
+          jsonpath.value(this.conversationContext, path, value.toLowerCase() === 'true')
+        } else if (type === 'integer') {
+          jsonpath.value(this.conversationContext, path, parseInt(value, 10))
+        }
+
+        msg.messageText = null
+      }
+
       if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V1') {
         return {
           workspace_id: this.useWorkspaceId,
@@ -225,12 +243,12 @@ class BotiumConnectorWatson {
       throw new Error(`Got duplicate intent confidence ${util.inspect(intents[0])} vs ${util.inspect(intents[1])}`)
     }
     const nlp = {
-      intent: intents ? {
+      intent: intents && intents.length > 1 ? {
         name: intents[0].intent,
         confidence: intents[0].confidence,
         intents: intents.map((intent) => { return { name: intent.intent, confidence: intent.confidence } })
       } : {},
-      entities: entities ? entities.map((entity) => { return { name: entity.entity, value: entity.value, confidence: entity.confidence } }) : []
+      entities: entities && entities.length > 1 ? entities.map((entity) => { return { name: entity.entity, value: entity.value, confidence: entity.confidence } }) : []
     }
 
     let forceIntentResolution = this.caps[Capabilities.WATSON_FORCE_INTENT_RESOLUTION]
