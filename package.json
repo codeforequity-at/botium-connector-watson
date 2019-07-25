@@ -48,7 +48,7 @@
     "jsonpath": "^1.0.2",
     "lodash": "^4.17.15",
     "slug": "1.1.0",
-    "watson-developer-cloud": "^4.0.1",
+    "ibm-watson": "^4.2.2",
     "xlsx": "^0.14.4",
     "yargs": "13.3.0"
   },
