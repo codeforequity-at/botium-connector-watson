@@ -168,23 +168,20 @@ class BotiumConnectorWatson {
     debug('UserSays called')
     if (!this.assistant) throw new Error('not built')
 
+    this.conversationContext = this.conversationContext || {}
+
     const getInputPayload = () => {
-      if (msg.messageText.startsWith('UPDATE_CONTEXT ')) {
-        const parsedMessage = msg.messageText.split(' ')
-        parsedMessage.shift() // remove first item
-        const [path, value, type] = parsedMessage
+      if (msg['SET_WATSON_CONTEXT']) {
+        _.keys(msg['SET_WATSON_CONTEXT']).forEach(key => {
+          _.set(this.conversationContext, key, msg['SET_WATSON_CONTEXT'][key])
+        })
+      }
+      if (msg['UNSET_WATSON_CONTEXT']) {
+        const keys = _.isString(msg['UNSET_WATSON_CONTEXT']) ? [msg['UNSET_WATSON_CONTEXT']] : msg['UNSET_WATSON_CONTEXT']
 
-        this.conversationContext = this.conversationContext || {}
-
-        if (!type || type === 'string') {
-          jsonpath.value(this.conversationContext, path, value)
-        } else if (type === 'boolean') {
-          jsonpath.value(this.conversationContext, path, value.toLowerCase() === 'true')
-        } else if (type === 'integer') {
-          jsonpath.value(this.conversationContext, path, parseInt(value, 10))
-        }
-
-        msg.messageText = null
+        keys.forEach(key => {
+          _.set(this.conversationContext, key, null)
+        })
       }
 
       if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V1') {
@@ -243,7 +240,7 @@ class BotiumConnectorWatson {
       throw new Error(`Got duplicate intent confidence ${util.inspect(intents[0])} vs ${util.inspect(intents[1])}`)
     }
     const nlp = {
-      intent: intents && intents.length > 1 ? {
+      intent: intents && intents.length > 0 ? {
         name: intents[0].intent,
         confidence: intents[0].confidence,
         intents: intents.map((intent) => { return { name: intent.intent, confidence: intent.confidence } })
@@ -265,10 +262,10 @@ class BotiumConnectorWatson {
       }, [])
     if (!texts || texts.length === 0) {
       // Assistant V1 legacy
-      texts = sendMessageResponse.output.text && (_.isArray(sendMessageResponse.output.text) ? sendMessageResponse.output.text.filter(t => t) : [ sendMessageResponse.output.text ])
+      texts = sendMessageResponse.output.text && (_.isArray(sendMessageResponse.output.text) ? sendMessageResponse.output.text.filter(t => t) : [sendMessageResponse.output.text])
     }
     if (!texts || texts.length === 0) {
-      texts = [ undefined ]
+      texts = [undefined]
     }
 
     const media = generic && generic.filter(g => g.response_type === 'image')
