@@ -95,6 +95,46 @@ For getting help on the available CLI options and switches, run:
 
     > botium-connector-watson-cli watsonimport --help
 
+## Watson Assistant Context Handling
+
+When using BotiumScript, you can do assertions on and manipulation of the Watson Assistant context variables.
+
+### Asserting context variables
+
+For asserting context variables, you can use the [JSON_PATH asserter](https://botium.atlassian.net/wiki/spaces/BOTIUM/pages/59113473/JSONPath+Asserter):
+
+    #bot
+    JSON_PATH $.context.skills['main skill'].user_defined.lightonoff|off
+
+_Depending on your Watson Assistant skill structure, this may different - but by default, this should work_
+
+### Adding context variables
+
+For adding a context variable, you have to use the [UPDATE_CUSTOM logic hook](https://botium.atlassian.net/wiki/spaces/BOTIUM/pages/48660497/Integrated+Logic+Hooks). This example will set two context variables, one to a plain string, the other one to a JSON object:
+
+    #me
+    play some jazz music
+    UPDATE_CUSTOM SET_WATSON_CONTEXT|skills['main skill'].user_defined.mycontext1|botium
+    UPDATE_CUSTOM SET_WATSON_CONTEXT|skills['main skill'].user_defined.mycontext2|{"nested": "botium"}
+
+The parameters are:
+1. SET_WATSON_CONTEXT
+2. The path to the context variable
+3. The value of the context variable
+
+### Removing context variables
+
+For removing a context variable, the same logic hook is used:
+
+    #me
+    play some jazz music
+    UPDATE_CUSTOM UNSET_WATSON_CONTEXT|skills['main skill'].user_defined.mycontext1
+    UPDATE_CUSTOM UNSET_WATSON_CONTEXT|skills['main skill'].user_defined.mycontext2
+
+The parameters are:
+1. UNSET_WATSON_CONTEXT
+2. The path to the context variable
+
 ## Supported Capabilities
 
 Set the capability __CONTAINERMODE__ to __watson__ to activate this connector.

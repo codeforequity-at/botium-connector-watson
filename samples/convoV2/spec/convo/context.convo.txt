@@ -1,0 +1,20 @@
+context
+
+#me
+play some jazz music
+UPDATE_CUSTOM SET_WATSON_CONTEXT|skills['main skill'].user_defined.mycontext1|botium
+UPDATE_CUSTOM SET_WATSON_CONTEXT|skills['main skill'].user_defined.mycontext2|{"nested": "botium"}
+
+#bot
+JSON_PATH $.context.skills['main skill'].user_defined.lightonoff|off
+JSON_PATH $.context.skills['main skill'].user_defined.mycontext1|botium
+JSON_PATH $.context.skills['main skill'].user_defined.mycontext2.nested|botium
+
+#me
+play some jazz music
+UPDATE_CUSTOM UNSET_WATSON_CONTEXT|skills['main skill'].user_defined.mycontext1
+UPDATE_CUSTOM UNSET_WATSON_CONTEXT|skills['main skill'].user_defined.mycontext2
+
+#bot
+JSON_PATH $.context.skills['main skill'].user_defined.lightonoff|off
+
