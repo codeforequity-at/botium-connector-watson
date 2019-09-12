@@ -125,7 +125,7 @@ class BotiumConnectorWatson {
                       workspaceAvailable = true
                       workspaceChecked()
                     } else {
-                      debug(`Watson workspace waiting for status 'Available'`)
+                      debug('Watson workspace waiting for status \'Available\'')
                       setTimeout(workspaceChecked, 10000)
                     }
                   }
@@ -171,13 +171,13 @@ class BotiumConnectorWatson {
     this.conversationContext = this.conversationContext || {}
 
     const getInputPayload = () => {
-      if (msg['SET_WATSON_CONTEXT']) {
-        _.keys(msg['SET_WATSON_CONTEXT']).forEach(key => {
-          _.set(this.conversationContext, key, msg['SET_WATSON_CONTEXT'][key])
+      if (msg.SET_WATSON_CONTEXT) {
+        _.keys(msg.SET_WATSON_CONTEXT).forEach(key => {
+          _.set(this.conversationContext, key, msg.SET_WATSON_CONTEXT[key])
         })
       }
-      if (msg['UNSET_WATSON_CONTEXT']) {
-        const keys = _.isString(msg['UNSET_WATSON_CONTEXT']) ? [msg['UNSET_WATSON_CONTEXT']] : msg['UNSET_WATSON_CONTEXT']
+      if (msg.UNSET_WATSON_CONTEXT) {
+        const keys = _.isString(msg.UNSET_WATSON_CONTEXT) ? [msg.UNSET_WATSON_CONTEXT] : msg.UNSET_WATSON_CONTEXT
 
         keys.forEach(key => {
           _.set(this.conversationContext, key, null)
