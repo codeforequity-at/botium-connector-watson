@@ -28,7 +28,7 @@ module.exports.writeConvo = (compiler, convo, outputDir) => {
 
   mkdirp.sync(outputDir)
 
-  const scriptData = compiler.Decompile([ convo ], 'SCRIPTING_FORMAT_TXT')
+  const scriptData = compiler.Decompile([convo], 'SCRIPTING_FORMAT_TXT')
 
   fs.writeFileSync(filename, scriptData)
   return filename
@@ -39,7 +39,7 @@ module.exports.writeUtterances = (compiler, utterance, samples, outputDir) => {
 
   mkdirp.sync(outputDir)
 
-  const scriptData = [ utterance, ...samples ].join('\n')
+  const scriptData = [utterance, ...samples].join('\n')
 
   fs.writeFileSync(filename, scriptData)
   return filename

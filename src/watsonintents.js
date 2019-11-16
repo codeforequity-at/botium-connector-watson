@@ -10,7 +10,7 @@ const helpers = require('./helpers')
 const getCaps = (caps) => {
   const result = caps || {}
   result[botium.Capabilities.CONTAINERMODE] = path.resolve(__dirname, '..', 'index.js')
-  result['WATSON_COPY_WORKSPACE'] = false
+  result.WATSON_COPY_WORKSPACE = false
   return result
 }
 
@@ -19,13 +19,13 @@ const importWatsonIntents = async ({ caps, buildconvos }) => {
   const container = await driver.Build()
   const compiler = await driver.BuildCompiler()
 
-  if (container.pluginInstance.caps['WATSON_ASSISTANT_VERSION'] !== 'V1') {
-    throw new Error(`FAILED: Currently only supported with Watson Assistant API V1`)
+  if (container.pluginInstance.caps.WATSON_ASSISTANT_VERSION !== 'V1') {
+    throw new Error('FAILED: Currently only supported with Watson Assistant API V1')
   }
 
   const workspace = await (new Promise((resolve, reject) => {
     container.pluginInstance.assistant.getWorkspace({
-      workspace_id: driver.caps['WATSON_WORKSPACE_ID'],
+      workspace_id: driver.caps.WATSON_WORKSPACE_ID,
       _export: true
     }, (err, workspace) => {
       if (err) {
@@ -84,13 +84,13 @@ const importWatsonLogs = async ({ caps, watsonfilter }, conversion) => {
   const container = await driver.Build()
   const compiler = await driver.BuildCompiler()
 
-  if (container.pluginInstance.caps['WATSON_ASSISTANT_VERSION'] !== 'V1') {
-    throw new Error(`FAILED: Currently only supported with Watson Assistant API V1`)
+  if (container.pluginInstance.caps.WATSON_ASSISTANT_VERSION !== 'V1') {
+    throw new Error('FAILED: Currently only supported with Watson Assistant API V1')
   }
 
   const workspace = await (new Promise((resolve, reject) => {
     container.pluginInstance.assistant.getWorkspace({
-      workspace_id: driver.caps['WATSON_WORKSPACE_ID'],
+      workspace_id: driver.caps.WATSON_WORKSPACE_ID,
       export: false
     }, (err, workspace) => {
       if (err) {
@@ -106,7 +106,7 @@ const importWatsonLogs = async ({ caps, watsonfilter }, conversion) => {
   let hasMore = true
 
   const pageParams = {
-    workspace_id: driver.caps['WATSON_WORKSPACE_ID'],
+    workspace_id: driver.caps.WATSON_WORKSPACE_ID,
     page_limit: 1000,
     sort: 'request_timestamp',
     watsonfilter
@@ -267,7 +267,7 @@ module.exports = {
     builder: (yargs) => {
       yargs.positional('source', {
         describe: 'Specify the source of the conversations for the configured chatbot',
-        choices: [ 'watson-intents', 'watson-logs' ]
+        choices: ['watson-intents', 'watson-logs']
       })
       yargs.option('buildconvos', {
         describe: 'Build convo files for intent assertions (otherwise, just write utterances files) - use --no-buildconvos to disable',
