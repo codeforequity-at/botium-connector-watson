@@ -1,0 +1,6 @@
+UTT_ENTITY_GENRE_BAD_ALTERNATIVE
+Alternative
+alt
+altrock
+grunge
+new wave

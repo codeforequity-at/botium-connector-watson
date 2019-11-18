@@ -1,0 +1,8 @@
+genre_bad = Electronic
+
+#me
+UTT_ENTITY_GENRE_BAD_ELECTRONIC
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Electronic

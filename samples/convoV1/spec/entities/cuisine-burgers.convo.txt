@@ -1,0 +1,8 @@
+cuisine = burgers
+
+#me
+UTT_ENTITY_CUISINE_BURGERS
+
+#bot
+ENTITIES cuisine
+ENTITY_VALUES burgers

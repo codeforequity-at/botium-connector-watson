@@ -1,0 +1,8 @@
+cuisine = pasta
+
+#me
+UTT_ENTITY_CUISINE_PASTA
+
+#bot
+ENTITIES cuisine
+ENTITY_VALUES pasta

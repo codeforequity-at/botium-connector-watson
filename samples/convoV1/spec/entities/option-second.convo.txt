@@ -1,0 +1,8 @@
+option = second
+
+#me
+UTT_ENTITY_OPTION_SECOND
+
+#bot
+ENTITIES option
+ENTITY_VALUES second

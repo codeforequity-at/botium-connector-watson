@@ -1,0 +1,8 @@
+genre_bad = Soundtrack
+
+#me
+UTT_ENTITY_GENRE_BAD_SOUNDTRACK
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Soundtrack

@@ -1,0 +1,8 @@
+appliance = AC
+
+#me
+UTT_ENTITY_APPLIANCE_AC
+
+#bot
+ENTITIES appliance
+ENTITY_VALUES AC

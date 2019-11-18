@@ -1,0 +1,19 @@
+UTT_ENTITY_AMENITY_RESTROOM
+restroom
+ bathroom
+ bathrooms
+boy's room
+boys' room
+girl's room
+girls' room
+loo
+outhouse
+out house
+rest room
+ restrooms
+rest rooms
+shitter
+ toilet
+ toilets
+water closet
+wc

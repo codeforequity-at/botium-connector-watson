@@ -1,0 +1,8 @@
+cuisine_bad = danish
+
+#me
+UTT_ENTITY_CUISINE_BAD_DANISH
+
+#bot
+ENTITIES cuisine_bad
+ENTITY_VALUES danish

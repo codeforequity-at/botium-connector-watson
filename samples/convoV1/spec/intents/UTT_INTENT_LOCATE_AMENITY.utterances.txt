@@ -1,0 +1,747 @@
+UTT_INTENT_LOCATE_AMENITY
+nearby hspitals
+Nearby hotels
+nearby hotel
+nearby hospital
+near by hospital
+nearby gas station
+Navigation
+navigate to work
+navigate to the nearest gas station
+navigate to the mall
+navigate to the citibank
+navigate to superstore
+navigate to school
+navigate to Pomona
+navigate to menara dayabumi
+navigate to macdonalds
+navigate to london
+navigate to kochi
+navigate to gas station
+navigate to dayabumi
+navigate to 4th
+Navigate me to the next lake
+Navigate me to the next city
+navigate me to the coffe shop
+name the restaurant
+mmm, i don't want music, i prefer you find me a good restaurant
+make a coffee
+looking for a movie
+looking for a gas station
+look for any pizza nearby
+look for a gas station
+locate the gas station within 1 KM
+locate starbucks
+locate poznan
+Locate McDonalds
+Locate gas station
+locate burgers
+locate ammenity
+locate amenity
+list of 5 next gas stations
+let you to another city
+let's stop at gas station
+lets not go to work, suggest somewhere nice
+find restorant
+find restoran, please
+find resteraunt
+find restaurents
+find rest area
+find rest
+find pizzeria
+Find Petrol pump
+find petrol
+find pasta
+find non veg restarant
+find next gas station
+Find my school
+find movie
+find motel
+find me the next gas station
+find me the neareset gas station
+Find me the hawker stall that sells fried carrot cake.
+find me some tacos
+find me gas station with cigerette counter
+find me a restroom
+find mcdonlds
+find mcdonalds
+find mcdonald
+find mall
+Find Library.
+find lclosest starbucks
+find hotel
+find hospital
+find home
+Find Hamburger shop
+Find hamburger
+find gus sation
+find gas station please.
+find gas station please
+find gas station close
+Find Gas Station
+find fuel
+find food
+find fastest way
+find epteke
+Find chipotle
+find chinese restraunt
+find chinese
+Find chicken
+find calte
+find cafe
+Find burger shop
+find burgers
+find burger
+find BP
+Find best option
+Find bar
+find a taco place
+find a restroom
+find another route
+Find an imvestor
+find an amenity
+Find a fast food
+finally this restaurant
+fill the gas
+fetch me lunch locations
+Drop me to my office
+drive to the restaurant
+Drive to a petrol station.
+drive through
+Drive somewhere
+Drive me home
+drive in the field
+Drive home.
+Drive home
+drive by local attractions
+drive across the bridge
+do you know where the next gas station?
+Do you know pizza?
+do you know if there's any restaurant around here?
+do you know a restaurant in new york city?
+do you know a restaurant in new york city
+do you know any chinese restaurants around
+Doctors nearby
+direction to santa monica
+Direction to San Diego Airport
+direction to pharmacy
+Did we reached restaurant
+could you find gas station?
+cool. restrooms nearby?
+cool, now I wanna go to a partu
+coffee shop?
+coffee place
+Coffee
+closest one please
+Closest one
+closest one.
+closest mcdonald's
+Closest gas station
+closest cafe
+closest burgers
+closest brothel
+Closest
+can you travel to italy?
+Can you take me home?
+can you show me the way please?
+can you locate a gas station
+can you help me to get to sesame street
+can you go to the third gas station instead?
+can you give me the directions
+Can you give me directions?
+can you find the nearest for me
+can you find my city ?
+can you find me a restaurant
+can you find gas station?
+can you find a wendy's on my way home
+can you find a good place to eat
+can you drive towards Resturant 2
+Can you drive me to pick up tickets for the circus
+can you drive downtown?
+can we go to the park?
+can we go to Shell ?
+can we drive to New York ?
+I'd like to get something to eat
+I'd like to eat something
+I'd like some coffee
+I am looking for restarurants
+I am looking for gas station.
+I am hungry
+I am going to New York.
+how to go to the post office?
+How to get home?
+how to get home
+how to drive home?
+how many times to the restaurant ?
+HOW MANY RESTAURANTS ARE NEAR BY?
+How long is drive from Pittsburgh to new york
+how long does it take to the restroom?
+how i get to a museum
+how far is the next restroom
+how far is the n ex italian  restaurant
+how far is the closest gas station?
+how far is the closest gas station
+howe much time will it take to reach restroom 1
+how can i go for gas?
+how can i get to Gbagada, Lagos
+how about pizza?
+how about pizza
+hotels nearby?
+hotel near by
+hotel nearby
+hmmm  the closest one
+Hmm I said Korean restaurant. None of the food you addressed is Korean food.
+hi where do i get dentist
+Hi Watson, where is the restaurant:
+Hi tell me please were I can find Amatriciana pasta around here
+hey, I'm almost out of gas.
+help me to arrive to my place
+hello gas
+guide me to the convenience store.
+got to sleep
+go to zoo
+Go to work
+go to walmart
+go to Wakayama in JAPAN
+go to vienna
+go to usa
+go to Toronto
+go to the zoo
+go to the third gas station
+go to the tacos
+go to the supermarket
+go to the studium
+go to the store
+Go to the shops
+go to the sea
+go to the school
+go to the restorant
+go to the post office
+go to the park
+Go to the movies
+go to the movie
+Go to the mountains
+go to the korea
+go to the hospitol
+Go to the hospital
+Go to the grocery store
+Go to the graveyeard
+Go to the gas station
+go to the garden
+go to the department store
+go to the country
+go to the closest
+go to the cinema
+go to the beach?
+go to the beach
+go to the be4ach?
+go to the airport
+Go to Tacos
+go to supermarket
+go to starbucks
+go to spot 1
+go to spermarket
+go to shp
+go to shop
+go to service
+go to sea
+go to school
+go to san francisco
+Go to San Diego
+go to Safeway
+go to resturunt
+go to restuarnts
+Go to restrant
+go to restaurannt
+go to restaraun
+go to piracicaba
+go to park
+go to paris
+go to orlando
+go to nyc
+Go to NY
+Go to number 2.
+Go to NewYork
+go to natianal park
+Go to movie
+Go to moskow
+go to mcdonalds
+Go to mauntain
+Go to London
+go to LA
+go to ibm hortolandia
+go to house
+go to hotel
+go to hospital
+Go to home
+go to home.
+go to harden nsw
+Go to Hamilton
+Go to Germany
+can I have some pizza?
+can i go to the park?
+Can I buy a humberger?
+buy some food
+buy me a dress
+burgers nearby
+bring me to the park
+bring me to the beach.
+bring me to the beach
+bring me a beer
+are there any restaurants near by ?
+Are there any italian restaurants nearby
+are there any good restaurants near me?
+Are there any around here
+any ukrainian restaurants?
+any restrooms nearby
+any restaurant here?
+Any restaurant around here?
+any place in the gas
+any good restaurant there nearby
+any gas stations?
+Amenities
+alright then. can you recommend a good place for a quick lunch?
+actually I would like to stop at one further away
+Â‹Ã›Ã›where is the nearest hotels?
+find gasstation
+What is the closests motel
+what is that green area
+what is near me
+what is nearby
+what is near
+What is good to eat?
+what is gasoline?
+what is closeby
+What is an amenity?
+What distance is the 5 gas station?
+what are the nearest restaurants
+what are some places nearby
+what are some chinese restaurant
+What about a gas station?
+were is the nearest bar
+We need gas
+well you certainly are at the restaurant
+well the next restaurant
+Watson I need gas station
+washrooms nearby
+want to go to the rest room!
+want to go to car shop
+turn on the lights and find a restaurant
+TThe closest
+Traduzir  qual o restaurante mais perto  which the restaurant closer
+Trace route to Sao Paulo
+to the shops
+to the cheapest
+To numbre 2
+to nr 2
+to Nevada
+to lima
+To gas station please!
+to eat Chinese food
+to another place
+the second pasta restaurant
+the closest restaruant
+The closest please
+The closest ones
+The closest one
+The closest gas station.
+the closest gas station
+the cheapest restaurant?
+tell me restaurants in seattle
+tell me how can I go to my mother's house
+tell me fancy restaurant
+tell me about restaurants
+tell me about gas stations
+take to naples, Italy
+Take me to your favorite reteraunt
+take me to New york
+take me to nearest police station
+take me to
+take me homw
+Take a right
+tacos restaurant
+tacos nearby
+stop near some resturnant
+stop near a grocery store
+Stop for food or coffee
+stop at the restroom
+stop at restroom 1
+someting near for meal
+some mexican food
+so can you lead me to the fastest way without the jams?
+show whats near by
+show the way to the gas station
+show my way to home
+show me these resturants
+Show me the road
+show me the next restrooms
+show me the next bar
+Show me the nearest one
+show me the nearest grocery
+show me the nearest gas station
+show me the hotel
+show me the best path
+show me the 5th
+show me startbucks
+show me our route
+show me nearest gas station
+show me mexican
+show me maps
+show me map
+show me houses in sun city west az.
+show me gasstations
+show me gas station
+show me direction
+show me burgers
+show directions
+shome me the closest burger restarurant
+shome me the closest american restarurant
+see if there are any chinese restaurants nearby
+Search for a supermarket
+resturant nearby
+restrooms show
+restroom
+restaurants tacos
+restaurants serving tacos
+restaurants
+Restaurant around this area
+restaurant
+restarurants near
+Recommend somewhere to visit
+Please tell me the best places to visit in 11040
+please tell me nice restrant near here
+please steer to the right
+please show me resturants
+please navigate go to restrant.
+please go to Tacobell
+please give me to my house
+please fin nearby gas station
+Please find the next gas station
+please find the gas station
+please find that gas station
+please  find hospital
+Please drive me home.
+Please drive me home
+pizza, please.
+pizza
+Lets head up to number 2
+Lets go to the store
+lets go to the river
+lets go to the resturant
+lets go to the park
+Lets go to the number 5
+lets go to rest room
+Let's go to NY
+Lets go to NewYork
+lets go to france
+lets go to burger king
+let's go for rock
+let's go for jazz
+lets go for drive
+let's get some grub
+let's get home
+let'd go to school
+just the cheapest restaurant please
+I would like to learn how to drive from Brooklyn to New York City
+I would like to hear some pop
+I would like to go to surfside.
+I would like go to a restaurante
+I would like a coffee
+i would go to the seafood
+I will go to the mountains
+I will go to th Alps
+I want to view a film
+I want to stop for some food
+i want to stop
+I want to see a scenic place
+i want to see a river
+i want to see a movie
+I want to go to U.S.A.
+I want to go to the gas station
+I want to go to school.
+i want to go to home
+I want to go to gas station.
+I want to go to beach.
+I want to go to 2.
+I want to go back to home
+I want to find gas station
+i want to drive home
+I want to drink beer
+i want some pizza
+I want restaurants
+i want restaurant 2
+I want pizza
+I wan to go Gas station.
+i wan to go gas station
+I wan to drink with my friend
+i want near restaurants full of light
+i want go restaurant
+I want gas
+i wanna to nightclub
+i wanna to dance tonight
+i wanna go to sea.
+I wanna go to hospital
+I wanna go to arestaurant
+i wanna get food
+i think we need gas
+Italian food is a kind of food
+Is there someplace I can eat around here?
+is there factory outlet near here?
+Is there any shopping mall nearby?
+Is there any resturant nearby?
+is there any pub nearby?
+is there any hotel nearby
+is there a good chinese resturant nearby?
+is there a gas station close by ?
+is there a gas station close
+is there a gas station?
+is there a gas station ?
+Is there a convenience  store?
+I see, I'm not sure if gas stations are necessary. How about restaurants?
+I prefer rock to Jazz
+In want to go to the beach
+Information on locations near me
+i need to stop for
+yep, need a hotel for tonight
+yeah a nice coffee place
+Whta is the nearst gas station from now.
+Whre is the nearest resturant
+which the restaurant closer
+which one is closest?
+which is the nearest gas station
+Which is the closest salon?
+Which is closest?
+Where us restoraunt?
+Where to have lunch
+where there is the next hotel
+where the GS
+where's the nearest station?
+where's the nearest petrol station
+where's the nearest fast food place?
+where's the nearest exit
+where's starbucks?
+where's houston
+Where should i go to eat?
+Where's burgers?
+where's a good resturaunt
+where restoran
+where is there petrol?
+where is there a good hotel
+where is the next stop
+where is the next pit stop ?
+where is the next bus stop?
+where is the next book store
+Where is the nearest station?
+where is the nearest railway station
+where is the nearest police station here
+Where is the nearest petrol station
+where is the nearest petrol station?
+where is the nearest gsa station?
+where is the nearest gaz station
+where is the nearest gasoline station ?
+where is the nearest filling station
+Where is the moon
+where is the bus stop
+where is the
+where is Tacos
+where is nearest petrol station
+Where is my home?
+where is my home
+Where is my favorite restaraunt?
+where is gus stations.
+where is ATM
+where is a petrol station ?
+where is a petrol station
+where is a gas station
+where is a fuel station
+where in the nearests CVS?
+Where do I can get tacos?
+where chinese restaulant?
+Where can we go?
+where can i have pizza
+Where can I eat tacos?
+where can i eat pizza
+where can I eat a good steakc
+where can i drink
+where are we going to?
+Where are the restrooms?
+where are the closest restrooms
+where are restrooms
+Where are nhe neast gas station
+Where are nearest McDonalds?
+what type of restaurant you like?
+What the nearest restrooms
+what's the nearest?
+what's the cheapest gas station around?
+what's nearby Watson
+Whats nearby
+whats nearby?
+what's near
+what's close to me
+what's closeby
+What's around here?
+whats a good restaurant around here?
+What restrooms are nearby?
+what restaurants
+what restaurant?
+what place is most popular?
+What is your advice where to eat fish
+Whatis the way to Sachsenhausen?
+what is the next gas station?
+what is the nearest movie theatre
+I need to pee
+i need to have a rest
+I need to eat some tacos
+i need to eat rice
+I need to eat
+i need to do some shopping
+i need to buy flowers
+I need some money
+I need some lunch
+i need some coffee
+i need some beer
+I need restrooms
+I need gas station
+i need directions to your moms house
+I need a toilet
+I need a resturant in nairobi
+i need another gas station
+i need a hotel
+I need a hospital
+I need a garage
+I need a destination
+I need a bathroom
+I'm thinking about some beef jerky
+I'm thinking about a nice, juicy steak
+I'm in the mood for having a hamburger
+im hungry I want to eat something
+i'm hungry
+I'm craving a burger.
+im almost out of gas
+I love spicy food
+i like some coffee
+i like pizza
+I have to go to the bathroom
+I have hungry like a wolf
+i feel like getting a coffee
+I dont have gas
+I'd need a toilet
+I'd like to see a movie.
+I'd like to see a map
+I'd like to go somewhere I can swim
+I'd like to go skiing
+I'd like to go camping
+go to gas station 2
+go to gas station 1.
+go to gas station 1
+go to gas station
+go to fouth
+Go to five
+go to first gas station
+Go to Esso
+go to disco
+go to cinema
+go to Campinas
+go to burguers
+go to burgers
+go to amsterdam center
+go to amenity
+go to amelia
+go to airport
+go to a
+go to 7-11
+go to 5
+go to 4
+go to 2 gas station
+gold to Olema
+go get some tacos
+go for a swim
+go for a city now
+go back to homz
+give me the address of italian restaurant
+give me some drink
+give me nearest burger joint
+give me directions
+Give me a pub street
+get. Some tacos
+get me home
+get me gas station
+get me directions
+Get me a sandwich
+Get me an uber
+gas stop
+Gas station nearby
+gas fuel
+gas
+french restaurants are my fav
+fool i said i need to eat an ice cream
+food nearest food
+fly to North Carolina
+find townsend hall
+Find to me the nearest gaz station
+find toilet
+Find the place with rich nature
+find the next MCdonalds
+Find the next gas station
+find the next gasstation
+find the nearst gas station
+find the last road
+find the italian restruant
+find the gas station
+find the closet gas station
+find the cheapest gas station
+Find tacos
+find s washroom
+find supermarket
+find subway
+find stations then
+find starbucks
+Find stadium
+find some gas station
+find snacks bar
+find servo
+find seafood
+Find school
+find rstaurants
+find resurant
+find resturants
+find resturant
+Find restuarants
+find restraunts
+find restourants
+parks nearby...
+or the restaurant
+or in the restaurant
+order a pizza
+ok restroom would be nice
+Ok ....please find a good resort for me
+OK, lets go to Tokyo!
+ok...lets go for a long drive
+OK. go to No.3
+Ok, get me spaghettis
+OK. Gas station. How far is the nearest gas station is located?
+okay let's go for jazz
+Okay let's go for burgers.
+no i need to eat ice creams
+no I mean the restaurant
+never mind, locate an amenity
+nevermind, i think i need some food instead
+need a restaurent
+need a map
+need a gas station
+ned space to stay
+near school
+near restrunt
+near one
+near gasstation go
+nearest restaurtant  aroungd me
+nearby Tacos
+nearby supermarket
+near by shopping
+near by seattle
+nearby rivers?
+near by resturant
+near by restaurent
+nearby restaurant
+nearby residents
+nearby mc donalds

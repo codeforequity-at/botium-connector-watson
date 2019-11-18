@@ -1,0 +1,8 @@
+response_types = negative
+
+#me
+UTT_ENTITY_RESPONSE_TYPES_NEGATIVE
+
+#bot
+ENTITIES response_types
+ENTITY_VALUES negative

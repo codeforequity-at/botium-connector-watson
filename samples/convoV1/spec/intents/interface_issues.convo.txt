@@ -1,7 +1,7 @@
 interface_issues
 
 #me
-interface_issues_input
+UTT_INTENT_INTERFACE_ISSUES
 
 #bot
 INTENT interface_issues

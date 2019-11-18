@@ -1,7 +1,7 @@
 system_reliance
 
 #me
-system_reliance_input
+UTT_INTENT_SYSTEM_RELIANCE
 
 #bot
 INTENT system_reliance

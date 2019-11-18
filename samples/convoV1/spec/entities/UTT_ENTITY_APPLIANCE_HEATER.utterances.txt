@@ -1,0 +1,7 @@
+UTT_ENTITY_APPLIANCE_HEATER
+heater
+heat
+heating
+heat vent
+heat vents
+hotter

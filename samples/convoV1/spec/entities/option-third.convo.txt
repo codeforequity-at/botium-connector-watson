@@ -1,0 +1,8 @@
+option = third
+
+#me
+UTT_ENTITY_OPTION_THIRD
+
+#bot
+ENTITIES option
+ENTITY_VALUES third

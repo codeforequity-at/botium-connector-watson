@@ -1,0 +1,14 @@
+UTT_ENTITY_GENRE_BAD_DANCE
+Dance
+club
+deep house
+dubstep
+edm
+electro house
+electroswing
+exercise
+house
+jungle
+techno
+trance
+trap

@@ -1,7 +1,7 @@
 positive_reaction
 
 #me
-positive_reaction_input
+UTT_INTENT_POSITIVE_REACTION
 
 #bot
 INTENT positive_reaction

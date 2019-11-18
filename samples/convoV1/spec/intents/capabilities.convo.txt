@@ -1,7 +1,7 @@
 capabilities
 
 #me
-capabilities_input
+UTT_INTENT_CAPABILITIES
 
 #bot
 INTENT capabilities

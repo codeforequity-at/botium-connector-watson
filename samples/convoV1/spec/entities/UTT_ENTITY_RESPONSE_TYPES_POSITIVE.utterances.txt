@@ -1,0 +1,8 @@
+UTT_ENTITY_RESPONSE_TYPES_POSITIVE
+positive
+absolutely
+definitely
+yeah
+yep
+yeppers
+yes

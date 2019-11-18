@@ -1,0 +1,14 @@
+UTT_ENTITY_CUISINE_BURGERS
+burgers
+burger
+burgers
+cheeseburger
+cheese burger
+cheeseburgers
+cheese burgers
+hamburger
+ham burger
+hamburgers
+ham burgers
+mcdonalds
+mcdonald's

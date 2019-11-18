@@ -1,0 +1,7 @@
+UTT_ENTITY_RESPONSE_TYPES_UNCERTAIN
+uncertain
+don't know
+maybe
+no idea
+not sure
+unknown

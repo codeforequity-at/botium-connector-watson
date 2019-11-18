@@ -1,0 +1,8 @@
+appliance = music
+
+#me
+UTT_ENTITY_APPLIANCE_MUSIC
+
+#bot
+ENTITIES appliance
+ENTITY_VALUES music

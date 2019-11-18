@@ -1,0 +1,10 @@
+UTT_ENTITY_GENRE_BAD_ELECTRONIC
+Electronic
+ambient
+crunk
+drum and bass
+drum & bass
+electro
+electronica
+industrial
+trip hop

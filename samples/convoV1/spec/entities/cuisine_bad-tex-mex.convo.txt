@@ -1,0 +1,8 @@
+cuisine_bad = tex mex
+
+#me
+UTT_ENTITY_CUISINE_BAD_TEX-MEX
+
+#bot
+ENTITIES cuisine_bad
+ENTITY_VALUES tex mex

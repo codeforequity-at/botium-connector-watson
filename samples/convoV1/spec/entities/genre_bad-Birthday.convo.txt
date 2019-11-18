@@ -1,0 +1,8 @@
+genre_bad = Birthday
+
+#me
+UTT_ENTITY_GENRE_BAD_BIRTHDAY
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Birthday

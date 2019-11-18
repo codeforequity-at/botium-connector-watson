@@ -1,0 +1,8 @@
+genre_bad = Country
+
+#me
+UTT_ENTITY_GENRE_BAD_COUNTRY
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Country

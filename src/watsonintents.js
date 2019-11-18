@@ -14,10 +14,13 @@ const getCaps = (caps) => {
   return result
 }
 
-const importWatsonIntents = async ({ caps, buildconvos }) => {
+const importWatsonIntents = async ({ caps, source, buildconvos }) => {
   const driver = new botium.BotDriver(getCaps(caps))
   const container = await driver.Build()
   const compiler = await driver.BuildCompiler()
+
+  const importIntents = (source === 'watson-intents' || source === 'watson-intents-entities')
+  const importEntities = (source === 'watson-entities' || source === 'watson-intents-entities')
 
   if (container.pluginInstance.caps.WATSON_ASSISTANT_VERSION !== 'V1') {
     throw new Error('FAILED: Currently only supported with Watson Assistant API V1')
@@ -25,7 +28,7 @@ const importWatsonIntents = async ({ caps, buildconvos }) => {
 
   const workspace = await (new Promise((resolve, reject) => {
     container.pluginInstance.assistant.getWorkspace({
-      workspace_id: driver.caps.WATSON_WORKSPACE_ID,
+      workspaceId: driver.caps.WATSON_WORKSPACE_ID,
       _export: true
     }, (err, workspace) => {
       if (err) {
@@ -36,46 +39,89 @@ const importWatsonIntents = async ({ caps, buildconvos }) => {
       }
     })
   }))
-  debug(`Watson workspace got intents: ${JSON.stringify(workspace.intents, null, 2)}`)
-  if (!workspace.intents || workspace.intents.length === 0) {
-    throw new Error(`Watson workspace intents empty: ${JSON.stringify(workspace, null, 2)}`)
+
+  if (importIntents) {
+    debug(`Watson workspace got intents: ${JSON.stringify(workspace.result.intents, null, 2)}`)
+  }
+  if (importEntities) {
+    debug(`Watson workspace got entities: ${JSON.stringify(workspace.result.entities, null, 2)}`)
   }
 
   const convos = []
   const utterances = []
 
-  for (const intent of workspace.intents) {
-    const inputUtterances = (intent.examples && intent.examples.map((e) => e.text)) || []
-    const utterancesRef = slug(intent.intent)
+  if (importIntents) {
+    for (const intent of (workspace.result.intents || [])) {
+      const inputUtterances = (intent.examples && intent.examples.map((e) => e.text)) || []
+      const utterancesRef = `UTT_INTENT_${slug(intent.intent).toUpperCase()}`
 
-    if (buildconvos) {
-      const convo = {
-        header: {
-          name: intent.intent
-        },
-        conversation: [
-          {
-            sender: 'me',
-            messageText: utterancesRef
+      if (buildconvos) {
+        const convo = {
+          header: {
+            name: intent.intent
           },
-          {
-            sender: 'bot',
-            asserters: [
+          conversation: [
+            {
+              sender: 'me',
+              messageText: utterancesRef
+            },
+            {
+              sender: 'bot',
+              asserters: [
+                {
+                  name: 'INTENT',
+                  args: [intent.intent]
+                }
+              ]
+            }
+          ]
+        }
+        convos.push(convo)
+      }
+      utterances.push({
+        name: utterancesRef,
+        utterances: inputUtterances
+      })
+    }
+  }
+
+  if (importEntities) {
+    for (const entity of (workspace.result.entities || [])) {
+      for (const entityValue of entity.values) {
+        const inputUtterances = [entityValue.value, ...(entityValue.synonyms || [])]
+        const utterancesRef = `UTT_ENTITY_${slug(entity.entity).toUpperCase()}_${slug(entityValue.value).toUpperCase()}`
+
+        if (buildconvos) {
+          const convo = {
+            header: {
+              name: `${entity.entity} = ${entityValue.value}`
+            },
+            conversation: [
               {
-                name: 'INTENT',
-                args: [intent.intent]
+                sender: 'me',
+                messageText: utterancesRef
+              },
+              {
+                sender: 'bot',
+                asserters: [
+                  {
+                    name: 'ENTITY_CONTENT',
+                    args: [entity.entity, entityValue.value]
+                  }
+                ]
               }
             ]
           }
-        ]
+          convos.push(convo)
+        }
+        utterances.push({
+          name: utterancesRef,
+          utterances: inputUtterances
+        })
       }
-      convos.push(convo)
     }
-    utterances.push({
-      name: utterancesRef,
-      utterances: inputUtterances
-    })
   }
+
   return { convos, utterances, driver, container, compiler }
 }
 
@@ -195,9 +241,9 @@ const handler = (argv) => {
   if (argv.watsonformat && argv.watsonformat !== 'convo' && argv.watsonformat !== 'intent') {
     return yargsCmd.showHelp()
   }
-  const outputDir = (argv.convos && argv.convos[0]) || '.'
+  const outputDir = (argv.convos && argv.convos[0]) || './spec/convo'
 
-  if (argv.source === 'watson-intents') {
+  if (argv.source === 'watson-intents' || argv.source === 'watson-entities' || argv.source === 'watson-intents-entities') {
     importWatsonIntents(argv)
       .then(({ convos, utterances, compiler }) => {
         convos && convos.forEach(convo => {
@@ -267,7 +313,7 @@ module.exports = {
     builder: (yargs) => {
       yargs.positional('source', {
         describe: 'Specify the source of the conversations for the configured chatbot',
-        choices: ['watson-intents', 'watson-logs']
+        choices: ['watson-intents', 'watson-entities', 'watson-intents-entities', 'watson-logs']
       })
       yargs.option('buildconvos', {
         describe: 'Build convo files for intent assertions (otherwise, just write utterances files) - use --no-buildconvos to disable',

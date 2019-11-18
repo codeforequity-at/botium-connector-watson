@@ -1,0 +1,7 @@
+UTT_ENTITY_GENRE_BAD_VOCAL
+Vocal
+acapella
+acappella
+A cappella
+barbershop
+doowop

@@ -1,7 +1,7 @@
 picture
 
 #me
-picture_input
+UTT_INTENT_PICTURE
 
 #bot
 INTENT picture

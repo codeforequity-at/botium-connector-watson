@@ -1,0 +1,7 @@
+UTT_ENTITY_APPLIANCE_WIPERS
+wipers
+windscreen wiper
+windscreen wipers
+windshield wiper
+windshield wipers
+wiper

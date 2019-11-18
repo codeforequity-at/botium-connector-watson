@@ -1,0 +1,8 @@
+cuisine_bad = austrian
+
+#me
+UTT_ENTITY_CUISINE_BAD_AUSTRIAN
+
+#bot
+ENTITIES cuisine_bad
+ENTITY_VALUES austrian

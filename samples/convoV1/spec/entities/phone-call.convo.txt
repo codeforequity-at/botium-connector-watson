@@ -1,0 +1,8 @@
+phone = call
+
+#me
+UTT_ENTITY_PHONE_CALL
+
+#bot
+ENTITIES phone
+ENTITY_VALUES call

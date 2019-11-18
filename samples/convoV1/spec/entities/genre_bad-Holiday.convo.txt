@@ -1,0 +1,8 @@
+genre_bad = Holiday
+
+#me
+UTT_ENTITY_GENRE_BAD_HOLIDAY
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Holiday

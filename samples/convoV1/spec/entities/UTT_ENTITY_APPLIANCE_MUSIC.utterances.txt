@@ -1,0 +1,17 @@
+UTT_ENTITY_APPLIANCE_MUSIC
+music
+itune
+itunes
+music station
+music stations
+radio
+radio station
+song
+songs
+sound system
+sound systems
+station
+stereo
+stereo system
+tune
+tunes

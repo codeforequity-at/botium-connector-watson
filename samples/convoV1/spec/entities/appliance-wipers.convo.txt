@@ -1,0 +1,8 @@
+appliance = wipers
+
+#me
+UTT_ENTITY_APPLIANCE_WIPERS
+
+#bot
+ENTITIES appliance
+ENTITY_VALUES wipers

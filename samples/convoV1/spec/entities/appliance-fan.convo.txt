@@ -1,0 +1,8 @@
+appliance = fan
+
+#me
+UTT_ENTITY_APPLIANCE_FAN
+
+#bot
+ENTITIES appliance
+ENTITY_VALUES fan

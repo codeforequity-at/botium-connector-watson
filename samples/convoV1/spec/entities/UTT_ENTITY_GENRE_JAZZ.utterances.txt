@@ -1,0 +1,8 @@
+UTT_ENTITY_GENRE_JAZZ
+jazz
+bebop
+big band
+dixie
+jazz
+lounge
+swing

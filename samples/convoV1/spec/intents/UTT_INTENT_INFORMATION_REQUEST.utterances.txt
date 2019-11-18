@@ -1,0 +1,15 @@
+UTT_INTENT_INFORMATION_REQUEST
+do you know the time
+can you tell time
+can you say me the time?
+hey whats the current time today
+hi what is the time?
+tell me the date
+what is the day today
+what is the time?
+what is today's date
+what's the date
+whats the square root of 70
+what's the time
+what time is it right now
+what time will it be in 4.5 hours

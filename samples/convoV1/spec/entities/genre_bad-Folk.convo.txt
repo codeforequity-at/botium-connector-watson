@@ -1,0 +1,8 @@
+genre_bad = Folk
+
+#me
+UTT_ENTITY_GENRE_BAD_FOLK
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Folk

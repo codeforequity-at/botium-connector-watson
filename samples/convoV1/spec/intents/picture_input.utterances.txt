@@ -1,3 +1,0 @@
-picture_input
-give me a picture
-show me a picture

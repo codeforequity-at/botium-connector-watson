@@ -1,0 +1,7 @@
+UTT_ENTITY_GENRE_BAD_RELIGIOUS
+Religious
+buddhist
+choir
+christian
+gospel
+muslim

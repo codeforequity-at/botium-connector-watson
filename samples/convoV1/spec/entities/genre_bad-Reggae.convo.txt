@@ -1,0 +1,8 @@
+genre_bad = Reggae
+
+#me
+UTT_ENTITY_GENRE_BAD_REGGAE
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Reggae

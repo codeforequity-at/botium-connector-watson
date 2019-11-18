@@ -1,0 +1,8 @@
+genre = jazz
+
+#me
+UTT_ENTITY_GENRE_JAZZ
+
+#bot
+ENTITIES genre
+ENTITY_VALUES jazz

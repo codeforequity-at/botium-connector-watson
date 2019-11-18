@@ -1,0 +1,8 @@
+appliance = lights
+
+#me
+UTT_ENTITY_APPLIANCE_LIGHTS
+
+#bot
+ENTITIES appliance
+ENTITY_VALUES lights

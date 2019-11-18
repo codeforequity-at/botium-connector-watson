@@ -1,0 +1,11 @@
+UTT_ENTITY_APPLIANCE_AC
+AC
+ac
+acs
+air conditioner
+air conditioners
+air conditioning
+colder
+cooling
+cooling system
+cooling systems

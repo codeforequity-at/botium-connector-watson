@@ -1,0 +1,8 @@
+genre_bad = Religious
+
+#me
+UTT_ENTITY_GENRE_BAD_RELIGIOUS
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Religious

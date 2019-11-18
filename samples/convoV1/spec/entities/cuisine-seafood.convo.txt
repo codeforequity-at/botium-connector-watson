@@ -1,0 +1,8 @@
+cuisine = seafood
+
+#me
+UTT_ENTITY_CUISINE_SEAFOOD
+
+#bot
+ENTITIES cuisine
+ENTITY_VALUES seafood

@@ -1,0 +1,8 @@
+genre_bad = Latin
+
+#me
+UTT_ENTITY_GENRE_BAD_LATIN
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Latin

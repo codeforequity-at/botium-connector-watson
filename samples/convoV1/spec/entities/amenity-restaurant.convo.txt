@@ -1,0 +1,8 @@
+amenity = restaurant
+
+#me
+UTT_ENTITY_AMENITY_RESTAURANT
+
+#bot
+ENTITIES amenity
+ENTITY_VALUES restaurant

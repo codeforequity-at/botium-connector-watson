@@ -1,0 +1,11 @@
+UTT_ENTITY_GENRE_BAD_LATIN
+Latin
+Baladas
+bossa nova
+brazilian
+cubmia
+flamenco
+portuguese
+reggaeton
+salsa
+Tango

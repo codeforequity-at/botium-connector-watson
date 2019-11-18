@@ -1,0 +1,7 @@
+UTT_ENTITY_AMENITY_PLACE
+place
+class
+home
+office
+school
+work

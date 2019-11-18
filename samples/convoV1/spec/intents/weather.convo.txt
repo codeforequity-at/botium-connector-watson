@@ -1,7 +1,7 @@
 weather
 
 #me
-weather_input
+UTT_INTENT_WEATHER
 
 #bot
 INTENT weather

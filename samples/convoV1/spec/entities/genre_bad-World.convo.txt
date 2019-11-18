@@ -1,0 +1,8 @@
+genre_bad = World
+
+#me
+UTT_ENTITY_GENRE_BAD_WORLD
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES World

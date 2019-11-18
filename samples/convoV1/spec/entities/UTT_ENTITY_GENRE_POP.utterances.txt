@@ -1,0 +1,9 @@
+UTT_ENTITY_GENRE_POP
+pop
+chart topper
+modern
+pop
+popular
+top 10
+top 20
+top 40

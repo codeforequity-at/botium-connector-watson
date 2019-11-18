@@ -1,0 +1,8 @@
+cuisine_bad = chinese
+
+#me
+UTT_ENTITY_CUISINE_BAD_CHINESE
+
+#bot
+ENTITIES cuisine_bad
+ENTITY_VALUES chinese

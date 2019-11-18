@@ -1,0 +1,8 @@
+capabilities_subject = time
+
+#me
+UTT_ENTITY_CAPABILITIES_SUBJECT_TIME
+
+#bot
+ENTITIES capabilities_subject
+ENTITY_VALUES time
