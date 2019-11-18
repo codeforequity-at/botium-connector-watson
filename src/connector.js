@@ -101,16 +101,18 @@ class BotiumConnectorWatson {
         (workspaceCopied) => {
           if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V1') {
             if (this.caps[Capabilities.WATSON_COPY_WORKSPACE]) {
-              this.assistant.getWorkspace({ workspace_id: this.caps[Capabilities.WATSON_WORKSPACE_ID], export: true }, (err, workspace) => {
+              this.assistant.getWorkspace({ workspaceId: this.caps[Capabilities.WATSON_WORKSPACE_ID], _export: true }, (err, workspace) => {
                 if (err) {
                   workspaceCopied(`Watson workspace connection failed: ${util.inspect(err)}`)
                 } else {
-                  this.assistant.createWorkspace(workspace, (err, workspaceCopy) => {
+                  const newWorkspace = workspace.result
+                  newWorkspace.name = `${newWorkspace.name} - Botium Copy`
+                  this.assistant.createWorkspace(newWorkspace, (err, workspaceCopy) => {
                     if (err) {
                       workspaceCopied(`Watson workspace copy failed: ${util.inspect(err)}`)
                     } else {
                       debug(`Watson workspace copied: ${util.inspect(workspaceCopy)}`)
-                      this.useWorkspaceId = workspaceCopy.workspace_id
+                      this.useWorkspaceId = workspaceCopy.result.workspace_id
                       workspaceCopied()
                     }
                   })
@@ -127,32 +129,39 @@ class BotiumConnectorWatson {
 
         (workspaceAvailableReady) => {
           if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V1' && this.caps[Capabilities.WATSON_COPY_WORKSPACE]) {
-            let workspaceAvailable = false
-
-            async.until(
-              () => workspaceAvailable,
-              (workspaceChecked) => {
+            // eslint-disable-next-line no-unexpected-multiline
+            (async () => {
+              const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
+              while (true) {
                 debug(`Watson checking workspace status ${this.useWorkspaceId} before proceed`)
-
-                this.assistant.getWorkspace({ workspace_id: this.useWorkspaceId }, (err, workspace) => {
-                  if (err) {
-                    workspaceChecked(`Watson workspace connection failed: ${util.inspect(err)}`)
+                try {
+                  const workspaceAvailable = await new Promise((resolve, reject) => {
+                    this.assistant.getWorkspace({ workspaceId: this.useWorkspaceId }, (err, workspace) => {
+                      if (err) {
+                        reject(new Error(`Watson workspace connection failed: ${util.inspect(err)}`))
+                      } else {
+                        debug(`Watson workspace connected, checking for status 'Available': ${util.inspect(workspace)}`)
+                        if (workspace.result.status === 'Available') {
+                          resolve(true)
+                        } else {
+                          debug('Watson workspace waiting for status \'Available\'')
+                          resolve(false)
+                        }
+                      }
+                    })
+                  })
+                  if (workspaceAvailable) {
+                    workspaceAvailableReady()
+                    return
                   } else {
-                    debug(`Watson workspace connected, checking for status 'Available': ${util.inspect(workspace)}`)
-                    if (workspace.status === 'Available') {
-                      workspaceAvailable = true
-                      workspaceChecked()
-                    } else {
-                      debug('Watson workspace waiting for status \'Available\'')
-                      setTimeout(workspaceChecked, 10000)
-                    }
+                    await timeout(10000)
                   }
-                })
-              },
-              (err) => {
-                if (err) return workspaceAvailableReady(err)
-                workspaceAvailableReady()
-              })
+                } catch (err) {
+                  debug(`Watson workspace error on availability check ${err.message}`)
+                  await timeout(10000)
+                }
+              }
+            })()
           } else {
             workspaceAvailableReady()
           }
@@ -174,7 +183,6 @@ class BotiumConnectorWatson {
       const createSession = util.promisify(this.assistant.createSession).bind(this.assistant)
       try {
         const createSessionResponse = await createSession({ assistantId: this.caps[Capabilities.WATSON_ASSISTANT_ID] })
-        console.log(createSessionResponse)
         this.sessionId = createSessionResponse.result.session_id
         debug(`Created Watson session ${this.sessionId}`)
       } catch (err) {
@@ -205,10 +213,10 @@ class BotiumConnectorWatson {
 
       if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V1') {
         return {
-          workspace_id: this.useWorkspaceId,
+          workspaceId: this.useWorkspaceId,
           context: this.conversationContext || {},
           input: { text: msg.messageText },
-          alternate_intents: true
+          alternateIntents: true
         }
       } else if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V2') {
         return {
@@ -230,10 +238,10 @@ class BotiumConnectorWatson {
     const handleResponse = async (sendMessageResponse) => {
       if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V1') {
         this.conversationContext = sendMessageResponse.context
-        await this._processWatsonResponse(sendMessageResponse,
-          sendMessageResponse.output.generic,
-          sendMessageResponse.intents,
-          sendMessageResponse.entities)
+        await this._processWatsonResponse(sendMessageResponse.result,
+          sendMessageResponse.result.output.generic,
+          sendMessageResponse.result.intents,
+          sendMessageResponse.result.entities)
       } else if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V2') {
         this.conversationContext = { skills: sendMessageResponse.result.context.skills }
         await this._processWatsonResponse(sendMessageResponse.result,
@@ -331,7 +339,7 @@ class BotiumConnectorWatson {
         (workspaceDeleteReady) => {
           if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V1') {
             if (this.caps[Capabilities.WATSON_COPY_WORKSPACE]) {
-              this.assistant.deleteWorkspace({ workspace_id: this.useWorkspaceId }, (err) => {
+              this.assistant.deleteWorkspace({ workspaceId: this.useWorkspaceId }, (err) => {
                 if (err) {
                   debug(`Watson workspace delete copy failed: ${util.inspect(err)}`)
                 } else {

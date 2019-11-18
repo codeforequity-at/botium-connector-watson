@@ -135,6 +135,14 @@ The parameters are:
 1. UNSET_WATSON_CONTEXT
 2. The path to the context variable
 
+## Usage behind a corporate proxy
+
+In case you have an HTTPS proxy, set the _HTTPS_PROXY_ environment variable
+
+    > HTTPS_PROXY=my-proxy-address:port npm test
+
+If you have an HTTP proxy, Botium has to tunnel the HTTPS traffic to Watson Assistant services over HTTP. Set the _WATSON_HTTP_PROXY_HOST_ and _WATSON_HTTP_PROXY_PORT_ capabilities in botium.json (see below).
+
 ## Supported Capabilities
 
 Set the capability __CONTAINERMODE__ to __watson__ to activate this connector.
@@ -148,6 +156,11 @@ Watson supports two Assistant SDK versions, V1 and V2.
 
 ### WATSON_URL
 _Default: "https://gateway.watsonplatform.net/assistant/api"_
+
+### WATSON_HTTP_PROXY_HOST / WATSON_HTTP_PROXY_PORT
+Hostname/IP Address and port of your HTTP proxy
+
+**This is only required if you have a HTTP proxy only. For HTTPS proxies, you can use the HTTPS_PROXY environment variable**
 
 ### WATSON_VERSION
 _Default: "2018-09-20"_
