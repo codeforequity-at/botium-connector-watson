@@ -49,6 +49,7 @@
     "ibm-watson": "^5.1.0",
     "jsonpath": "^1.0.2",
     "lodash": "^4.17.15",
+    "randomatic": "^3.1.1",
     "slug": "^1.1.0",
     "tunnel": "^0.0.6",
     "xlsx": "^0.15.2",
