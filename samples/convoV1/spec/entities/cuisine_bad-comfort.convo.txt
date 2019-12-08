@@ -1,0 +1,8 @@
+cuisine_bad = comfort
+
+#me
+UTT_ENTITY_CUISINE_BAD_COMFORT
+
+#bot
+ENTITIES cuisine_bad
+ENTITY_VALUES comfort

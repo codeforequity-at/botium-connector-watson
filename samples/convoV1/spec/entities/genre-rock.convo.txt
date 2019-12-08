@@ -1,0 +1,8 @@
+genre = rock
+
+#me
+UTT_ENTITY_GENRE_ROCK
+
+#bot
+ENTITIES genre
+ENTITY_VALUES rock

@@ -1,0 +1,8 @@
+genre_bad = Vocal
+
+#me
+UTT_ENTITY_GENRE_BAD_VOCAL
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Vocal

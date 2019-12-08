@@ -1,0 +1,8 @@
+response_types = positive
+
+#me
+UTT_ENTITY_RESPONSE_TYPES_POSITIVE
+
+#bot
+ENTITIES response_types
+ENTITY_VALUES positive

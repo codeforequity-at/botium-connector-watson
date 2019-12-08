@@ -1,7 +1,7 @@
 turn_on
 
 #me
-turn_on_input
+UTT_INTENT_TURN_ON
 
 #bot
 INTENT turn_on

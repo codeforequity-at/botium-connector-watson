@@ -1,0 +1,8 @@
+genre_bad = R&B
+
+#me
+UTT_ENTITY_GENRE_BAD_RANDB
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES R&B

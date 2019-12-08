@@ -1,0 +1,8 @@
+genre_bad = Dance
+
+#me
+UTT_ENTITY_GENRE_BAD_DANCE
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Dance

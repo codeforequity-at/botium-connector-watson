@@ -1,0 +1,8 @@
+genre_bad = Hip Hop
+
+#me
+UTT_ENTITY_GENRE_BAD_HIP-HOP
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Hip Hop

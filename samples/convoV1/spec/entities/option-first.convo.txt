@@ -1,0 +1,8 @@
+option = first
+
+#me
+UTT_ENTITY_OPTION_FIRST
+
+#bot
+ENTITIES option
+ENTITY_VALUES first

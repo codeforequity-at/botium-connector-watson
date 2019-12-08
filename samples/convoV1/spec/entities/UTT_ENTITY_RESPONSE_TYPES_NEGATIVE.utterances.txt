@@ -1,0 +1,7 @@
+UTT_ENTITY_RESPONSE_TYPES_NEGATIVE
+negative
+definitely not
+no
+nope
+not at all
+no way

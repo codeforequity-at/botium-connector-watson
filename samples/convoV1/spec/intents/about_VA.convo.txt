@@ -1,7 +1,7 @@
 about_VA
 
 #me
-about_VA_input
+UTT_INTENT_ABOUT_VA
 
 #bot
 INTENT about_VA

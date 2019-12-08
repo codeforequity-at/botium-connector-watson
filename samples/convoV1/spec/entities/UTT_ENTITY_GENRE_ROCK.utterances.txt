@@ -1,0 +1,10 @@
+UTT_ENTITY_GENRE_ROCK
+rock
+jam
+metal
+prog
+progressive
+punk
+punkrock
+rock
+surf

@@ -1,0 +1,8 @@
+cuisine_bad = greek
+
+#me
+UTT_ENTITY_CUISINE_BAD_GREEK
+
+#bot
+ENTITIES cuisine_bad
+ENTITY_VALUES greek

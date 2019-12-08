@@ -1,0 +1,8 @@
+genre_bad = New Age
+
+#me
+UTT_ENTITY_GENRE_BAD_NEW-AGE
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES New Age

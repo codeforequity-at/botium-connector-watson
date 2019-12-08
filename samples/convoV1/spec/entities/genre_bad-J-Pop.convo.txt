@@ -1,0 +1,8 @@
+genre_bad = J-Pop
+
+#me
+UTT_ENTITY_GENRE_BAD_J-POP
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES J-Pop

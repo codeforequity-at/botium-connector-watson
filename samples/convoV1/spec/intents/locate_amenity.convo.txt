@@ -1,7 +1,7 @@
 locate_amenity
 
 #me
-locate_amenity_input
+UTT_INTENT_LOCATE_AMENITY
 
 #bot
 INTENT locate_amenity

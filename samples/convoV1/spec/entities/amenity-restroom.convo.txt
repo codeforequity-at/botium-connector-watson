@@ -1,0 +1,8 @@
+amenity = restroom
+
+#me
+UTT_ENTITY_AMENITY_RESTROOM
+
+#bot
+ENTITIES amenity
+ENTITY_VALUES restroom

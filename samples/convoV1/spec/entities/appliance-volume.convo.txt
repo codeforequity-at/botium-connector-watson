@@ -1,0 +1,8 @@
+appliance = volume
+
+#me
+UTT_ENTITY_APPLIANCE_VOLUME
+
+#bot
+ENTITIES appliance
+ENTITY_VALUES volume

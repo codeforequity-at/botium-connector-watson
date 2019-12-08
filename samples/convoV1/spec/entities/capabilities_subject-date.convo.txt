@@ -1,0 +1,8 @@
+capabilities_subject = date
+
+#me
+UTT_ENTITY_CAPABILITIES_SUBJECT_DATE
+
+#bot
+ENTITIES capabilities_subject
+ENTITY_VALUES date

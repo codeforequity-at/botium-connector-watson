@@ -1,0 +1,11 @@
+UTT_ENTITY_CUISINE_PASTA
+pasta
+calzone
+canneloni
+fettucine
+Italian
+pasta
+pizza
+pizzas
+ravioli
+spaghetti

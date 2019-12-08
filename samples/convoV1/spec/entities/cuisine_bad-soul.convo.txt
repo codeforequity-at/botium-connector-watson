@@ -1,0 +1,8 @@
+cuisine_bad = soul
+
+#me
+UTT_ENTITY_CUISINE_BAD_SOUL
+
+#bot
+ENTITIES cuisine_bad
+ENTITY_VALUES soul

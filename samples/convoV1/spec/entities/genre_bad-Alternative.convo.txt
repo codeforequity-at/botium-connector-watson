@@ -1,0 +1,8 @@
+genre_bad = Alternative
+
+#me
+UTT_ENTITY_GENRE_BAD_ALTERNATIVE
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Alternative

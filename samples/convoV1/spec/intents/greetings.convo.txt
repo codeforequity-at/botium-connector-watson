@@ -1,7 +1,7 @@
 greetings
 
 #me
-greetings_input
+UTT_INTENT_GREETINGS
 
 #bot
 INTENT greetings

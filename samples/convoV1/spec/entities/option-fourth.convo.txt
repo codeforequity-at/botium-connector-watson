@@ -1,0 +1,8 @@
+option = fourth
+
+#me
+UTT_ENTITY_OPTION_FOURTH
+
+#bot
+ENTITIES option
+ENTITY_VALUES fourth

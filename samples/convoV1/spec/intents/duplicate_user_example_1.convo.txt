@@ -1,7 +1,7 @@
 duplicate_user_example_1
 
 #me
-duplicate_user_example_1_input
+UTT_INTENT_DUPLICATE_USER_EXAMPLE_1
 
 #bot
 INTENT duplicate_user_example_1

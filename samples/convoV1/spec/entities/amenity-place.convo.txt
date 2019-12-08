@@ -1,0 +1,8 @@
+amenity = place
+
+#me
+UTT_ENTITY_AMENITY_PLACE
+
+#bot
+ENTITIES amenity
+ENTITY_VALUES place

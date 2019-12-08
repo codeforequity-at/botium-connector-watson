@@ -1,7 +1,7 @@
 goodbyes
 
 #me
-goodbyes_input
+UTT_INTENT_GOODBYES
 
 #bot
 INTENT goodbyes

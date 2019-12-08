@@ -1,0 +1,8 @@
+genre_bad = Blues
+
+#me
+UTT_ENTITY_GENRE_BAD_BLUES
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Blues

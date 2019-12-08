@@ -1,0 +1,16 @@
+UTT_ENTITY_GENRE_CLASSICAL
+classical
+avant-garde
+baroque
+chamber
+chant
+choral
+classical
+impressionist
+medieval
+opera
+orchestra
+orchestral
+renaissance
+string quartet
+wedding

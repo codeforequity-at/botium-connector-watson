@@ -1,0 +1,7 @@
+UTT_INTENT_SYSTEM_RELIANCE
+do you tell the truth
+hey, now it's raining, you said you didn't know anything about that. Are you a liar?
+do you lie
+can i trust you
+are you trustworthy
+can you guess what it is ?

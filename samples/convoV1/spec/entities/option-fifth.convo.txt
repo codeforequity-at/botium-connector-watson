@@ -1,0 +1,8 @@
+option = fifth
+
+#me
+UTT_ENTITY_OPTION_FIFTH
+
+#bot
+ENTITIES option
+ENTITY_VALUES fifth

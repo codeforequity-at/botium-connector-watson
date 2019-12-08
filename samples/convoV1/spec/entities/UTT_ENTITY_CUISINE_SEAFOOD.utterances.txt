@@ -1,0 +1,6 @@
+UTT_ENTITY_CUISINE_SEAFOOD
+seafood
+fish
+prawns
+seafood
+shrimp

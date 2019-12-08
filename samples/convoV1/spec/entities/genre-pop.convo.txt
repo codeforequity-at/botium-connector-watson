@@ -1,0 +1,8 @@
+genre = pop
+
+#me
+UTT_ENTITY_GENRE_POP
+
+#bot
+ENTITIES genre
+ENTITY_VALUES pop

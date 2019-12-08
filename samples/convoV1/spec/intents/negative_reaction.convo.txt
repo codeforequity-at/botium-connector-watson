@@ -1,7 +1,7 @@
 negative_reaction
 
 #me
-negative_reaction_input
+UTT_INTENT_NEGATIVE_REACTION
 
 #bot
 INTENT negative_reaction

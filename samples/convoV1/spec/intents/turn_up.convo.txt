@@ -1,7 +1,7 @@
 turn_up
 
 #me
-turn_up_input
+UTT_INTENT_TURN_UP
 
 #bot
 INTENT turn_up

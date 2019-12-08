@@ -1,7 +1,7 @@
 information_request
 
 #me
-information_request_input
+UTT_INTENT_INFORMATION_REQUEST
 
 #bot
 INTENT information_request

@@ -1,0 +1,5 @@
+UTT_ENTITY_PHONE_CALL
+call
+call
+ calls
+voice message

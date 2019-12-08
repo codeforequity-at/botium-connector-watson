@@ -1,0 +1,6 @@
+UTT_INTENT_NAVIGATION
+how do i get from here to there
+Hi Watson! Please enable the GPS.
+can you navigate to my home
+what is the best route to a gas station
+How long does it take to get the first gas station?

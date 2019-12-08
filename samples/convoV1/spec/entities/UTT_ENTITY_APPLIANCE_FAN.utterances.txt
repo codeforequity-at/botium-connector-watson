@@ -1,0 +1,4 @@
+UTT_ENTITY_APPLIANCE_FAN
+fan
+cooler
+fans

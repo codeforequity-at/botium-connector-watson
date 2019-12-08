@@ -1,0 +1,121 @@
+UTT_INTENT_CAPABILITIES
+ok watson, why should I use you
+open door
+please open the sunroof
+repair my car
+roll down windows
+so what did you learn?
+stop it from raining
+tell me a joke
+tell me joke
+tell me jokes
+tell me some jokes
+tell me what things you can do
+Tell me what to do.
+tell me what you can do
+test
+testing om
+turn ac when rain ends?
+What a can asc iu?
+What are you
+what are you capable of
+what are your benefits
+what are your capabilities Watson
+What are your functions?
+What ca I ask?
+what can I do
+What can i say
+what can you do
+need help
+can you do coding ?
+can you do it?
+can you do more than that?
+CAN YOU DO OTHER THING?
+can you do this?
+can you do xyz?
+Can you drive anywhere else?
+can you harm me?
+Can you hear me?
+can you help me find a candidate?
+can you help me to turn on the left light
+can you learn something new?
+can you read me
+can you speak something with me?
+can you tell me about problem
+can you tell me my cars average sale price
+Can you tell me random facts?
+Change the weather
+Change weather
+deploy airbags
+don't drive any further
+do you do anything else
+Do you do anything else?
+do you know something about cognitive?
+go fast
+go slow
+Hello can i have some help
+Hello Watson! Can you bring me home?
+help
+help me
+Hey!Stop!UseBreak
+hi can we go to canada?
+Hi, can you read me a book?
+Hi Watson, please tell about the latest news
+Hi! what could you do ?
+hi where am i
+How are you going to help me
+how can you help me
+how close is
+Howdy mny Tieres Do you have
+how far is
+how far is the moon
+how far to
+how many licks does it take to get to the center of a tootsie roll
+I'd like to have dinner with you
+I enjoy petting cats
+I love dolphins
+i need a new wheelchair
+I need to shut it down
+it's too dark
+I want to eat tacos everyday
+i want to see how this demo works
+lets go
+Make it rain
+Make it stop raining.
+make me a sandwich
+you can say what is php
+you can not change yourself?
+why should I use you
+where should I turn
+where is the poop deck on this ship
+Where are we
+what u know about car?
+what things can you turn on?
+what things can you do
+What's the speed
+what should i ask
+what question
+What makes you different from Siri or Google
+what else
+what do you know
+What do you have
+what do you have?
+what did you learn
+What devices are you able to connect with?
+what cayou do?
+what care you capablities
+what capabilities you have
+what can you turn on things?
+what can you help me with
+what can you do for me
+what canyou do
+adapt to current weather condition
+book a flight for NY on sunday
+but can I ask you
+can I manipulate the
+Can I teach you
+can i training you?
+can u please do that
+can you change lanes
+can you direct me please?
+Can you do anything that helps me drive?

@@ -1,0 +1,6 @@
+UTT_ENTITY_GENRE_BAD_REGGAE
+Reggae
+dancehall
+dub
+roots
+ska

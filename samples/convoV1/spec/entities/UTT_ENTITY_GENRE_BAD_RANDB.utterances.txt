@@ -1,0 +1,6 @@
+UTT_ENTITY_GENRE_BAD_RANDB
+R&B
+Disco
+Funk
+Motown
+Soul

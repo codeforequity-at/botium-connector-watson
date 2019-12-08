@@ -1,0 +1,8 @@
+amenity = gas
+
+#me
+UTT_ENTITY_AMENITY_GAS
+
+#bot
+ENTITIES amenity
+ENTITY_VALUES gas

@@ -1,0 +1,8 @@
+genre_bad = Childrens
+
+#me
+UTT_ENTITY_GENRE_BAD_CHILDRENS
+
+#bot
+ENTITIES genre_bad
+ENTITY_VALUES Childrens

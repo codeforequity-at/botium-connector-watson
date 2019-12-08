@@ -1,0 +1,8 @@
+cuisine = tacos
+
+#me
+UTT_ENTITY_CUISINE_TACOS
+
+#bot
+ENTITIES cuisine
+ENTITY_VALUES tacos

@@ -1,0 +1,8 @@
+cuisine_bad = canadian
+
+#me
+UTT_ENTITY_CUISINE_BAD_CANADIAN
+
+#bot
+ENTITIES cuisine_bad
+ENTITY_VALUES canadian

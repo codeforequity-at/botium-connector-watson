@@ -1,0 +1,12 @@
+UTT_ENTITY_GENRE_BAD_WORLD
+World
+Afrobeat
+afropop
+cajun
+calypso
+caribbean
+celtic
+congo
+polka
+soca
+zydeco

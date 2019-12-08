@@ -1,0 +1,19 @@
+UTT_ENTITY_APPLIANCE_LIGHTS
+lights
+bulb
+bulbs
+foglight
+fog light
+foglights
+fog lights
+headlight
+head light
+headlights
+head lights
+highbeam
+high beam
+highbeams
+high beams
+light
+tubelight
+tubelights

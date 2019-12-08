@@ -1,0 +1,12 @@
+UTT_ENTITY_AMENITY_RESTAURANT
+restaurant
+cafe
+cafes
+diner
+diners
+eat
+ food
+hungry
+ meal
+ meals
+ restaurants

@@ -1,0 +1,9 @@
+UTT_ENTITY_AMENITY_GAS
+gas
+fuel
+fuel station
+fuel stations
+gas station
+gas stations
+pump
+pumps

@@ -1,7 +1,7 @@
 compound_questions
 
 #me
-compound_questions_input
+UTT_INTENT_COMPOUND_QUESTIONS
 
 #bot
 INTENT compound_questions

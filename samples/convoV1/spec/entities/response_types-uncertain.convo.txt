@@ -1,0 +1,8 @@
+response_types = uncertain
+
+#me
+UTT_ENTITY_RESPONSE_TYPES_UNCERTAIN
+
+#bot
+ENTITIES response_types
+ENTITY_VALUES uncertain

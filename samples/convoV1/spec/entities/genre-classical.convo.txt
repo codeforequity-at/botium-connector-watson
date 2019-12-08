@@ -1,0 +1,8 @@
+genre = classical
+
+#me
+UTT_ENTITY_GENRE_CLASSICAL
+
+#bot
+ENTITIES genre
+ENTITY_VALUES classical

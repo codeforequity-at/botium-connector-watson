@@ -1,0 +1,9 @@
+UTT_ENTITY_PHONE_TEXT
+text
+ message
+ messages
+short message service
+sms
+sms message
+text
+ texts

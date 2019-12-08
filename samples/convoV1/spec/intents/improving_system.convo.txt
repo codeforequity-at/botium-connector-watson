@@ -1,7 +1,7 @@
 improving_system
 
 #me
-improving_system_input
+UTT_INTENT_IMPROVING_SYSTEM
 
 #bot
 INTENT improving_system

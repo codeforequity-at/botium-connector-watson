@@ -1,0 +1,8 @@
+UTT_ENTITY_CAPABILITIES_SUBJECT_TIME
+time
+hour
+minutes
+seconds
+the time
+time
+what time

@@ -1,0 +1,7 @@
+UTT_ENTITY_GENRE_BAD_COUNTRY
+Country
+americana
+bluegrass
+honky tonk
+outlaw
+urban cowboy

@@ -1,7 +1,7 @@
 traffic_update
 
 #me
-traffic_update_input
+UTT_INTENT_TRAFFIC_UPDATE
 
 #bot
 INTENT traffic_update
