@@ -265,9 +265,6 @@ class BotiumConnectorWatson {
   }
 
   async _processWatsonResponse (sendMessageResponse, generic, intents, entities) {
-    if (intents && intents.length > 1 && intents[0].confidence === intents[1].confidence) {
-      throw new Error(`Got duplicate intent confidence ${util.inspect(intents[0])} vs ${util.inspect(intents[1])}`)
-    }
     const nlp = {
       intent: intents && intents.length > 0 ? {
         name: intents[0].intent,
