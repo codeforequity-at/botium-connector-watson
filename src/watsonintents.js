@@ -305,8 +305,8 @@ const handler = (argv) => {
 
 module.exports = {
   importWatsonIntents: (args) => importWatsonIntents(args),
-  importWatsonLogConvos: (args, filter) => importWatsonLogs(args, convertLogToConvos),
-  importWatsonLogIntents: (args, filter) => importWatsonLogs(args, convertLogToList),
+  importWatsonLogConvos: (args, filter) => importWatsonLogs({ ...args, watsonfilter: filter }, convertLogToConvos),
+  importWatsonLogIntents: (args, filter) => importWatsonLogs({ ...args, watsonfilter: filter }, convertLogToList),
   args: {
     command: 'watsonimport [source]',
     describe: 'Importing conversations for Botium',
