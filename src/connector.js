@@ -271,7 +271,7 @@ class BotiumConnectorWatson {
         confidence: intents[0].confidence,
         intents: intents.length > 1 && intents.slice(1).map((intent) => { return { name: intent.intent, confidence: intent.confidence } })
       } : {},
-      entities: entities && entities.length > 1 ? entities.map((entity) => { return { name: entity.entity, value: entity.value, confidence: entity.confidence } }) : []
+      entities: entities && entities.length > 0 ? entities.map((entity) => { return { name: entity.entity, value: entity.value, confidence: entity.confidence } }) : []
     }
 
     let forceIntentResolution = this.caps[Capabilities.WATSON_FORCE_INTENT_RESOLUTION]
