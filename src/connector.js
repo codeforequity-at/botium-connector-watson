@@ -237,7 +237,7 @@ class BotiumConnectorWatson {
     }
     const handleResponse = async (sendMessageResponse) => {
       if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V1') {
-        this.conversationContext = sendMessageResponse.context
+        this.conversationContext = sendMessageResponse.result.context
         await this._processWatsonResponse(sendMessageResponse.result,
           sendMessageResponse.result.output.generic,
           sendMessageResponse.result.intents,
@@ -255,6 +255,7 @@ class BotiumConnectorWatson {
     let sendMessageResponse = {}
     try {
       const inputPayload = getInputPayload()
+      msg.sourceData = inputPayload
       debug(`Watson request: ${JSON.stringify(inputPayload, null, 2)}`)
       sendMessageResponse = await sendMessage(inputPayload)
       debug(`Watson response: ${JSON.stringify(sendMessageResponse, null, 2)}`)
