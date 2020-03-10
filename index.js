@@ -1,13 +1,17 @@
 const BotiumConnectorWatson = require('./src/connector')
-const { importWatsonIntents, importWatsonLogs } = require('./src/watsonintents')
+const { importHandler, importArgs, importWatsonLogConvos, importWatsonLogIntents } = require('./src/watsonintents')
 const { extractIntentUtterances, trainIntentUtterances, cleanupIntentUtterances } = require('./src/nlp')
 
 module.exports = {
   PluginVersion: 1,
   PluginClass: BotiumConnectorWatson,
+  Import: {
+    Handler: importHandler,
+    Args: importArgs
+  },
   Utils: {
-    importWatsonIntents,
-    importWatsonLogs
+    importWatsonLogConvos,
+    importWatsonLogIntents
   },
   NLP: {
     ExtractIntentUtterances: extractIntentUtterances,
