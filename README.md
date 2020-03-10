@@ -80,23 +80,22 @@ Botium setup is ready, you can begin to write your [BotiumScript](https://github
 
 This connector provides a CLI interface for importing convos and utterances from your Watson workspace and convert it to BotiumScript.
 
-* Intents and user examples are converted to BotiumScript utterances and convo files (using the _watson-intents_ or _watson-intents-entities_ option)
-* Entities and synonyms are converted to BotiumScript utterances and convo files (using the _watson-entities_ or _watson-intents-entities_ option)
-* User Conversations are downloaded and converted to BotiumScript convos or just a plain list for analytics (using the _watson-logs_ option)
+* Intents and user examples are converted to BotiumScript utterances and convo files (using the _import_ command and the _--buildconvos_ or _--buildentities_ option)
+* Entities and synonyms are converted to BotiumScript utterances and convo files (using the _import_ command and the _--buildentities_ option)
+* User Conversations are downloaded and converted to BotiumScript convos or just a plain list for analytics (using the _importlogs_ command)
 
 You can either run the CLI with botium-cli (it is integrated there), or directly from this connector (see samples/convoV1/package.json for some examples):
 
-    > botium-connector-watson-cli watsonimport watson-intents
-    > botium-connector-watson-cli watsonimport watson-entities
-    > botium-connector-watson-cli watsonimport watson-intents-entities
-    > botium-connector-watson-cli watsonimport watson-logs --watsonformat convo
-    > botium-connector-watson-cli watsonimport watson-logs --watsonformat intent
+    > botium-connector-watson-cli import
+    > botium-connector-watson-cli importlogs --watsonformat convo
+    > botium-connector-watson-cli importlogs --watsonformat intent
 
 _Please note that a botium-core installation is required_
 
 For getting help on the available CLI options and switches, run:
 
-    > botium-connector-watson-cli watsonimport --help
+    > botium-connector-watson-cli import --help
+    > botium-connector-watson-cli importlogs --help
 
 ## Watson Assistant Context Handling
 
