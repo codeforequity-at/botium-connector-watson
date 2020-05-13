@@ -1,6 +1,6 @@
 {
   "name": "botium-connector-watson",
-  "version": "0.0.14",
+  "version": "0.0.16",
   "description": "Botium Connector for IBM Watson Assistant",
   "main": "dist/botium-connector-watson-cjs.js",
   "module": "dist/botium-connector-watson-es.js",
