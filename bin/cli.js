@@ -130,7 +130,8 @@ yargsCmd.usage('Botium Connector Watson CLI\n\nUsage: $0 [options]') // eslint-d
       const utterances = Object.keys(compiler.utterances).reduce((acc, u) => acc.concat([compiler.utterances[u]]), [])
 
       try {
-        await exportHandler(argv, { convos, utterances }, { statusCallback: (log, obj) => console.log(log, obj) })
+        const result = await exportHandler(argv, { convos, utterances }, { statusCallback: (log, obj) => console.log(log, obj) })
+        console.log(JSON.stringify(result, null, 2))
       } catch (err) {
         console.log(`FAILED: ${err.message}`)
       }
