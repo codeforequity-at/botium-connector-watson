@@ -8,6 +8,7 @@ const XLSX = require('xlsx')
 const { BotDriver } = require('botium-core')
 
 const { importHandler, importArgs, importWatsonLogConvos, importWatsonLogIntents } = require('../src/watsonintents')
+const { exportHandler, exportArgs } = require('../src/watsonintents')
 const debug = require('debug')('botium-connector-watson-cli')
 
 const writeConvosExcel = (compiler, convos, outputDir, filenamePrefix) => {
@@ -59,7 +60,7 @@ yargsCmd.usage('Botium Connector Watson CLI\n\nUsage: $0 [options]') // eslint-d
   .strict(true)
   .command({
     command: 'import',
-    describe: 'Importing Convos and Utterances from IBM Watson Assistant to Botium',
+    describe: 'Downloading Convos and Utterances from IBM Watson Assistant to Botium',
     builder: (yargs) => {
       for (const arg of Object.keys(importArgs)) {
         if (importArgs[arg].skipCli) continue
@@ -105,6 +106,37 @@ yargsCmd.usage('Botium Connector Watson CLI\n\nUsage: $0 [options]') // eslint-d
     }
   })
   .command({
+    command: 'export',
+    describe: 'Uploading Utterances from Botium to IBM Watson Assistant',
+    builder: (yargs) => {
+      for (const arg of Object.keys(exportArgs)) {
+        if (exportArgs[arg].skipCli) continue
+        yargs.option(arg, exportArgs[arg])
+      }
+      yargs.option('input', {
+        describe: 'Input directory',
+        type: 'string',
+        default: '.'
+      })
+    },
+    handler: async (argv) => {
+      const inputDir = argv.input
+
+      const driver = new BotDriver()
+      const compiler = driver.BuildCompiler()
+      compiler.ReadScriptsFromDirectory(inputDir)
+
+      const convos = []
+      const utterances = Object.keys(compiler.utterances).reduce((acc, u) => acc.concat([compiler.utterances[u]]), [])
+
+      try {
+        await exportHandler(argv, { convos, utterances }, { statusCallback: (log, obj) => console.log(log, obj) })
+      } catch (err) {
+        console.log(`FAILED: ${err.message}`)
+      }
+    }
+  })
+  .command({
     command: 'importlogs',
     describe: 'Importing Convos and Utterances from IBM Watson Assistant Logs to Botium',
     builder: (yargs) => {
@@ -112,7 +144,9 @@ yargsCmd.usage('Botium Connector Watson CLI\n\nUsage: $0 [options]') // eslint-d
         describe: 'Filter for downloading the watson logs, for example "response_timestamp>=2018-08-20,response_timestamp<2018-08-22"'
       })
       yargs.option('watsonformat', {
-        describe: 'Format for downloading the watson logs. "convo" for full conversations, "intent" for intent-list only (default: "convo")'
+        describe: 'Format for downloading the watson logs. "convo" for full conversations, "intent" for intent-list only',
+        default: 'convo',
+        choices: ['convo', 'intent']
       })
       yargs.option('output', {
         describe: 'Output directory',
