@@ -173,7 +173,7 @@ const exportWatsonIntents = async ({ caps, newWorkspaceName, newWorkspaceLanguag
     await waitWorkspaceAvailable(container.pluginInstance.assistant, newWorkspace.workspaceId)
     status(`Workspace ${newWorkspace.name} is available and ready for use`, { workspaceId: newWorkspace.workspaceId })
   }
-  
+
   const newCaps = _.pickBy(driver.caps, (value, key) => key.startsWith('WATSON_'))
   newCaps.WATSON_WORKSPACE_ID = newWorkspace.workspaceId
   return { caps: newCaps, workspaceId: newWorkspace.workspaceId }
