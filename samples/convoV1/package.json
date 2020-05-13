@@ -4,19 +4,20 @@
   "description": "",
   "scripts": {
     "test": "mocha spec",
-    "import-intents": "botium-connector-watson-cli watsonimport watson-intents",
-    "import-entities": "botium-connector-watson-cli watsonimport watson-entities",
-    "import-logs-convo": "botium-connector-watson-cli watsonimport watson-logs --watsonformat convo",
-    "import-logs-intent": "botium-connector-watson-cli watsonimport watson-logs --watsonformat intent"
+    "import-intents": "botium-connector-watson-cli import --output ./spec/watson-intents",
+    "import-testcases": "botium-connector-watson-cli import --buildconvos --buildentities --output ./spec/watson-import",
+    "import-logs-convo": "botium-connector-watson-cli importlogs --watsonformat convo --output ./spec/watson-logs",
+    "import-logs-intent": "botium-connector-watson-cli importlogs --watsonformat intent --output ./spec/watson-logs",
+    "export-intents-new": "botium-connector-watson-cli export --input spec/watson-intents --uploadmode new",
+    "export-intents-copy": "botium-connector-watson-cli export --input spec/watson-intents --uploadmode copy",
+    "export-intents-update": "botium-connector-watson-cli export --input spec/watson-intents --uploadmode update"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "botium": {
     "convodirs": [
-      "spec/convo",
-      "spec/intents",
-      "spec/entities"
+      "spec/convo"
     ],
     "expandConvos": true,
     "expandUtterancesToConvos": false

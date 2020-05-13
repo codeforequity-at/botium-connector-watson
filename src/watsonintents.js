@@ -1,7 +1,10 @@
 const util = require('util')
 const path = require('path')
 const slug = require('slug')
+const randomize = require('randomatic')
 const botium = require('botium-core')
+const _ = require('lodash')
+const { getWorkspace, createWorkspace, updateWorkspace, waitWorkspaceAvailable } = require('./helpers')
 const debug = require('debug')('botium-connector-watson-intents')
 
 const getCaps = (caps) => {
@@ -20,31 +23,23 @@ const importWatsonIntents = async ({ caps, buildconvos, buildentities }) => {
     throw new Error('FAILED: Currently only supported with Watson Assistant API V1')
   }
 
-  const workspace = await (new Promise((resolve, reject) => {
-    container.pluginInstance.assistant.getWorkspace({
-      workspaceId: driver.caps.WATSON_WORKSPACE_ID,
-      _export: true
-    }, (err, workspace) => {
-      if (err) {
-        reject(new Error(`Watson workspace connection failed: ${util.inspect(err)}`))
-      } else {
-        debug(`Got Watson workspace ${workspace.name}`)
-        resolve(workspace)
-      }
-    })
-  }))
+  const workspace = await getWorkspace(container.pluginInstance.assistant, driver.caps.WATSON_WORKSPACE_ID)
 
   const convos = []
   const utterances = []
 
   if (buildconvos) {
-    debug(`Watson workspace got intents: ${JSON.stringify(workspace.result.intents, null, 2)}`)
+    debug(`Watson workspace got intents: ${JSON.stringify(workspace.intents, null, 2)}`)
   }
-  for (const intent of (workspace.result.intents || [])) {
+  for (const intent of (workspace.intents || [])) {
     const inputUtterances = (intent.examples && intent.examples.map((e) => e.text)) || []
 
+    utterances.push({
+      name: intent.intent,
+      utterances: inputUtterances
+    })
+
     if (buildconvos) {
-      const utterancesRef = `UTT_INTENT_${slug(intent.intent).toUpperCase()}`
       const convo = {
         header: {
           name: intent.intent
@@ -52,7 +47,7 @@ const importWatsonIntents = async ({ caps, buildconvos, buildentities }) => {
         conversation: [
           {
             sender: 'me',
-            messageText: utterancesRef
+            messageText: intent.intent
           },
           {
             sender: 'bot',
@@ -66,21 +61,12 @@ const importWatsonIntents = async ({ caps, buildconvos, buildentities }) => {
         ]
       }
       convos.push(convo)
-      utterances.push({
-        name: utterancesRef,
-        utterances: inputUtterances
-      })
-    } else {
-      utterances.push({
-        name: intent.intent,
-        utterances: inputUtterances
-      })
     }
   }
 
   if (buildentities) {
-    debug(`Watson workspace got entities: ${JSON.stringify(workspace.result.entities, null, 2)}`)
-    for (const entity of (workspace.result.entities || [])) {
+    debug(`Watson workspace got entities: ${JSON.stringify(workspace.entities, null, 2)}`)
+    for (const entity of (workspace.entities || [])) {
       for (const entityValue of entity.values) {
         const inputUtterances = [entityValue.value, ...(entityValue.synonyms || [])]
 
@@ -117,6 +103,76 @@ const importWatsonIntents = async ({ caps, buildconvos, buildentities }) => {
   return { convos, utterances, driver, container, compiler }
 }
 
+const exportWatsonIntents = async ({ caps, newWorkspaceName, newWorkspaceLanguage, uploadmode }, { convos, utterances }, { statusCallback }) => {
+  const driver = new botium.BotDriver(getCaps(caps))
+  const container = await driver.Build()
+
+  if (container.pluginInstance.caps.WATSON_ASSISTANT_VERSION !== 'V1') {
+    throw new Error('FAILED: Currently only supported with Watson Assistant API V1')
+  }
+
+  let workspace = {}
+  let newWorkspace = {}
+
+  const status = (log, obj) => {
+    debug(log, obj)
+    if (statusCallback) statusCallback(log, obj)
+  }
+
+  const updateIntentExamples = () => {
+    if (!workspace.intents) workspace.intents = []
+    for (const utt of utterances) {
+      const wintent = workspace.intents.find(i => i.intent === utt.name)
+      if (wintent) {
+        for (const ex of (utt.utterances || [])) {
+          if (wintent.examples && wintent.examples.find(we => we.text === ex)) continue
+          else wintent.examples.push({ text: ex })
+        }
+      } else {
+        workspace.intents.push({
+          intent: utt.name,
+          examples: (utt.utterances || []).map(u => ({
+            text: u
+          }))
+        })
+      }
+    }
+  }
+
+  if (uploadmode === 'update') {
+    workspace = await getWorkspace(container.pluginInstance.assistant, driver.caps.WATSON_WORKSPACE_ID, true)
+    workspace = _.pick(workspace, ['workspaceId', 'intents'])
+    workspace.append = false
+
+    updateIntentExamples()
+
+    newWorkspace = await updateWorkspace(container.pluginInstance.assistant, workspace, true)
+    status(`Updated workspace ${newWorkspace.name}`, { workspaceId: newWorkspace.workspaceId })
+  } else if (uploadmode === 'copy') {
+    workspace = await getWorkspace(container.pluginInstance.assistant, driver.caps.WATSON_WORKSPACE_ID, true)
+    if (newWorkspaceName) workspace.name = newWorkspaceName
+    else workspace.name = `${workspace.name}-Copy-${randomize('Aa0', 5)}`
+    delete workspace.workspaceId
+
+    updateIntentExamples()
+    newWorkspace = await createWorkspace(container.pluginInstance.assistant, workspace, true)
+    status(`Copied workspace to ${newWorkspace.name}`, { workspaceId: newWorkspace.workspaceId })
+  } else {
+    workspace = {
+      name: newWorkspaceName || `Botium-${randomize('Aa0', 5)}`,
+      language: newWorkspaceLanguage
+    }
+
+    updateIntentExamples()
+    newWorkspace = await createWorkspace(container.pluginInstance.assistant, workspace, true)
+    status(`Created workspace ${newWorkspace.name}`, { workspaceId: newWorkspace.workspaceId })
+  }
+
+  status(`Waiting for workspace ${newWorkspace.name} to become available`, { workspaceId: newWorkspace.workspaceId })
+  await waitWorkspaceAvailable(container.pluginInstance.assistant, newWorkspace.workspaceId)
+  status(`Workspace ${newWorkspace.name} is available and ready for use`, { workspaceId: newWorkspace.workspaceId })
+}
+
 const importWatsonLogs = async ({ caps, watsonfilter }, conversion) => {
   const driver = new botium.BotDriver(getCaps(caps))
   const container = await driver.Build()
@@ -126,19 +182,7 @@ const importWatsonLogs = async ({ caps, watsonfilter }, conversion) => {
     throw new Error('FAILED: Currently only supported with Watson Assistant API V1')
   }
 
-  const workspace = await (new Promise((resolve, reject) => {
-    container.pluginInstance.assistant.getWorkspace({
-      workspaceId: driver.caps.WATSON_WORKSPACE_ID,
-      export: false
-    }, (err, workspace) => {
-      if (err) {
-        reject(new Error(`Watson workspace connection failed: ${util.inspect(err)}`))
-      } else {
-        debug(`Got Watson workspace ${workspace.result.name}`)
-        resolve(workspace.result)
-      }
-    })
-  }))
+  const workspace = await getWorkspace(container.pluginInstance.assistant, driver.caps.WATSON_WORKSPACE_ID)
 
   let logs = []
   let hasMore = true
@@ -151,22 +195,19 @@ const importWatsonLogs = async ({ caps, watsonfilter }, conversion) => {
   }
   while (hasMore) {
     debug(`Watson workspace gettings logs page: ${pageParams.cursor}`)
-    await (new Promise((resolve, reject) => {
-      container.pluginInstance.assistant.listLogs(pageParams, (err, pageResult) => {
-        if (err) {
-          reject(new Error(`Watson workspace connection failed: ${util.inspect(err)}`))
-        } else {
-          logs = logs.concat(pageResult.result.logs)
-          if (pageResult.result.pagination && pageResult.result.pagination.next_cursor) {
-            hasMore = true
-            pageParams.cursor = pageResult.result.pagination.next_cursor
-          } else {
-            hasMore = false
-          }
-          resolve()
-        }
-      })
-    }))
+
+    try {
+      const pageResult = await container.pluginInstance.assistant.listLogs(pageParams)
+      logs = logs.concat(pageResult.result.logs)
+      if (pageResult.result.pagination && pageResult.result.pagination.next_cursor) {
+        hasMore = true
+        pageParams.cursor = pageResult.result.pagination.next_cursor
+      } else {
+        hasMore = false
+      }
+    } catch (err) {
+      throw new Error(`Watson workspace connection failed: ${err.message}`)
+    }
   }
   debug(`Watson workspace got ${logs.length} log entries`)
   if (logs.length === 0) {
@@ -251,7 +292,7 @@ module.exports = {
     buildconvos: {
       describe: 'Build convo files for intent assertions (otherwise, just write utterances files)',
       type: 'boolean',
-      default: true
+      default: false
     },
     buildentities: {
       describe: 'Add entity asserters to convo files',
@@ -260,5 +301,27 @@ module.exports = {
     }
   },
   importWatsonLogConvos: ({ caps, watsonfilter, ...rest }) => importWatsonLogs({ caps, watsonfilter, ...rest }, convertLogToConvos),
-  importWatsonLogIntents: ({ caps, watsonfilter, ...rest }) => importWatsonLogs({ caps, watsonfilter, ...rest }, convertLogToList)
+  importWatsonLogIntents: ({ caps, watsonfilter, ...rest }) => importWatsonLogs({ caps, watsonfilter, ...rest }, convertLogToList),
+  exportHandler: ({ caps, newWorkspaceName, newWorkspaceLanguage, uploadmode, ...rest } = {}, { convos, utterances } = {}, { statusCallback } = {}) => exportWatsonIntents({ caps, newWorkspaceName, newWorkspaceLanguage, uploadmode, ...rest }, { convos, utterances }, { statusCallback }),
+  exportArgs: {
+    caps: {
+      describe: 'Capabilities',
+      type: 'json',
+      skipCli: true
+    },
+    uploadmode: {
+      describe: 'Update the IBM Watson Assistant workspace with data from Botium, copy it before making chances, or create a blank one',
+      default: 'new',
+      choices: ['new', 'copy', 'update']
+    },
+    newWorkspaceName: {
+      describe: 'Create a new IBM Watson Assistant workspace',
+      type: 'string'
+    },
+    newWorkspaceLanguage: {
+      describe: 'Language for the new workspace',
+      type: 'string',
+      default: 'en'
+    }
+  }
 }
