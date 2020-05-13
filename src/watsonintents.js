@@ -103,7 +103,7 @@ const importWatsonIntents = async ({ caps, buildconvos, buildentities }) => {
   return { convos, utterances, driver, container, compiler }
 }
 
-const exportWatsonIntents = async ({ caps, newWorkspaceName, newWorkspaceLanguage, uploadmode }, { convos, utterances }, { statusCallback }) => {
+const exportWatsonIntents = async ({ caps, newWorkspaceName, newWorkspaceLanguage, uploadmode, waitforavailable }, { convos, utterances }, { statusCallback }) => {
   const driver = new botium.BotDriver(getCaps(caps))
   const container = await driver.Build()
 
@@ -168,9 +168,11 @@ const exportWatsonIntents = async ({ caps, newWorkspaceName, newWorkspaceLanguag
     status(`Created workspace ${newWorkspace.name}`, { workspaceId: newWorkspace.workspaceId })
   }
 
-  status(`Waiting for workspace ${newWorkspace.name} to become available`, { workspaceId: newWorkspace.workspaceId })
-  await waitWorkspaceAvailable(container.pluginInstance.assistant, newWorkspace.workspaceId)
-  status(`Workspace ${newWorkspace.name} is available and ready for use`, { workspaceId: newWorkspace.workspaceId })
+  if (waitforavailable) {
+    status(`Waiting for workspace ${newWorkspace.name} to become available`, { workspaceId: newWorkspace.workspaceId })
+    await waitWorkspaceAvailable(container.pluginInstance.assistant, newWorkspace.workspaceId)
+    status(`Workspace ${newWorkspace.name} is available and ready for use`, { workspaceId: newWorkspace.workspaceId })
+  }
 
   const newCaps = _.pickBy(driver.caps, (value, key) => key.startsWith('WATSON_'))
   newCaps.WATSON_WORKSPACE_ID = newWorkspace.workspaceId
@@ -306,7 +308,7 @@ module.exports = {
   },
   importWatsonLogConvos: ({ caps, watsonfilter, ...rest }) => importWatsonLogs({ caps, watsonfilter, ...rest }, convertLogToConvos),
   importWatsonLogIntents: ({ caps, watsonfilter, ...rest }) => importWatsonLogs({ caps, watsonfilter, ...rest }, convertLogToList),
-  exportHandler: ({ caps, newWorkspaceName, newWorkspaceLanguage, uploadmode, ...rest } = {}, { convos, utterances } = {}, { statusCallback } = {}) => exportWatsonIntents({ caps, newWorkspaceName, newWorkspaceLanguage, uploadmode, ...rest }, { convos, utterances }, { statusCallback }),
+  exportHandler: ({ caps, newWorkspaceName, newWorkspaceLanguage, uploadmode, waitforavailable, ...rest } = {}, { convos, utterances } = {}, { statusCallback } = {}) => exportWatsonIntents({ caps, newWorkspaceName, newWorkspaceLanguage, uploadmode, waitforavailable, ...rest }, { convos, utterances }, { statusCallback }),
   exportArgs: {
     caps: {
       describe: 'Capabilities',
@@ -326,6 +328,11 @@ module.exports = {
       describe: 'Language for the new workspace',
       type: 'string',
       default: 'en'
+    },
+    waitforavailable: {
+      describe: 'Wait until new workspace finished training',
+      type: 'boolean',
+      default: false
     }
   }
 }
