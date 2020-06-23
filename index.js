@@ -90,7 +90,7 @@ module.exports = {
         type: 'string',
         helperText: 'To find the assistant ID in the Watson Assistant user interface, open the assistant settings and click API Details.',
         required: false
-      },      
+      },
       {
         name: 'WATSON_WORKSPACE_ID',
         label: 'Workspace (for Assistant V1)',
@@ -113,9 +113,9 @@ module.exports = {
                   password: caps.WATSON_PASSWORD
                 })
               }
-        
+
               const assistant = new AssistantV1(opts)
-        
+
               assistant.listWorkspaces((err, response) => {
                 if (err) {
                   reject(err)
@@ -129,5 +129,5 @@ module.exports = {
         }
       }
     ]
-  }  
+  }
 }
