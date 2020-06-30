@@ -4,7 +4,8 @@
       "PROJECTNAME": "IBM Watson Plugin Sample",
       "CONTAINERMODE": "watson",
       "WATSON_APIKEY": "...",
-      "WATSON_WORKSPACE_ID": "..."
+      "WATSON_WORKSPACE_ID": "...",
+      "WATSON_WELCOME_MESSAGE": "start"
     }
   }
 }

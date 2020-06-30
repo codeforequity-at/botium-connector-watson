@@ -1,8 +1,5 @@
 show me buttons
 
-#me
-start
-
 #bot
 Hi. It looks like a nice drive today. What would you like me to do?
 
@@ -10,4 +7,8 @@ Hi. It looks like a nice drive today. What would you like me to do?
 show me buttons
 
 #bot
+ok, here are some buttons
+
+#bot
+Select Option
 BUTTONS Button 1|Button 2|Button 3

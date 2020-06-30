@@ -195,3 +195,8 @@ This capability will copy the Watson workspace and run the Botium script on the 
 _This is only supported for Assistant SDK V1_
 
 _Attention: as the copied workspace will run through Watson training session, it could take some time until the copied workspace is available. Botium will only continue after training is complete_
+
+### WATSON_WELCOME_MESSAGE
+_default: empty_
+
+Trigger a welcome message from IBM Watson by sending some input upfront (for example "WELCOME")

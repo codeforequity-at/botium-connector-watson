@@ -54,6 +54,13 @@ module.exports = {
         required: false
       },
       {
+        name: 'WATSON_WELCOME_MESSAGE',
+        label: 'Trigger Welcome Message',
+        type: 'string',
+        helperText: 'Trigger a welcome message from IBM Watson by sending some input upfront (for example "WELCOME")',
+        required: false
+      },
+      {
         name: 'WATSON_URL',
         label: 'Service Endpoint',
         type: 'choice',

@@ -21,7 +21,8 @@ const Capabilities = {
   WATSON_WORKSPACE_ID: 'WATSON_WORKSPACE_ID',
   WATSON_ASSISTANT_ID: 'WATSON_ASSISTANT_ID',
   WATSON_COPY_WORKSPACE: 'WATSON_COPY_WORKSPACE',
-  WATSON_FORCE_INTENT_RESOLUTION: 'WATSON_FORCE_INTENT_RESOLUTION'
+  WATSON_FORCE_INTENT_RESOLUTION: 'WATSON_FORCE_INTENT_RESOLUTION',
+  WATSON_WELCOME_MESSAGE: 'WATSON_WELCOME_MESSAGE'
 }
 
 const Defaults = {
@@ -164,6 +165,9 @@ class BotiumConnectorWatson {
         throw new Error(`Failed to create Watson session: ${util.inspect(err)}`)
       }
     }
+    if (this.caps[Capabilities.WATSON_WELCOME_MESSAGE]) {
+      await this.UserSays({ messageText: this.caps[Capabilities.WATSON_WELCOME_MESSAGE] })
+    }
   }
 
   async UserSays (msg) {
@@ -252,43 +256,48 @@ class BotiumConnectorWatson {
 
     let forceIntentResolution = this.caps[Capabilities.WATSON_FORCE_INTENT_RESOLUTION]
 
-    let texts = generic && generic.filter(g => g.response_type === 'text')
-      .reduce((acc, g) => {
-        if (_.isArray(g.text)) {
-          return acc.concat(g.text.filter(t => t))
-        } else if (g.text) {
-          return acc.concat([g.text])
-        } else {
-          return acc
-        }
-      }, [])
-    if (!texts || texts.length === 0) {
-      // Assistant V1 legacy
-      texts = sendMessageResponse.output.text && (_.isArray(sendMessageResponse.output.text) ? sendMessageResponse.output.text.filter(t => t) : [sendMessageResponse.output.text])
-    }
-    if (!texts || texts.length === 0) {
-      texts = [undefined]
-    }
-
-    const media = generic && generic.filter(g => g.response_type === 'image')
-      .map(g => ({
-        mediaUri: g.source,
-        altText: g.title
-      }))
-
-    const buttons = generic && generic.filter(g => g.response_type === 'option')
-      .reduce((acc, g) => {
-        return g.options && acc.concat(g.options.map(o => ({
-          text: o.label,
-          payload: o.value && o.value.input && o.value.input.text
-        })))
-      }, [])
-
-    texts.forEach((messageText) => {
-      const botMsg = { sender: 'bot', sourceData: sendMessageResponse, messageText, media, buttons, nlp }
-      setTimeout(() => this.queueBotSays(botMsg), 0)
+    const sendBotMsg = (botMsg) => {
+      setTimeout(() => this.queueBotSays(Object.assign({}, { sender: 'bot', sourceData: sendMessageResponse, nlp }, botMsg)), 0)
       forceIntentResolution = false
-    })
+    }
+
+    if (generic && generic.length > 0) {
+      for (const response of generic) {
+        if (response.response_type === 'text') {
+          const messageText = _.isArray(response.text) ? response.text.join('\r\n') : response.text
+          sendBotMsg({ messageText })
+        } else if (response.response_type === 'image') {
+          sendBotMsg({
+            media: [
+              {
+                mediaUri: response.source,
+                altText: response.title
+              }
+            ]
+          })
+        } else if (response.response_type === 'option') {
+          const messageText = response.title
+          const buttons = response.options.map(o => ({
+            text: o.label,
+            payload: o.value && o.value.input && o.value.input.text
+          }))
+          sendBotMsg({ messageText, buttons })
+        } else if (response.response_type === 'suggestion') {
+          const messageText = response.title
+          const buttons = response.suggestions.map(o => ({
+            text: o.label,
+            payload: o.value && o.value.input && o.value.input.text
+          }))
+          sendBotMsg({ messageText, buttons })
+        } else {
+          debug(`Response type ${response.response_type} not supported.`)
+        }
+      }
+    } else if (sendMessageResponse.output.text) {
+      // Assistant V1 legacy
+      const messageText = _.isArray(sendMessageResponse.output.text) ? sendMessageResponse.output.text.join('\r\n') : sendMessageResponse.output.text
+      sendBotMsg({ messageText })
+    }
 
     if (forceIntentResolution) {
       const botMsg = { sender: 'bot', sourceData: sendMessageResponse, nlp }
