@@ -165,7 +165,7 @@ class BotiumConnectorWatson {
         throw new Error(`Failed to create Watson session: ${util.inspect(err)}`)
       }
     }
-    if (this.caps[Capabilities.WATSON_WELCOME_MESSAGE]) {
+    if (!_.isNil(this.caps[Capabilities.WATSON_WELCOME_MESSAGE])) {
       await this.UserSays({ messageText: this.caps[Capabilities.WATSON_WELCOME_MESSAGE] })
     }
   }
