@@ -1,5 +1,4 @@
 const util = require('util')
-const path = require('path')
 const slug = require('slug')
 const randomize = require('randomatic')
 const botium = require('botium-core')
@@ -9,7 +8,6 @@ const debug = require('debug')('botium-connector-watson-intents')
 
 const getCaps = (caps) => {
   const result = caps || {}
-  result[botium.Capabilities.CONTAINERMODE] = path.resolve(__dirname, '..', 'index.js')
   result.WATSON_COPY_WORKSPACE = false
   return result
 }

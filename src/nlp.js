@@ -1,5 +1,4 @@
 const util = require('util')
-const path = require('path')
 const randomize = require('randomatic')
 const botium = require('botium-core')
 const debug = require('debug')('botium-connector-watson-nlp')
@@ -8,7 +7,6 @@ const { waitWorkspaceAvailable } = require('./helpers')
 
 const getCaps = (caps) => {
   const result = Object.assign({}, caps || {})
-  result.CONTAINERMODE = path.resolve(__dirname, '..', 'index.js')
   result.WATSON_ASSISTANT_VERSION = 'V1'
   result.WATSON_COPY_WORKSPACE = false
   result.WATSON_FORCE_INTENT_RESOLUTION = true
