@@ -159,6 +159,8 @@ Watson supports two Assistant SDK versions, V1 and V2.
 ### WATSON_URL
 _Default: "https://gateway.watsonplatform.net/assistant/api"_
 
+Has to be set to the URL shown in the Skill API details page (e.g. https://api.us-east.assistant.watson.cloud.ibm.com)
+
 ### WATSON_HTTP_PROXY_HOST / WATSON_HTTP_PROXY_PORT
 Hostname/IP Address and port of your HTTP proxy
 
