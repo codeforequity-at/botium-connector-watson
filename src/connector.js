@@ -219,7 +219,7 @@ class BotiumConnectorWatson {
         this.conversationContext = sendMessageResponse.result.context
         await this._processWatsonResponse(sendMessageResponse.result,
           sendMessageResponse.result.output.generic,
-          sendMessageResponse.result.output.action ? [sendMessageResponse.result.output.action] : null,
+          sendMessageResponse.result.output.action ? [sendMessageResponse.result.output.action] : (sendMessageResponse.result.actions || []),
           sendMessageResponse.result.intents,
           sendMessageResponse.result.entities)
       } else if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V2') {
