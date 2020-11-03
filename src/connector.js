@@ -219,12 +219,14 @@ class BotiumConnectorWatson {
         this.conversationContext = sendMessageResponse.result.context
         await this._processWatsonResponse(sendMessageResponse.result,
           sendMessageResponse.result.output.generic,
+          sendMessageResponse.result.output.action ? [sendMessageResponse.result.output.action] : null,
           sendMessageResponse.result.intents,
           sendMessageResponse.result.entities)
       } else if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V2') {
         this.conversationContext = { skills: sendMessageResponse.result.context.skills }
         await this._processWatsonResponse(sendMessageResponse.result,
           sendMessageResponse.result.output.generic,
+          sendMessageResponse.result.output.actions || null,
           sendMessageResponse.result.output.intents,
           sendMessageResponse.result.output.entities)
       }
@@ -244,7 +246,7 @@ class BotiumConnectorWatson {
     await handleResponse(sendMessageResponse)
   }
 
-  async _processWatsonResponse (sendMessageResponse, generic, intents, entities) {
+  async _processWatsonResponse (sendMessageResponse, generic, actions, intents, entities) {
     const nlp = {
       intent: intents && intents.length > 0 ? {
         name: intents[0].intent,
@@ -293,6 +295,8 @@ class BotiumConnectorWatson {
           debug(`Response type ${response.response_type} not supported.`)
         }
       }
+    } else if (actions && actions.length > 0) {
+      sendBotMsg({ })
     } else if (sendMessageResponse.output.text) {
       // Assistant V1 legacy
       const messageText = _.isArray(sendMessageResponse.output.text) ? sendMessageResponse.output.text.join('\r\n') : sendMessageResponse.output.text
