@@ -58,7 +58,7 @@ module.exports = {
         label: 'Bearer token for IBM Watson CP4D',
         type: 'secret',
         required: false
-      }
+      },
       {
         name: 'WATSON_WELCOME_MESSAGE',
         label: 'Trigger Welcome Message',
@@ -124,7 +124,6 @@ module.exports = {
                 opts.authenticator = new BearerTokenAuthenticator({
                   bearerToken: caps.WATSON_BEARER
                 })
-              }
               } else {
                 opts.authenticator = new BasicAuthenticator({
                   username: caps.WATSON_USER,

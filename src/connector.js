@@ -75,7 +75,7 @@ class BotiumConnectorWatson {
           if (this.caps[Capabilities.WATSON_APIKEY]) {
             Object.assign(opts, { authenticator: new IamAuthenticator({ apikey: this.caps[Capabilities.WATSON_APIKEY] }) })
           } else if (this.caps[Capabilities.WATSON_BEARER]) {
-            Object.assign(opts, { authenticator: new BearerTokenAuthenticator({ apikey: this.caps[Capabilities.WATSON_BEARER] }) })
+            Object.assign(opts, { authenticator: new BearerTokenAuthenticator({ bearerToken: this.caps[Capabilities.WATSON_BEARER] }) })
           } else {
             Object.assign(opts, {
               username: this.caps[Capabilities.WATSON_USER],
