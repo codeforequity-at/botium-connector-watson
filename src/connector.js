@@ -5,7 +5,7 @@ const randomize = require('randomatic')
 const _ = require('lodash')
 const AssistantV1 = require('ibm-watson/assistant/v1')
 const AssistantV2 = require('ibm-watson/assistant/v2')
-const { IamAuthenticator } = require('ibm-watson/auth')
+const { IamAuthenticator, BearerTokenAuthenticator } = require('ibm-watson/auth')
 const debug = require('debug')('botium-connector-watson')
 const { getWorkspace, createWorkspace, waitWorkspaceAvailable } = require('./helpers')
 
@@ -16,6 +16,7 @@ const Capabilities = {
   WATSON_HTTP_PROXY_PORT: 'WATSON_HTTP_PROXY_PORT',
   WATSON_VERSION: 'WATSON_VERSION',
   WATSON_APIKEY: 'WATSON_APIKEY',
+  WATSON_BEARER: 'WATSON_BEARER',
   WATSON_USER: 'WATSON_USER',
   WATSON_PASSWORD: 'WATSON_PASSWORD',
   WATSON_WORKSPACE_ID: 'WATSON_WORKSPACE_ID',
@@ -44,9 +45,9 @@ class BotiumConnectorWatson {
     this.caps = Object.assign({}, Defaults, this.caps)
 
     if (!this.caps[Capabilities.WATSON_URL]) throw new Error('WATSON_URL capability required')
-    if (!this.caps[Capabilities.WATSON_APIKEY]) {
-      if (!this.caps[Capabilities.WATSON_USER]) throw new Error('WATSON_USER capability required (or use WATSON_APIKEY)')
-      if (!this.caps[Capabilities.WATSON_PASSWORD]) throw new Error('WATSON_PASSWORD capability required (or use WATSON_APIKEY)')
+    if (!this.caps[Capabilities.WATSON_APIKEY] && !this.caps[Capabilities.WATSON_BEARER]) {
+      if (!this.caps[Capabilities.WATSON_USER]) throw new Error('WATSON_USER capability required (or use WATSON_APIKEY or WATSON_BEARER)')
+      if (!this.caps[Capabilities.WATSON_PASSWORD]) throw new Error('WATSON_PASSWORD capability required (or use WATSON_APIKEY or WATSON_BEARER)')
     }
     if (!this.caps[Capabilities.WATSON_VERSION]) throw new Error('WATSON_VERSION capability required')
 
@@ -73,6 +74,8 @@ class BotiumConnectorWatson {
           }
           if (this.caps[Capabilities.WATSON_APIKEY]) {
             Object.assign(opts, { authenticator: new IamAuthenticator({ apikey: this.caps[Capabilities.WATSON_APIKEY] }) })
+          } else if (this.caps[Capabilities.WATSON_BEARER]) {
+            Object.assign(opts, { authenticator: new BearerTokenAuthenticator({ apikey: this.caps[Capabilities.WATSON_BEARER] }) })
           } else {
             Object.assign(opts, {
               username: this.caps[Capabilities.WATSON_USER],
