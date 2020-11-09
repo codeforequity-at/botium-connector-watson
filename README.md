@@ -172,6 +172,10 @@ _Default: "2018-09-20"_
 ### WATSON_APIKEY *
 IAM API Key for IBM Watson - see [here](https://cloud.ibm.com/docs/services/watson/getting-started-iam.html) how to create it for your IBM Watson account. Either the IAM API Key or the Service credentials (see below) are required.
 
+### WATSON_BEARER *
+
+IBM Watson instances using the [Cloud Pak For Data Platform](https://cloud.ibm.com/apidocs/cloud-pak-data#getauthorizationtoken) do not have IAM API Keys, but can instead be authenticated using the bearer token found within the service instance details.
+
 ### WATSON_USER * and WATSON_PASSWORD *
 Service credentials for your IBM Watson instance - see [here](https://console.bluemix.net/docs/services/watson/getting-started-credentials.html#service-credentials-for-watson-services) how to create them for your IBM Watson account.
 

@@ -1,5 +1,5 @@
 const AssistantV1 = require('ibm-watson/assistant/v1')
-const { IamAuthenticator, BasicAuthenticator } = require('ibm-watson/auth')
+const { IamAuthenticator, BasicAuthenticator, BearerTokenAuthenticator } = require('ibm-watson/auth')
 const BotiumConnectorWatson = require('./src/connector')
 const { importHandler, importArgs, importWatsonLogConvos, importWatsonLogIntents } = require('./src/watsonintents')
 const { exportHandler, exportArgs } = require('./src/watsonintents')
@@ -54,6 +54,12 @@ module.exports = {
         required: false
       },
       {
+        name: 'WATSON_BEARER',
+        label: 'Bearer token for IBM Watson CP4D',
+        type: 'secret',
+        required: false
+      },
+      {
         name: 'WATSON_WELCOME_MESSAGE',
         label: 'Trigger Welcome Message',
         type: 'string',
@@ -104,7 +110,7 @@ module.exports = {
         type: 'query',
         required: false,
         query: async (caps) => {
-          if (caps && ((caps.WATSON_USER && caps.WATSON_PASSWORD) || caps.WATSON_APIKEY) && caps.WATSON_URL) {
+          if (caps && ((caps.WATSON_USER && caps.WATSON_PASSWORD) || caps.WATSON_APIKEY || caps.WATSON_BEARER) && caps.WATSON_URL) {
             return new Promise((resolve, reject) => {
               const opts = {
                 url: caps.WATSON_URL,
@@ -113,6 +119,10 @@ module.exports = {
               if (caps.WATSON_APIKEY) {
                 opts.authenticator = new IamAuthenticator({
                   apikey: caps.WATSON_APIKEY
+                })
+              } else if (caps.WATSON_BEARER) {
+                opts.authenticator = new BearerTokenAuthenticator({
+                  bearerToken: caps.WATSON_BEARER
                 })
               } else {
                 opts.authenticator = new BasicAuthenticator({
