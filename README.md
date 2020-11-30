@@ -16,7 +16,7 @@ Botium uses the IBM Watson Assistant API to run conversations.
 It can be used as any other Botium connector with all Botium Stack components:
 * [Botium CLI](https://github.com/codeforequity-at/botium-cli/)
 * [Botium Bindings](https://github.com/codeforequity-at/botium-bindings/)
-* [Botium Box](https://www.botium.at)
+* [Botium Box](https://www.botium.ai)
 
 This connector processes info about NLP. So Intent/Entity asserters can be used.
 
@@ -74,7 +74,7 @@ To check the configuration, run the emulator (Botium CLI required) to bring up a
 > botium-cli emulator
 ```
 
-Botium setup is ready, you can begin to write your [BotiumScript](https://github.com/codeforequity-at/botium-core/wiki/Botium-Scripting) files.
+Botium setup is ready, you can begin to write your [BotiumScript](https://botium-docs.readthedocs.io/en/latest/05_botiumscript/index.html) files.
 
 ## Using the botium-connector-watson-cli
 
@@ -103,7 +103,7 @@ When using BotiumScript, you can do assertions on and manipulation of the Watson
 
 ### Asserting context variables
 
-For asserting context variables, you can use the [JSON_PATH asserter](https://botium.atlassian.net/wiki/spaces/BOTIUM/pages/59113473/JSONPath+Asserter):
+For asserting context variables, you can use the [JSON_PATH asserter](https://botium-docs.readthedocs.io/en/latest/05_botiumscript/index.html#jsonpath-asserter):
 
     #bot
     JSON_PATH $.context.skills['main skill'].user_defined.lightonoff|off
@@ -112,7 +112,7 @@ _Depending on your Watson Assistant skill structure, this may different - but by
 
 ### Adding context variables
 
-For adding a context variable, you have to use the [UPDATE_CUSTOM logic hook](https://botium.atlassian.net/wiki/spaces/BOTIUM/pages/48660497/Integrated+Logic+Hooks). This example will set two context variables, one to a plain string, the other one to a JSON object:
+For adding a context variable, you have to use the [UPDATE_CUSTOM logic hook](https://botium-docs.readthedocs.io/en/latest/05_botiumscript/index.html#update-custom). This example will set two context variables, one to a plain string, the other one to a JSON object:
 
     #me
     play some jazz music
