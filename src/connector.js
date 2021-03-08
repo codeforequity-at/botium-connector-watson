@@ -12,6 +12,7 @@ const { getWorkspace, createWorkspace, waitWorkspaceAvailable } = require('./hel
 const Capabilities = {
   WATSON_ASSISTANT_VERSION: 'WATSON_ASSISTANT_VERSION',
   WATSON_URL: 'WATSON_URL',
+  WATSON_TIMEOUT: 'WATSON_TIMEOUT',
   WATSON_HTTP_PROXY_HOST: 'WATSON_HTTP_PROXY_HOST',
   WATSON_HTTP_PROXY_PORT: 'WATSON_HTTP_PROXY_PORT',
   WATSON_VERSION: 'WATSON_VERSION',
@@ -21,6 +22,7 @@ const Capabilities = {
   WATSON_PASSWORD: 'WATSON_PASSWORD',
   WATSON_WORKSPACE_ID: 'WATSON_WORKSPACE_ID',
   WATSON_ASSISTANT_ID: 'WATSON_ASSISTANT_ID',
+  WATSON_ASSISTANT_USER_ID: 'WATSON_ASSISTANT_USER_ID',
   WATSON_COPY_WORKSPACE: 'WATSON_COPY_WORKSPACE',
   WATSON_FORCE_INTENT_RESOLUTION: 'WATSON_FORCE_INTENT_RESOLUTION',
   WATSON_WELCOME_MESSAGE: 'WATSON_WELCOME_MESSAGE'
@@ -28,7 +30,8 @@ const Capabilities = {
 
 const Defaults = {
   [Capabilities.WATSON_ASSISTANT_VERSION]: 'V1',
-  [Capabilities.WATSON_URL]: 'https://gateway.watsonplatform.net/assistant/api',
+  [Capabilities.WATSON_URL]: 'https://api.us-south.assistant.watson.cloud.ibm.com',
+  [Capabilities.WATSON_TIMEOUT]: 10000,
   [Capabilities.WATSON_VERSION]: '2020-04-01',
   [Capabilities.WATSON_COPY_WORKSPACE]: false,
   [Capabilities.WATSON_FORCE_INTENT_RESOLUTION]: false
@@ -71,6 +74,9 @@ class BotiumConnectorWatson {
           const opts = {
             url: this.caps[Capabilities.WATSON_URL],
             version: this.caps[Capabilities.WATSON_VERSION]
+          }
+          if (this.caps[Capabilities.WATSON_TIMEOUT] && this.caps[Capabilities.WATSON_TIMEOUT] > 0) {
+            opts.timeout = this.caps[Capabilities.WATSON_TIMEOUT]
           }
           if (this.caps[Capabilities.WATSON_APIKEY]) {
             Object.assign(opts, { authenticator: new IamAuthenticator({ apikey: this.caps[Capabilities.WATSON_APIKEY] }) })
@@ -148,7 +154,7 @@ class BotiumConnectorWatson {
 
       ], (err) => {
         if (err) {
-          return reject(new Error(`Cannot build watson container: ${util.inspect(err)}`))
+          return reject(new Error(`Cannot build watson container: ${err.message}`))
         }
         resolve(this)
       })
@@ -165,7 +171,7 @@ class BotiumConnectorWatson {
         this.sessionId = createSessionResponse.result.session_id
         debug(`Created Watson session ${this.sessionId}`)
       } catch (err) {
-        throw new Error(`Failed to create Watson session: ${util.inspect(err)}`)
+        throw new Error(`Failed to create Watson session: ${err.message}`)
       }
     }
     if (!_.isNil(this.caps[Capabilities.WATSON_WELCOME_MESSAGE])) {
@@ -191,6 +197,10 @@ class BotiumConnectorWatson {
         keys.forEach(key => {
           _.set(this.conversationContext, key, null)
         })
+      }
+
+      if (this.caps[Capabilities.WATSON_ASSISTANT_USER_ID]) {
+        _.set(this.conversationContext, 'global.system.user_id', `${this.caps[Capabilities.WATSON_ASSISTANT_USER_ID]}`)
       }
 
       if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V1') {
@@ -244,7 +254,7 @@ class BotiumConnectorWatson {
       sendMessageResponse = await sendMessage(inputPayload)
       debug(`Watson response: ${JSON.stringify(sendMessageResponse, null, 2)}`)
     } catch (err) {
-      throw new Error(`Cannot send message to watson container: ${util.inspect(err)}`)
+      throw new Error(`Cannot send message to watson container: ${err.message}`)
     }
     await handleResponse(sendMessageResponse)
   }
@@ -330,7 +340,7 @@ class BotiumConnectorWatson {
             if (this.caps[Capabilities.WATSON_COPY_WORKSPACE]) {
               this.assistant.deleteWorkspace({ workspaceId: this.useWorkspaceId }, (err) => {
                 if (err) {
-                  debug(`Watson workspace delete copy failed: ${util.inspect(err)}`)
+                  debug(`Watson workspace delete copy failed: ${err.message}`)
                 } else {
                   debug(`Watson workspace deleted: ${this.useWorkspaceId}`)
                 }
@@ -352,7 +362,7 @@ class BotiumConnectorWatson {
         }
 
       ], (err) => {
-        if (err) return reject(new Error(`Cleanup failed ${util.inspect(err)}`))
+        if (err) return reject(new Error(`Cleanup failed: ${err.message}`))
         resolve(this)
       })
     })

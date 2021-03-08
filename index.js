@@ -88,6 +88,13 @@ module.exports = {
         ]
       },
       {
+        name: 'WATSON_TIMEOUT',
+        label: 'API Timeout (in ms)',
+        type: 'int',
+        helperText: 'Watson API Calls are cancelled after timeout expires (and test case is failed)',
+        required: false
+      },
+      {
         name: 'WATSON_ASSISTANT_VERSION',
         label: 'Assistant SDK Version',
         type: 'choice',
@@ -144,6 +151,13 @@ module.exports = {
             })
           }
         }
+      },
+      {
+        name: 'WATSON_ASSISTANT_USER_ID',
+        label: 'User Id (for User-based plans)',
+        type: 'string',
+        helperText: 'User Id to be set for User-based IBM Watson plans (see <a href="https://cloud.ibm.com/docs/assistant?topic=assistant-services-information" target="_blank">here</a>)',
+        required: false
       }
     ]
   }
