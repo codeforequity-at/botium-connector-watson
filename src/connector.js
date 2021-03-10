@@ -86,7 +86,6 @@ class BotiumConnectorWatson {
               password: this.caps[Capabilities.WATSON_PASSWORD]
             })
           }
-          console.log(opts.authenticator.tokenManager.requestWrapperInstance)
 
           if (this.caps[Capabilities.WATSON_HTTP_PROXY_HOST] && this.caps[Capabilities.WATSON_HTTP_PROXY_PORT]) {
             opts.disableSslVerification = true
