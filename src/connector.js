@@ -73,21 +73,20 @@ class BotiumConnectorWatson {
         (assistantReady) => {
           const opts = {
             url: this.caps[Capabilities.WATSON_URL],
-            version: this.caps[Capabilities.WATSON_VERSION]
-          }
-          if (this.caps[Capabilities.WATSON_TIMEOUT] && this.caps[Capabilities.WATSON_TIMEOUT] > 0) {
-            opts.timeout = this.caps[Capabilities.WATSON_TIMEOUT]
+            version: this.caps[Capabilities.WATSON_VERSION],
+            timeout: this.caps[Capabilities.WATSON_TIMEOUT]
           }
           if (this.caps[Capabilities.WATSON_APIKEY]) {
-            Object.assign(opts, { authenticator: new IamAuthenticator({ apikey: this.caps[Capabilities.WATSON_APIKEY] }) })
+            Object.assign(opts, { authenticator: new IamAuthenticator({ apikey: this.caps[Capabilities.WATSON_APIKEY], timeout: this.caps[Capabilities.WATSON_TIMEOUT] }) })
           } else if (this.caps[Capabilities.WATSON_BEARER]) {
-            Object.assign(opts, { authenticator: new BearerTokenAuthenticator({ bearerToken: this.caps[Capabilities.WATSON_BEARER] }) })
+            Object.assign(opts, { authenticator: new BearerTokenAuthenticator({ bearerToken: this.caps[Capabilities.WATSON_BEARER], timeout: this.caps[Capabilities.WATSON_TIMEOUT] }) })
           } else {
             Object.assign(opts, {
               username: this.caps[Capabilities.WATSON_USER],
               password: this.caps[Capabilities.WATSON_PASSWORD]
             })
           }
+          console.log(opts.authenticator.tokenManager.requestWrapperInstance)
 
           if (this.caps[Capabilities.WATSON_HTTP_PROXY_HOST] && this.caps[Capabilities.WATSON_HTTP_PROXY_PORT]) {
             opts.disableSslVerification = true

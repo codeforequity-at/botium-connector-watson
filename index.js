@@ -91,7 +91,7 @@ module.exports = {
         name: 'WATSON_TIMEOUT',
         label: 'API Timeout (in ms)',
         type: 'int',
-        helperText: 'Watson API Calls are cancelled after timeout expires (and test case is failed)',
+        helperText: 'Watson API Calls are cancelled after timeout expires (and test case is failed) - default is 10 seconds',
         required: false
       },
       {
