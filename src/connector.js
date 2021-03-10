@@ -37,6 +37,19 @@ const Defaults = {
   [Capabilities.WATSON_FORCE_INTENT_RESOLUTION]: false
 }
 
+const promiseTimeout = (prom, timeout) => {
+  let timeoutTimer = null
+
+  return Promise.race([
+    prom,
+    ...(
+      timeout && timeout > 0
+        ? [new Promise((resolve, reject) => { timeoutTimer = setTimeout(() => reject(new Error(`Watson API Call did not complete within ${timeout}ms, cancelled.`)), timeout) })]
+        : []
+    )
+  ]).finally(() => { if (timeoutTimer) clearTimeout(timeoutTimer) })
+}
+
 class BotiumConnectorWatson {
   constructor ({ queueBotSays, caps }) {
     this.queueBotSays = queueBotSays
@@ -71,15 +84,20 @@ class BotiumConnectorWatson {
     return new Promise((resolve, reject) => {
       async.series([
         (assistantReady) => {
-          const opts = {
-            url: this.caps[Capabilities.WATSON_URL],
-            version: this.caps[Capabilities.WATSON_VERSION],
-            timeout: this.caps[Capabilities.WATSON_TIMEOUT]
+          const addTimeout = (opts) => {
+            if (this.caps[Capabilities.WATSON_TIMEOUT] && this.caps[Capabilities.WATSON_TIMEOUT] > 0) {
+              opts.timeout = this.caps[Capabilities.WATSON_TIMEOUT]
+            }
+            return opts
           }
+          const opts = addTimeout({
+            url: this.caps[Capabilities.WATSON_URL],
+            version: this.caps[Capabilities.WATSON_VERSION]
+          })
           if (this.caps[Capabilities.WATSON_APIKEY]) {
-            Object.assign(opts, { authenticator: new IamAuthenticator({ apikey: this.caps[Capabilities.WATSON_APIKEY], timeout: this.caps[Capabilities.WATSON_TIMEOUT] }) })
+            Object.assign(opts, { authenticator: new IamAuthenticator(addTimeout({ apikey: this.caps[Capabilities.WATSON_APIKEY] })) })
           } else if (this.caps[Capabilities.WATSON_BEARER]) {
-            Object.assign(opts, { authenticator: new BearerTokenAuthenticator({ bearerToken: this.caps[Capabilities.WATSON_BEARER], timeout: this.caps[Capabilities.WATSON_TIMEOUT] }) })
+            Object.assign(opts, { authenticator: new BearerTokenAuthenticator(addTimeout({ bearerToken: this.caps[Capabilities.WATSON_BEARER] })) })
           } else {
             Object.assign(opts, {
               username: this.caps[Capabilities.WATSON_USER],
@@ -163,9 +181,8 @@ class BotiumConnectorWatson {
     debug('Start called')
     this.conversationContext = {}
     if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V2') {
-      const createSession = util.promisify(this.assistant.createSession).bind(this.assistant)
       try {
-        const createSessionResponse = await createSession({ assistantId: this.caps[Capabilities.WATSON_ASSISTANT_ID] })
+        const createSessionResponse = await promiseTimeout(this.assistant.createSession({ assistantId: this.caps[Capabilities.WATSON_ASSISTANT_ID] }), this.caps[Capabilities.WATSON_TIMEOUT])
         this.sessionId = createSessionResponse.result.session_id
         debug(`Created Watson session ${this.sessionId}`)
       } catch (err) {
@@ -243,13 +260,12 @@ class BotiumConnectorWatson {
       }
     }
 
-    const sendMessage = util.promisify(this.assistant.message).bind(this.assistant)
     let sendMessageResponse = {}
     try {
       const inputPayload = getInputPayload()
       msg.sourceData = inputPayload
       debug(`Watson request: ${JSON.stringify(inputPayload, null, 2)}`)
-      sendMessageResponse = await sendMessage(inputPayload)
+      sendMessageResponse = await promiseTimeout(this.assistant.message(inputPayload), this.caps[Capabilities.WATSON_TIMEOUT])
       debug(`Watson response: ${JSON.stringify(sendMessageResponse, null, 2)}`)
     } catch (err) {
       throw new Error(`Cannot send message to watson container: ${err.message}`)
