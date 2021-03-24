@@ -190,8 +190,8 @@ The Assistant ID to use. You can find it in the IBM Watson Assistant Dashboard w
 _This is only supported for Assistant SDK V2_
 
 ### WATSON_FORCE_INTENT_RESOLUTION
-_Default: true_
-If this capability is enabled, then a response will be dropped if the connector does not recognizes any component like text or button in it. But the dropped message has NLP recognition info like intent and entities, which could be checked.
+_Default: false_
+If this capability is disabled, then a response will be dropped if the connector does not recognizes any component like text or button in it. But the dropped message has NLP recognition info like intent and entities, which could be checked.
 
 ### WATSON_COPY_WORKSPACE
 _Default: false_
