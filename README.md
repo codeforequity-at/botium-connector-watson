@@ -157,7 +157,7 @@ Watson supports two Assistant SDK versions, V1 and V2.
 * With **V2**, Botium accesses an assistant wrapping a versioned skill
 
 ### WATSON_URL
-_Default: "https://gateway.watsonplatform.net/assistant/api"_
+_Default: "https://api.us-south.assistant.watson.cloud.ibm.com"_
 
 Has to be set to the URL shown in the Skill API details page (e.g. https://api.us-east.assistant.watson.cloud.ibm.com)
 
