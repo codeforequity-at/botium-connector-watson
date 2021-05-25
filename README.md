@@ -51,7 +51,7 @@ When using __Botium Box__:
 _Already integrated into Botium Box, no setup required_
 
 ## Connecting IBM Watson Assistant to Botium
-You need IBM Cloud credentials (Username/Password or API Key) - see [this article](https://chatbotsmagazine.com/10-minutes-codeless-test-automation-for-ibm-watson-chatbots-d71eac9626d7) on how to get it.
+You need IBM Cloud credentials (Username/Password or API Key) - see [IBM Docs](https://cloud.ibm.com/apidocs/assistant/assistant-v2?code=node#authentication) on how to get it.
 
 Open the file _botium.json_ in your working directory and add the secret:
 
@@ -170,7 +170,7 @@ Hostname/IP Address and port of your HTTP proxy
 _Default: "2018-09-20"_
 
 ### WATSON_APIKEY *
-IAM API Key for IBM Watson - see [here](https://cloud.ibm.com/docs/services/watson/getting-started-iam.html) how to create it for your IBM Watson account. Either the IAM API Key or the Service credentials (see below) are required.
+IAM API Key for IBM Watson - see [IBM Docs](https://cloud.ibm.com/apidocs/assistant/assistant-v2?code=node#authentication) how to create it for your IBM Watson account. Either the IAM API Key or the Service credentials (see below) are required.
 
 ### WATSON_BEARER *
 
@@ -180,12 +180,12 @@ IBM Watson instances using the [Cloud Pak For Data Platform](https://cloud.ibm.c
 Service credentials for your IBM Watson instance - see [here](https://console.bluemix.net/docs/services/watson/getting-started-credentials.html#service-credentials-for-watson-services) how to create them for your IBM Watson account.
 
 ### WATSON_WORKSPACE_ID *
-The Workspace ID to use. You can find it in the IBM Watson Assistant Dashboard when clicking on "View API Details" in the popup menu of a workspace.
+The Skill ID to use (Workspace ID). You can find it in the IBM Watson Assistant Dashboard when clicking on "View API Details" in the popup menu of a skill in the Skills overview list.
 
 _This is only supported for Assistant SDK V1_
 
 ### WATSON_ASSISTANT_ID *
-The Assistant ID to use. You can find it in the IBM Watson Assistant Dashboard when clicking on "View API Details" in the popup menu of an assistant.
+The Assistant ID to use. You can find it in the IBM Watson Assistant Dashboard when clicking on "Settings" in the popup menu of an assistant in the Assistants overview list.
 
 _This is only supported for Assistant SDK V2_
 
