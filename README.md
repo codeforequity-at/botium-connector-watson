@@ -206,3 +206,7 @@ _Attention: as the copied workspace will run through Watson training session, it
 _default: empty_
 
 Trigger a welcome message from IBM Watson by sending some input upfront (for example "WELCOME")
+
+### WATSON_ASSISTANT_USER_ID
+For user-based Watson Assistant plans, it is possible to set the user-id
+
