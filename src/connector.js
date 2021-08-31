@@ -215,7 +215,11 @@ class BotiumConnectorWatson {
       }
 
       if (this.caps[Capabilities.WATSON_ASSISTANT_USER_ID]) {
-        _.set(this.conversationContext, 'global.system.user_id', `${this.caps[Capabilities.WATSON_ASSISTANT_USER_ID]}`)
+        if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V1') {
+          _.set(this.conversationContext, 'metadata.user_id', `${this.caps[Capabilities.WATSON_ASSISTANT_USER_ID]}`)
+        } else if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V2') {
+          _.set(this.conversationContext, 'global.system.user_id', `${this.caps[Capabilities.WATSON_ASSISTANT_USER_ID]}`)
+        }
       }
 
       if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V1') {
