@@ -298,12 +298,12 @@ class BotiumConnectorWatson {
 
   async _processWatsonResponse (sendMessageResponse, generic, actions, intents, entities) {
     const nlp = {
-      intent: intents && intents.length > 0 ? {
+      intent: (intents && intents.length > 0) ? {
         name: intents[0].intent,
         confidence: intents[0].confidence,
         intents: intents.length > 1 && intents.slice(1).map((intent) => { return { name: intent.intent, confidence: intent.confidence } })
       } : {},
-      entities: entities && entities.length > 0 ? entities.map((entity) => { return { name: entity.entity, value: entity.value, confidence: entity.confidence } }) : []
+      entities: (entities && entities.length > 0) ? entities.map((entity) => { return { name: entity.entity, value: entity.value, confidence: entity.confidence } }) : []
     }
 
     let forceIntentResolution = this.caps[Capabilities.WATSON_FORCE_INTENT_RESOLUTION]
