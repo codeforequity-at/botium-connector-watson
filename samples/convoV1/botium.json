@@ -5,7 +5,11 @@
       "CONTAINERMODE": "watson",
       "WATSON_APIKEY": "...",
       "WATSON_WORKSPACE_ID": "...",
-      "WATSON_WELCOME_MESSAGE": "start"
+      "WATSON_WELCOME_MESSAGE": "start",
+      "WATSON_INITIAL_CONTEXT": {
+        "initcontext1": "initcontext1value",
+        "initcontext2": "initcontext2value"
+      }
     }
   }
 }

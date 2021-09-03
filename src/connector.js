@@ -25,7 +25,8 @@ const Capabilities = {
   WATSON_ASSISTANT_USER_ID: 'WATSON_ASSISTANT_USER_ID',
   WATSON_COPY_WORKSPACE: 'WATSON_COPY_WORKSPACE',
   WATSON_FORCE_INTENT_RESOLUTION: 'WATSON_FORCE_INTENT_RESOLUTION',
-  WATSON_WELCOME_MESSAGE: 'WATSON_WELCOME_MESSAGE'
+  WATSON_WELCOME_MESSAGE: 'WATSON_WELCOME_MESSAGE',
+  WATSON_INITIAL_CONTEXT: 'WATSON_INITIAL_CONTEXT'
 }
 
 const Defaults = {
@@ -56,7 +57,7 @@ class BotiumConnectorWatson {
     this.caps = caps
   }
 
-  Validate () {
+  async Validate () {
     debug('Validate called')
     this.caps = Object.assign({}, Defaults, this.caps)
 
@@ -76,7 +77,11 @@ class BotiumConnectorWatson {
       throw new Error('WATSON_ASSISTANT_VERSION capability has to be one of: V1,V2')
     }
 
-    return Promise.resolve()
+    if (this.caps[Capabilities.WATSON_INITIAL_CONTEXT]) {
+      if (_.isString(this.caps[Capabilities.WATSON_INITIAL_CONTEXT])) {
+        this.caps[Capabilities.WATSON_INITIAL_CONTEXT] = JSON.parse(this.caps[Capabilities.WATSON_INITIAL_CONTEXT])
+      }
+    }
   }
 
   Build () {
@@ -180,6 +185,20 @@ class BotiumConnectorWatson {
   async Start () {
     debug('Start called')
     this.conversationContext = {}
+
+    if (this.caps[Capabilities.WATSON_INITIAL_CONTEXT]) {
+      if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V1') {
+        this.conversationContext = _.cloneDeep(this.caps[Capabilities.WATSON_INITIAL_CONTEXT])
+      } else if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V2') {
+        this.conversationContext = {
+          skills: {
+            'main skill': {
+              user_defined: _.cloneDeep(this.caps[Capabilities.WATSON_INITIAL_CONTEXT])
+            }
+          }
+        }
+      }
+    }
     if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V2') {
       try {
         const createSessionResponse = await promiseTimeout(this.assistant.createSession({ assistantId: this.caps[Capabilities.WATSON_ASSISTANT_ID] }), this.caps[Capabilities.WATSON_TIMEOUT])

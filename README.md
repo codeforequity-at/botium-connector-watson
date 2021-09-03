@@ -110,9 +110,18 @@ For asserting context variables, you can use the [JSON_PATH asserter](https://bo
 
 _Depending on your Watson Assistant skill structure, this may different - but by default, this should work_
 
+### Initializing context variables
+
+You can use the _WATSON\_INITIAL\_CONTEXT_ capability to initialize the context in your botium.json:
+
+    "WATSON_INITIAL_CONTEXT"{
+      "initcontext1": "initcontext1value",
+      "initcontext2": "initcontext2value"
+    }
+
 ### Adding context variables
 
-For adding a context variable, you have to use the [UPDATE_CUSTOM logic hook](https://botium-docs.readthedocs.io/en/latest/05_botiumscript/index.html#update-custom). This example will set two context variables, one to a plain string, the other one to a JSON object:
+For adding a context variable within a test case, you have to use the [UPDATE_CUSTOM logic hook](https://botium-docs.readthedocs.io/en/latest/05_botiumscript/index.html#update-custom). This example will set two context variables (when using V2 API), one to a plain string, the other one to a JSON object:
 
     #me
     play some jazz music
@@ -126,7 +135,7 @@ The parameters are:
 
 ### Removing context variables
 
-For removing a context variable, the same logic hook is used:
+For removing a context variable, the same logic hook is used (when using V2 API):
 
     #me
     play some jazz music
@@ -210,3 +219,7 @@ Trigger a welcome message from IBM Watson by sending some input upfront (for exa
 ### WATSON_ASSISTANT_USER_ID
 For user-based Watson Assistant plans, it is possible to set the user-id
 
+### WATSON_INITIAL_CONTEXT
+_default: empty_
+
+Initial context variables (as JSON struct)

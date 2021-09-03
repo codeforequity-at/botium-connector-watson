@@ -5,7 +5,11 @@
       "CONTAINERMODE": "watson",
       "WATSON_ASSISTANT_VERSION": "V2",
       "WATSON_APIKEY": "...",
-      "WATSON_ASSISTANT_ID": "..."
+      "WATSON_ASSISTANT_ID": "...",
+      "WATSON_INITIAL_CONTEXT": {
+        "initcontext1": "initcontext1value",
+        "initcontext2": "initcontext2value"
+      }
     }
   }
 }
