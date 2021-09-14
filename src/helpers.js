@@ -89,3 +89,16 @@ module.exports.waitWorkspaceAvailable = async (assistant, workspaceId, interval)
     await timeout(interval || 5000)
   }
 }
+
+module.exports.promiseTimeout = (prom, timeout) => {
+  let timeoutTimer = null
+
+  return Promise.race([
+    prom,
+    ...(
+      timeout && timeout > 0
+        ? [new Promise((resolve, reject) => { timeoutTimer = setTimeout(() => reject(new Error(`Watson API Call did not complete within ${timeout}ms, cancelled.`)), timeout) })]
+        : []
+    )
+  ]).finally(() => { if (timeoutTimer) clearTimeout(timeoutTimer) })
+}

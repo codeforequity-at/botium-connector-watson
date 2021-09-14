@@ -7,7 +7,7 @@ const AssistantV1 = require('ibm-watson/assistant/v1')
 const AssistantV2 = require('ibm-watson/assistant/v2')
 const { IamAuthenticator, BearerTokenAuthenticator } = require('ibm-watson/auth')
 const debug = require('debug')('botium-connector-watson')
-const { getWorkspace, createWorkspace, waitWorkspaceAvailable } = require('./helpers')
+const { getWorkspace, createWorkspace, waitWorkspaceAvailable, promiseTimeout } = require('./helpers')
 
 const Capabilities = {
   WATSON_ASSISTANT_VERSION: 'WATSON_ASSISTANT_VERSION',
@@ -36,19 +36,6 @@ const Defaults = {
   [Capabilities.WATSON_VERSION]: '2020-04-01',
   [Capabilities.WATSON_COPY_WORKSPACE]: false,
   [Capabilities.WATSON_FORCE_INTENT_RESOLUTION]: false
-}
-
-const promiseTimeout = (prom, timeout) => {
-  let timeoutTimer = null
-
-  return Promise.race([
-    prom,
-    ...(
-      timeout && timeout > 0
-        ? [new Promise((resolve, reject) => { timeoutTimer = setTimeout(() => reject(new Error(`Watson API Call did not complete within ${timeout}ms, cancelled.`)), timeout) })]
-        : []
-    )
-  ]).finally(() => { if (timeoutTimer) clearTimeout(timeoutTimer) })
 }
 
 class BotiumConnectorWatson {

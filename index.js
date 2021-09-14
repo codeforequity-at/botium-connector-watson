@@ -1,6 +1,7 @@
 const AssistantV1 = require('ibm-watson/assistant/v1')
 const { IamAuthenticator, BasicAuthenticator, BearerTokenAuthenticator } = require('ibm-watson/auth')
 const BotiumConnectorWatson = require('./src/connector')
+const { promiseTimeout } = require('./src/helpers')
 const { importHandler, importArgs, importWatsonLogConvos, importWatsonLogIntents } = require('./src/watsonintents')
 const { exportHandler, exportArgs } = require('./src/watsonintents')
 const { extractIntentUtterances, trainIntentUtterances, cleanupIntentUtterances } = require('./src/nlp')
@@ -118,7 +119,7 @@ module.exports = {
         required: false,
         query: async (caps) => {
           if (caps && ((caps.WATSON_USER && caps.WATSON_PASSWORD) || caps.WATSON_APIKEY || caps.WATSON_BEARER) && caps.WATSON_URL) {
-            return new Promise((resolve, reject) => {
+            try {
               const opts = {
                 url: caps.WATSON_URL,
                 version: '2020-04-01'
@@ -137,18 +138,12 @@ module.exports = {
                   password: caps.WATSON_PASSWORD
                 })
               }
-
               const assistant = new AssistantV1(opts)
-
-              assistant.listWorkspaces((err, response) => {
-                if (err) {
-                  reject(err)
-                } else {
-                  const dd = response.result && response.result.workspaces && response.result.workspaces.map(w => ({ name: w.name, key: w.workspace_id }))
-                  resolve(dd || [])
-                }
-              })
-            })
+              const response = await promiseTimeout(assistant.listWorkspaces(), caps.WATSON_TIMEOUT || 10000)
+              return (response.result && response.result.workspaces && response.result.workspaces.map(w => ({ name: w.name, key: w.workspace_id }))) || []
+            } catch (err) {
+              throw new Error(`Watson Workspace Query failed: ${err.message}`)
+            }
           }
         }
       },
