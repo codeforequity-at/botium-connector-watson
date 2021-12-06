@@ -195,7 +195,7 @@ const importWatsonLogs = async ({ caps, watsonfilter }, conversion) => {
     workspaceId: driver.caps.WATSON_WORKSPACE_ID,
     pageLimit: 1000,
     sort: 'request_timestamp',
-    watsonfilter
+    filter: watsonfilter
   }
   while (hasMore) {
     debug(`Watson workspace gettings logs page: ${pageParams.cursor}`)
