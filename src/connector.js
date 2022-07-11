@@ -5,7 +5,7 @@ const randomize = require('randomatic')
 const _ = require('lodash')
 const AssistantV1 = require('ibm-watson/assistant/v1')
 const AssistantV2 = require('ibm-watson/assistant/v2')
-const { IamAuthenticator, BearerTokenAuthenticator } = require('ibm-watson/auth')
+const { IamAuthenticator, BearerTokenAuthenticator, BasicAuthenticator } = require('ibm-watson/auth')
 const debug = require('debug')('botium-connector-watson')
 const { getWorkspace, createWorkspace, waitWorkspaceAvailable, promiseTimeout } = require('./helpers')
 
@@ -91,9 +91,10 @@ class BotiumConnectorWatson {
           } else if (this.caps[Capabilities.WATSON_BEARER]) {
             Object.assign(opts, { authenticator: new BearerTokenAuthenticator(addTimeout({ bearerToken: this.caps[Capabilities.WATSON_BEARER] })) })
           } else {
-            Object.assign(opts, {
-              username: this.caps[Capabilities.WATSON_USER],
-              password: this.caps[Capabilities.WATSON_PASSWORD]
+            Object.assign(opts, { authenticator: new BasicAuthenticator(addTimeout({
+                username: this.caps[Capabilities.WATSON_USER],
+                password: this.caps[Capabilities.WATSON_PASSWORD]
+              }))
             })
           }
 
