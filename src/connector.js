@@ -91,7 +91,8 @@ class BotiumConnectorWatson {
           } else if (this.caps[Capabilities.WATSON_BEARER]) {
             Object.assign(opts, { authenticator: new BearerTokenAuthenticator(addTimeout({ bearerToken: this.caps[Capabilities.WATSON_BEARER] })) })
           } else {
-            Object.assign(opts, { authenticator: new BasicAuthenticator(addTimeout({
+            Object.assign(opts, {
+              authenticator: new BasicAuthenticator(addTimeout({
                 username: this.caps[Capabilities.WATSON_USER],
                 password: this.caps[Capabilities.WATSON_PASSWORD]
               }))
@@ -343,7 +344,7 @@ class BotiumConnectorWatson {
         }
       }
     } else if (actions && actions.length > 0) {
-      sendBotMsg({ })
+      sendBotMsg({})
     } else if (sendMessageResponse.output.text) {
       // Assistant V1 legacy
       const messageText = _.isArray(sendMessageResponse.output.text) ? sendMessageResponse.output.text.join('\r\n') : sendMessageResponse.output.text
