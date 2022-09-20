@@ -64,7 +64,7 @@ module.exports = {
         name: 'WATSON_WELCOME_MESSAGE',
         label: 'Trigger Welcome Message',
         type: 'string',
-        helperText: 'Trigger a welcome message from IBM Watson by sending some input upfront (for example "WELCOME")',
+        description: 'Trigger a welcome message from IBM Watson by sending some input upfront (for example "WELCOME")',
         required: false
       },
       {
@@ -92,7 +92,7 @@ module.exports = {
         name: 'WATSON_TIMEOUT',
         label: 'API Timeout (in ms)',
         type: 'int',
-        helperText: 'Watson API Calls are cancelled after timeout expires (and test case is failed) - default is 10 seconds',
+        description: 'Watson API Calls are cancelled after timeout expires (and test case is failed) - default is 10 seconds',
         required: false
       },
       {
@@ -109,7 +109,7 @@ module.exports = {
         name: 'WATSON_ASSISTANT_ID',
         label: 'Assistant Id (for Assistant V2)',
         type: 'string',
-        helperText: 'To find the assistant ID in the Watson Assistant user interface, open the assistant settings and click API Details.',
+        description: 'To find the assistant ID in the Watson Assistant user interface, open the assistant settings and click API Details.',
         required: false
       },
       {
@@ -151,7 +151,7 @@ module.exports = {
         name: 'WATSON_ASSISTANT_USER_ID',
         label: 'User Id (for User-based plans)',
         type: 'string',
-        helperText: 'User Id to be set for User-based IBM Watson plans (see <a href="https://cloud.ibm.com/docs/assistant?topic=assistant-services-information" target="_blank">here</a>)',
+        description: 'User Id to be set for User-based IBM Watson plans (see <a href="https://cloud.ibm.com/docs/assistant?topic=assistant-services-information" target="_blank">here</a>)',
         required: false
       }
     ]
