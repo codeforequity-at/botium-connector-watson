@@ -33,7 +33,8 @@ module.exports = {
       intentResolution: true,
       intentConfidenceScore: true,
       alternateIntents: true,
-      entityResolution: true
+      entityResolution: true,
+      entityConfidenceScore: true
     },
     capabilities: [
       {
