@@ -19,7 +19,23 @@ const fixCamelCase = (workspace) => {
   }
 }
 
-module.exports.getWorkspace = async (assistant, workspaceId, forUpdate) => {
+module.exports.getWorkspace = async (assistant, workspaceId) => {
+  try {
+    const workspace = await assistant.getWorkspace({
+      workspaceId,
+      _export: false
+    })
+    if (workspace.result) {
+      return workspace.result
+    } else {
+      throw new Error('result empty')
+    }
+  } catch (err) {
+    throw new Error(`Watson workspace connection failed: ${err.message}`)
+  }
+}
+
+module.exports.exportWorkspace = async (assistant, workspaceId, forUpdate) => {
   try {
     const workspace = await assistant.getWorkspace({
       workspaceId,

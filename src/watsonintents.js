@@ -3,7 +3,7 @@ const slug = require('slug')
 const randomize = require('randomatic')
 const botium = require('botium-core')
 const _ = require('lodash')
-const { getWorkspace, createWorkspace, updateWorkspace, waitWorkspaceAvailable } = require('./helpers')
+const { exportWorkspace, createWorkspace, updateWorkspace, waitWorkspaceAvailable } = require('./helpers')
 const debug = require('debug')('botium-connector-watson-intents')
 
 const getCaps = (caps) => {
@@ -21,7 +21,7 @@ const importWatsonIntents = async ({ caps, buildconvos, buildentities }) => {
     throw new Error('FAILED: Currently only supported with Watson Assistant API V1')
   }
 
-  const workspace = await getWorkspace(container.pluginInstance.assistant, driver.caps.WATSON_WORKSPACE_ID)
+  const workspace = await exportWorkspace(container.pluginInstance.assistant, driver.caps.WATSON_WORKSPACE_ID)
 
   const convos = []
   const utterances = []
@@ -138,7 +138,7 @@ const exportWatsonIntents = async ({ caps, newWorkspaceName, newWorkspaceLanguag
   }
 
   if (uploadmode === 'update') {
-    workspace = await getWorkspace(container.pluginInstance.assistant, driver.caps.WATSON_WORKSPACE_ID, true)
+    workspace = await exportWorkspace(container.pluginInstance.assistant, driver.caps.WATSON_WORKSPACE_ID, true)
     workspace = _.pick(workspace, ['workspaceId', 'intents'])
     workspace.append = false
 
@@ -147,7 +147,7 @@ const exportWatsonIntents = async ({ caps, newWorkspaceName, newWorkspaceLanguag
     newWorkspace = await updateWorkspace(container.pluginInstance.assistant, workspace, true)
     status(`Updated workspace ${newWorkspace.name}`, { workspaceId: newWorkspace.workspaceId })
   } else if (uploadmode === 'copy') {
-    workspace = await getWorkspace(container.pluginInstance.assistant, driver.caps.WATSON_WORKSPACE_ID, true)
+    workspace = await exportWorkspace(container.pluginInstance.assistant, driver.caps.WATSON_WORKSPACE_ID, true)
     if (newWorkspaceName) workspace.name = newWorkspaceName
     else workspace.name = `${workspace.name}-Copy-${randomize('Aa0', 5)}`
     delete workspace.workspaceId
@@ -186,7 +186,7 @@ const importWatsonLogs = async ({ caps, watsonfilter }, conversion) => {
     throw new Error('FAILED: Currently only supported with Watson Assistant API V1')
   }
 
-  const workspace = await getWorkspace(container.pluginInstance.assistant, driver.caps.WATSON_WORKSPACE_ID)
+  const workspace = await exportWorkspace(container.pluginInstance.assistant, driver.caps.WATSON_WORKSPACE_ID)
 
   let logs = []
   let hasMore = true

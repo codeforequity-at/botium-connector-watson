@@ -7,7 +7,7 @@ const AssistantV1 = require('ibm-watson/assistant/v1')
 const AssistantV2 = require('ibm-watson/assistant/v2')
 const { IamAuthenticator, BearerTokenAuthenticator, BasicAuthenticator } = require('ibm-watson/auth')
 const debug = require('debug')('botium-connector-watson')
-const { getWorkspace, createWorkspace, waitWorkspaceAvailable, promiseTimeout } = require('./helpers')
+const { exportWorkspace, createWorkspace, waitWorkspaceAvailable, promiseTimeout } = require('./helpers')
 
 const Capabilities = {
   WATSON_ASSISTANT_VERSION: 'WATSON_ASSISTANT_VERSION',
@@ -126,7 +126,7 @@ class BotiumConnectorWatson {
               // eslint-disable-next-line no-unexpected-multiline
               (async () => {
                 try {
-                  const newWorkspace = await getWorkspace(this.assistant, this.caps[Capabilities.WATSON_WORKSPACE_ID], true)
+                  const newWorkspace = await exportWorkspace(this.assistant, this.caps[Capabilities.WATSON_WORKSPACE_ID], true)
                   debug(`Watson workspace copying from: ${util.inspect(newWorkspace)}`)
                   newWorkspace.name = `${newWorkspace.name}-Botium-${randomize('Aa0', 5)}`
                   const workspaceCopy = await createWorkspace(this.assistant, newWorkspace)
