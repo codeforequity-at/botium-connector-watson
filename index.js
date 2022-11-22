@@ -18,39 +18,6 @@ module.exports = {
     Args: exportArgs
   },
   Utils: {
-    GetAgentMetaData: async ({ caps }) => {
-      if (caps && ((caps.WATSON_USER && caps.WATSON_PASSWORD) || caps.WATSON_APIKEY || caps.WATSON_BEARER) && caps.WATSON_URL && caps.WATSON_WORKSPACE_ID) {
-        try {
-          const opts = {
-            url: caps.WATSON_URL,
-            version: '2020-04-01'
-          }
-          if (caps.WATSON_APIKEY) {
-            opts.authenticator = new IamAuthenticator({
-              apikey: caps.WATSON_APIKEY
-            })
-          } else if (caps.WATSON_BEARER) {
-            opts.authenticator = new BearerTokenAuthenticator({
-              bearerToken: caps.WATSON_BEARER
-            })
-          } else {
-            opts.authenticator = new BasicAuthenticator({
-              username: caps.WATSON_USER,
-              password: caps.WATSON_PASSWORD
-            })
-          }
-          const assistant = new AssistantV1(opts)
-          const workspace = await promiseTimeout(getWorkspace(assistant, caps.WATSON_WORKSPACE_ID), caps.WATSON_TIMEOUT || 10000)
-          return {
-            name: workspace.name,
-            description: workspace.description,
-            metadata: workspace
-          }
-        } catch (err) {
-          throw new Error(`Watson Workspace Query failed: ${err.message}`)
-        }
-      }
-    },
     importWatsonLogConvos,
     importWatsonLogIntents
   },
@@ -187,6 +154,45 @@ module.exports = {
         type: 'string',
         description: 'User Id to be set for User-based IBM Watson plans (see <a href="https://cloud.ibm.com/docs/assistant?topic=assistant-services-information" target="_blank">here</a>)',
         required: false
+      }
+    ],
+    actions: [
+      {
+        name: 'GetAgentMetaData',
+        description: 'GetAgentMetaData',
+        run: async (caps) => {
+          if (caps && ((caps.WATSON_USER && caps.WATSON_PASSWORD) || caps.WATSON_APIKEY || caps.WATSON_BEARER) && caps.WATSON_URL && caps.WATSON_WORKSPACE_ID) {
+            try {
+              const opts = {
+                url: caps.WATSON_URL,
+                version: '2020-04-01'
+              }
+              if (caps.WATSON_APIKEY) {
+                opts.authenticator = new IamAuthenticator({
+                  apikey: caps.WATSON_APIKEY
+                })
+              } else if (caps.WATSON_BEARER) {
+                opts.authenticator = new BearerTokenAuthenticator({
+                  bearerToken: caps.WATSON_BEARER
+                })
+              } else {
+                opts.authenticator = new BasicAuthenticator({
+                  username: caps.WATSON_USER,
+                  password: caps.WATSON_PASSWORD
+                })
+              }
+              const assistant = new AssistantV1(opts)
+              const workspace = await promiseTimeout(getWorkspace(assistant, caps.WATSON_WORKSPACE_ID), caps.WATSON_TIMEOUT || 10000)
+              return {
+                name: workspace.name,
+                description: workspace.description,
+                metadata: workspace
+              }
+            } catch (err) {
+              throw new Error(`Watson Workspace Query failed: ${err.message}`)
+            }
+          }
+        }
       }
     ]
   }
