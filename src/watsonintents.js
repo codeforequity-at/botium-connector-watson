@@ -1,10 +1,12 @@
-const util = require('util')
-const slug = require('slug')
-const randomize = require('randomatic')
-const botium = require('botium-core')
-const _ = require('lodash')
-const { exportWorkspace, createWorkspace, updateWorkspace, waitWorkspaceAvailable } = require('./helpers')
-const debug = require('debug')('botium-connector-watson-intents')
+import util from 'util'
+import slug from 'slug'
+import randomize from 'randomatic'
+import botium from 'botium-core'
+import _ from 'lodash'
+import { exportWorkspace, createWorkspace, updateWorkspace, waitWorkspaceAvailable } from './helpers.js'
+import createDebug from 'debug'
+
+const debug = createDebug('botium-connector-watson-intents')
 
 const getCaps = (caps) => {
   const result = caps || {}
@@ -285,52 +287,55 @@ const convertLogToList = (logs) => {
   return data
 }
 
-module.exports = {
-  importHandler: ({ caps, buildconvos, buildentities, ...rest } = {}) => importWatsonIntents({ caps, buildconvos, buildentities, ...rest }),
-  importArgs: {
-    caps: {
-      describe: 'Capabilities',
-      type: 'json',
-      skipCli: true
-    },
-    buildconvos: {
-      describe: 'Build convo files for intent assertions (otherwise, just write utterances files)',
-      type: 'boolean',
-      default: false
-    },
-    buildentities: {
-      describe: 'Add entity asserters to convo files',
-      type: 'boolean',
-      default: false
-    }
+export const importHandler = ({ caps, buildconvos, buildentities, ...rest } = {}) => importWatsonIntents({ caps, buildconvos, buildentities, ...rest })
+
+export const importArgs = {
+  caps: {
+    describe: 'Capabilities',
+    type: 'json',
+    skipCli: true
   },
-  importWatsonLogConvos: ({ caps, watsonfilter, ...rest }) => importWatsonLogs({ caps, watsonfilter, ...rest }, convertLogToConvos),
-  importWatsonLogIntents: ({ caps, watsonfilter, ...rest }) => importWatsonLogs({ caps, watsonfilter, ...rest }, convertLogToList),
-  exportHandler: ({ caps, newWorkspaceName, newWorkspaceLanguage, uploadmode, waitforavailable, ...rest } = {}, { convos, utterances } = {}, { statusCallback } = {}) => exportWatsonIntents({ caps, newWorkspaceName, newWorkspaceLanguage, uploadmode, waitforavailable, ...rest }, { convos, utterances }, { statusCallback }),
-  exportArgs: {
-    caps: {
-      describe: 'Capabilities',
-      type: 'json',
-      skipCli: true
-    },
-    uploadmode: {
-      describe: 'Update the IBM Watson Assistant workspace with data from Botium, copy it before making chances, or create a blank one',
-      default: 'new',
-      choices: ['new', 'copy', 'update']
-    },
-    newWorkspaceName: {
-      describe: 'Create a new IBM Watson Assistant workspace',
-      type: 'string'
-    },
-    newWorkspaceLanguage: {
-      describe: 'Language for the new workspace',
-      type: 'string',
-      default: 'en'
-    },
-    waitforavailable: {
-      describe: 'Wait until new workspace finished training',
-      type: 'boolean',
-      default: false
-    }
+  buildconvos: {
+    describe: 'Build convo files for intent assertions (otherwise, just write utterances files)',
+    type: 'boolean',
+    default: false
+  },
+  buildentities: {
+    describe: 'Add entity asserters to convo files',
+    type: 'boolean',
+    default: false
+  }
+}
+
+export const importWatsonLogConvos = ({ caps, watsonfilter, ...rest }) => importWatsonLogs({ caps, watsonfilter, ...rest }, convertLogToConvos)
+
+export const importWatsonLogIntents = ({ caps, watsonfilter, ...rest }) => importWatsonLogs({ caps, watsonfilter, ...rest }, convertLogToList)
+
+export const exportHandler = ({ caps, newWorkspaceName, newWorkspaceLanguage, uploadmode, waitforavailable, ...rest } = {}, { convos, utterances } = {}, { statusCallback } = {}) => exportWatsonIntents({ caps, newWorkspaceName, newWorkspaceLanguage, uploadmode, waitforavailable, ...rest }, { convos, utterances }, { statusCallback })
+
+export const exportArgs = {
+  caps: {
+    describe: 'Capabilities',
+    type: 'json',
+    skipCli: true
+  },
+  uploadmode: {
+    describe: 'Update the IBM Watson Assistant workspace with data from Botium, copy it before making chances, or create a blank one',
+    default: 'new',
+    choices: ['new', 'copy', 'update']
+  },
+  newWorkspaceName: {
+    describe: 'Create a new IBM Watson Assistant workspace',
+    type: 'string'
+  },
+  newWorkspaceLanguage: {
+    describe: 'Language for the new workspace',
+    type: 'string',
+    default: 'en'
+  },
+  waitforavailable: {
+    describe: 'Wait until new workspace finished training',
+    type: 'boolean',
+    default: false
   }
 }

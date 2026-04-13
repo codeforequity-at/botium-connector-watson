@@ -2,16 +2,26 @@
   "name": "botium-connector-watson",
   "version": "0.0.28",
   "description": "Botium Connector for IBM Watson Assistant",
-  "main": "dist/botium-connector-watson-cjs.js",
+  "type": "module",
+  "main": "dist/botium-connector-watson-cjs.cjs",
   "module": "dist/botium-connector-watson-es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/botium-connector-watson-es.js",
+      "require": "./dist/botium-connector-watson-cjs.cjs",
+      "default": "./dist/botium-connector-watson-cjs.cjs"
+    }
+  },
   "engines": {
-    "node": ">=8.3"
+    "node": ">=20"
   },
   "bin": {
     "botium-connector-watson-cli": "./bin/cli.js"
   },
   "scripts": {
-    "build": "npm run eslint && rollup -c",
+    "build": "rollup -c",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
     "eslint": "eslint index.js src/*.js bin/*.js",
     "eslint-fix": "eslint --fix index.js src/*.js bin/*.js"
   },
@@ -26,10 +36,6 @@
   },
   "homepage": "https://www.botium.ai",
   "devDependencies": {
-    "@babel/core": "^7.20.2",
-    "@babel/node": "^7.20.2",
-    "@babel/plugin-transform-runtime": "^7.19.6",
-    "@babel/preset-env": "^7.20.2",
     "eslint": "^8.28.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
@@ -37,13 +43,9 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-standard": "^5.0.0",
     "rollup": "^2.79.1",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-resolve": "^5.2.0"
+    "rollup-plugin-json": "^4.0.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.1",
     "async": "^3.2.4",
     "debug": "^4.3.4",
     "ibm-watson": "^6.1.2",
