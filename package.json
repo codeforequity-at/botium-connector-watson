@@ -19,7 +19,7 @@
     "botium-connector-watson-cli": "./bin/cli.js"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "npm run eslint && rollup -c",
     "prepare": "npm run build",
     "prepublishOnly": "npm run build",
     "eslint": "eslint index.js src/*.js bin/*.js",

@@ -320,7 +320,7 @@ export const exportArgs = {
     skipCli: true
   },
   uploadmode: {
-    describe: 'Update the IBM Watson Assistant workspace with data from Botium, copy it before making chances, or create a blank one',
+    describe: 'Update the IBM Watson Assistant workspace with data from Botium, copy it before making changes, or create a blank one',
     default: 'new',
     choices: ['new', 'copy', 'update']
   },

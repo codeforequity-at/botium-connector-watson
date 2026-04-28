@@ -90,7 +90,7 @@ export const waitWorkspaceAvailable = async (assistant, workspaceId, interval) =
   while (true) {
     debug(`Watson checking workspace status ${workspaceId}`)
     try {
-      const workspace = await assistant.getWorkspace({ workspaceId: workspaceId })
+      const workspace = await assistant.getWorkspace({ workspaceId })
       if (workspace.result) {
         debug(`Watson workspace connected, checking for status 'Available': ${util.inspect(workspace.result)}`)
         if (workspace.result.status === 'Available') {
