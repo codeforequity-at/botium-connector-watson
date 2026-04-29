@@ -1,6 +1,6 @@
 {
   "name": "botium-connector-watson",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "description": "Botium Connector for IBM Watson Assistant",
   "type": "module",
   "main": "dist/botium-connector-watson-cjs.cjs",
@@ -60,5 +60,11 @@
   },
   "peerDependencies": {
     "botium-core": "^1.4.15"
+  },
+  "overrides": {
+    "es-abstract": "^1.23.5"
+  },
+  "resolutions": {
+    "es-abstract": "^1.23.5"
   }
 }
