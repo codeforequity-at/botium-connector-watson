@@ -1,15 +1,18 @@
 #!/usr/bin/env node
-const yargsCmd = require('yargs')
-const slug = require('slug')
-const fs = require('fs')
-const path = require('path')
-const mkdirp = require('mkdirp')
-const XLSX = require('xlsx')
-const { BotDriver } = require('botium-core')
+import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
+import slug from 'slug'
+import fs from 'fs'
+import path from 'path'
+import mkdirp from 'mkdirp'
+import XLSX from 'xlsx'
+import { BotDriver } from 'botium-core'
+import { importHandler, importArgs, importWatsonLogConvos, importWatsonLogIntents, exportHandler, exportArgs } from '../src/watsonintents.js'
+import createDebug from 'debug'
+import { createRequire } from 'module'
 
-const { importHandler, importArgs, importWatsonLogConvos, importWatsonLogIntents } = require('../src/watsonintents')
-const { exportHandler, exportArgs } = require('../src/watsonintents')
-const debug = require('debug')('botium-connector-watson-cli')
+const require = createRequire(import.meta.url)
+const debug = createDebug('botium-connector-watson-cli')
 
 const writeConvosExcel = (compiler, convos, outputDir, filenamePrefix) => {
   const filename = path.resolve(outputDir, slug(filenamePrefix) + '.xlsx')
@@ -53,7 +56,7 @@ const writeUtterances = (compiler, utterance, samples, outputDir) => {
   return filename
 }
 
-yargsCmd.usage('Botium Connector Watson CLI\n\nUsage: $0 [options]') // eslint-disable-line
+yargs(hideBin(process.argv)).usage('Botium Connector Watson CLI\n\nUsage: $0 [options]') // eslint-disable-line
   .help('help').alias('help', 'h')
   .version('version', require('../package.json').version).alias('version', 'V')
   .showHelpOnFail(true)

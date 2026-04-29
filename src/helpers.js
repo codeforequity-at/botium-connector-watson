@@ -1,5 +1,7 @@
-const util = require('util')
-const debug = require('debug')('botium-connector-watson-helper')
+import util from 'util'
+import createDebug from 'debug'
+
+const debug = createDebug('botium-connector-watson-helper')
 
 const toCamel = (s) => {
   return s.replace(/([-_][a-z])/ig, ($1) => {
@@ -19,7 +21,7 @@ const fixCamelCase = (workspace) => {
   }
 }
 
-module.exports.getWorkspace = async (assistant, workspaceId) => {
+export const getWorkspace = async (assistant, workspaceId) => {
   try {
     const workspace = await assistant.getWorkspace({
       workspaceId,
@@ -35,7 +37,7 @@ module.exports.getWorkspace = async (assistant, workspaceId) => {
   }
 }
 
-module.exports.exportWorkspace = async (assistant, workspaceId, forUpdate) => {
+export const exportWorkspace = async (assistant, workspaceId, forUpdate) => {
   try {
     const workspace = await assistant.getWorkspace({
       workspaceId,
@@ -53,7 +55,7 @@ module.exports.exportWorkspace = async (assistant, workspaceId, forUpdate) => {
   }
 }
 
-module.exports.createWorkspace = async (assistant, newWorkspaceData, forUpdate) => {
+export const createWorkspace = async (assistant, newWorkspaceData, forUpdate) => {
   try {
     const workspace = await assistant.createWorkspace(newWorkspaceData)
     if (workspace.result) {
@@ -68,7 +70,7 @@ module.exports.createWorkspace = async (assistant, newWorkspaceData, forUpdate) 
   }
 }
 
-module.exports.updateWorkspace = async (assistant, updatedWorkspaceData, forUpdate) => {
+export const updateWorkspace = async (assistant, updatedWorkspaceData, forUpdate) => {
   try {
     const workspace = await assistant.updateWorkspace(updatedWorkspaceData)
     if (workspace.result) {
@@ -83,12 +85,12 @@ module.exports.updateWorkspace = async (assistant, updatedWorkspaceData, forUpda
   }
 }
 
-module.exports.waitWorkspaceAvailable = async (assistant, workspaceId, interval) => {
+export const waitWorkspaceAvailable = async (assistant, workspaceId, interval) => {
   const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
   while (true) {
     debug(`Watson checking workspace status ${workspaceId}`)
     try {
-      const workspace = await assistant.getWorkspace({ workspaceId: workspaceId })
+      const workspace = await assistant.getWorkspace({ workspaceId })
       if (workspace.result) {
         debug(`Watson workspace connected, checking for status 'Available': ${util.inspect(workspace.result)}`)
         if (workspace.result.status === 'Available') {
@@ -106,7 +108,7 @@ module.exports.waitWorkspaceAvailable = async (assistant, workspaceId, interval)
   }
 }
 
-module.exports.promiseTimeout = (prom, timeout) => {
+export const promiseTimeout = (prom, timeout) => {
   let timeoutTimer = null
 
   return Promise.race([

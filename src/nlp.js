@@ -1,9 +1,10 @@
-const util = require('util')
-const randomize = require('randomatic')
-const botium = require('botium-core')
-const debug = require('debug')('botium-connector-watson-nlp')
+import util from 'util'
+import randomize from 'randomatic'
+import botium from 'botium-core'
+import createDebug from 'debug'
+import { waitWorkspaceAvailable } from './helpers.js'
 
-const { waitWorkspaceAvailable } = require('./helpers')
+const debug = createDebug('botium-connector-watson-nlp')
 
 const getCaps = (caps) => {
   const result = Object.assign({}, caps || {})
@@ -13,7 +14,7 @@ const getCaps = (caps) => {
   return result
 }
 
-const extractIntentUtterances = async ({ caps }) => {
+export const extractIntentUtterances = async ({ caps }) => {
   const driver = new botium.BotDriver(getCaps(caps))
   const container = await driver.Build()
 
@@ -54,7 +55,7 @@ const extractIntentUtterances = async ({ caps }) => {
   }
 }
 
-const trainIntentUtterances = async ({ caps }, intents, { origWorkspace }) => {
+export const trainIntentUtterances = async ({ caps }, intents, { origWorkspace }) => {
   const driver = new botium.BotDriver(getCaps(caps))
   const container = await driver.Build()
 
@@ -98,7 +99,7 @@ const trainIntentUtterances = async ({ caps }, intents, { origWorkspace }) => {
   }
 }
 
-const cleanupIntentUtterances = async ({ caps }, { caps: trainCaps, origWorkspace, tempWorkspace }) => {
+export const cleanupIntentUtterances = async ({ caps }, { caps: trainCaps, origWorkspace, tempWorkspace }) => {
   const driver = new botium.BotDriver(getCaps(Object.assign(caps || {}, trainCaps || {})))
   const container = await driver.Build()
 
@@ -116,10 +117,4 @@ const cleanupIntentUtterances = async ({ caps }, { caps: trainCaps, origWorkspac
   } finally {
     if (container) await container.Clean()
   }
-}
-
-module.exports = {
-  extractIntentUtterances,
-  trainIntentUtterances,
-  cleanupIntentUtterances
 }

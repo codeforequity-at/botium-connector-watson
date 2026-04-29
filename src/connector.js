@@ -1,13 +1,15 @@
-const util = require('util')
-const async = require('async')
-const tunnel = require('tunnel')
-const randomize = require('randomatic')
-const _ = require('lodash')
-const AssistantV1 = require('ibm-watson/assistant/v1')
-const AssistantV2 = require('ibm-watson/assistant/v2')
-const { IamAuthenticator, BearerTokenAuthenticator, BasicAuthenticator } = require('ibm-watson/auth')
-const debug = require('debug')('botium-connector-watson')
-const { exportWorkspace, createWorkspace, waitWorkspaceAvailable, promiseTimeout } = require('./helpers')
+import util from 'util'
+import async from 'async'
+import tunnel from 'tunnel'
+import randomize from 'randomatic'
+import _ from 'lodash'
+import AssistantV1 from 'ibm-watson/assistant/v1.js'
+import AssistantV2 from 'ibm-watson/assistant/v2.js'
+import { IamAuthenticator, BearerTokenAuthenticator, BasicAuthenticator } from 'ibm-watson/auth/index.js'
+import createDebug from 'debug'
+import { exportWorkspace, createWorkspace, waitWorkspaceAvailable, promiseTimeout } from './helpers.js'
+
+const debug = createDebug('botium-connector-watson')
 
 const Capabilities = {
   WATSON_ASSISTANT_VERSION: 'WATSON_ASSISTANT_VERSION',
@@ -346,7 +348,6 @@ class BotiumConnectorWatson {
     } else if (actions && actions.length > 0) {
       sendBotMsg({})
     } else if (sendMessageResponse.output.text) {
-      // Assistant V1 legacy
       const messageText = _.isArray(sendMessageResponse.output.text) ? sendMessageResponse.output.text.join('\r\n') : sendMessageResponse.output.text
       sendBotMsg({ messageText })
     }
@@ -404,4 +405,4 @@ class BotiumConnectorWatson {
   }
 }
 
-module.exports = BotiumConnectorWatson
+export default BotiumConnectorWatson

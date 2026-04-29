@@ -1,12 +1,11 @@
-const AssistantV1 = require('ibm-watson/assistant/v1')
-const { IamAuthenticator, BasicAuthenticator, BearerTokenAuthenticator } = require('ibm-watson/auth')
-const BotiumConnectorWatson = require('./src/connector')
-const { getWorkspace, promiseTimeout } = require('./src/helpers')
-const { importHandler, importArgs, importWatsonLogConvos, importWatsonLogIntents } = require('./src/watsonintents')
-const { exportHandler, exportArgs } = require('./src/watsonintents')
-const { extractIntentUtterances, trainIntentUtterances, cleanupIntentUtterances } = require('./src/nlp')
+import AssistantV1 from 'ibm-watson/assistant/v1.js'
+import { IamAuthenticator, BasicAuthenticator, BearerTokenAuthenticator } from 'ibm-watson/auth/index.js'
+import BotiumConnectorWatson from './src/connector.js'
+import { getWorkspace, promiseTimeout } from './src/helpers.js'
+import { importHandler, importArgs, importWatsonLogConvos, importWatsonLogIntents, exportHandler, exportArgs } from './src/watsonintents.js'
+import { extractIntentUtterances, trainIntentUtterances, cleanupIntentUtterances } from './src/nlp.js'
 
-module.exports = {
+export default {
   PluginVersion: 1,
   PluginClass: BotiumConnectorWatson,
   Import: {
