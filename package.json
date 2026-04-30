@@ -12,18 +12,18 @@
       "default": "./dist/botium-connector-watson-cjs.cjs"
     }
   },
-  "engines": {
-    "node": ">=20"
-  },
   "bin": {
     "botium-connector-watson-cli": "./bin/cli.js"
   },
   "scripts": {
-    "build": "npm run eslint && rollup -c",
+    "build": "rollup -c",
     "prepare": "npm run build",
     "prepublishOnly": "npm run build",
-    "eslint": "eslint index.js src/*.js bin/*.js",
-    "eslint-fix": "eslint --fix index.js src/*.js bin/*.js"
+    "eslint": "eslint index.js bin/**/*.js src/**/*.js",
+    "eslint-fix": "eslint --fix index.js bin/**/*.js src/**/*.js",
+    "update-dependencies": "npm-check-updates -u --timeout 60000",
+    "test": "echo Just placeholder, no tests here yet",
+    "test-nightly": "echo Just placeholder, no tests here yet"
   },
   "repository": {
     "type": "git",
@@ -36,13 +36,19 @@
   },
   "homepage": "https://www.botium.ai",
   "devDependencies": {
-    "eslint": "^8.28.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.5.1",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-standard": "^5.0.0",
-    "rollup": "^2.79.1",
+    "chai": "^4.3.7",
+    "chai-as-promised": "^7.1.1",
+    "dotenv": "^16.0.3",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-mocha": "^10.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-standard": "^4.1.0",
+    "mocha": "^10.2.0",
+    "npm-check-updates": "^11.8.5",
+    "rollup": "^2.58.0",
     "rollup-plugin-json": "^4.0.0"
   },
   "dependencies": {
@@ -60,11 +66,5 @@
   },
   "peerDependencies": {
     "botium-core": "^1.4.15"
-  },
-  "overrides": {
-    "es-abstract": "^1.23.5"
-  },
-  "resolutions": {
-    "es-abstract": "^1.23.5"
   }
 }
