@@ -148,6 +148,13 @@ export default {
         }
       },
       {
+        name: 'WATSON_COPY_WORKSPACE',
+        label: 'Copy Workspace (for Assistant V1)',
+        type: 'boolean',
+        description: 'Copy the Watson workspace and run tests on the copy (deleted afterwards) to avoid polluting the production workspace with test data. Only supported for Assistant SDK V1. Training of the copied workspace may take some time.',
+        required: false
+      },
+      {
         name: 'WATSON_ASSISTANT_USER_ID',
         label: 'User Id (for User-based plans)',
         type: 'string',
