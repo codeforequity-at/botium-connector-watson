@@ -67,6 +67,6 @@
     "yargs": "^17.6.2"
   },
   "peerDependencies": {
-    "botium-core": "^1.4.15"
+    "botium-core": "^1.15.15"
   }
 }
