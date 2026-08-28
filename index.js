@@ -113,13 +113,6 @@ export default {
         required: false
       },
       {
-        name: 'WATSON_ENVIRONMENT_ID',
-        label: 'Environment Id (for Assistant V2)',
-        type: 'string',
-        description: 'Environment ID for the Watson Assistant (draft/live/staging). Required by ibm-watson SDK v10+. Find it in the assistant environments API details.',
-        required: false
-      },
-      {
         name: 'WATSON_WORKSPACE_ID',
         label: 'Workspace (for Assistant V1)',
         type: 'query',

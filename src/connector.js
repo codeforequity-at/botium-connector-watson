@@ -24,7 +24,6 @@ const Capabilities = {
   WATSON_PASSWORD: 'WATSON_PASSWORD',
   WATSON_WORKSPACE_ID: 'WATSON_WORKSPACE_ID',
   WATSON_ASSISTANT_ID: 'WATSON_ASSISTANT_ID',
-  WATSON_ENVIRONMENT_ID: 'WATSON_ENVIRONMENT_ID',
   WATSON_ASSISTANT_USER_ID: 'WATSON_ASSISTANT_USER_ID',
   WATSON_COPY_WORKSPACE: 'WATSON_COPY_WORKSPACE',
   WATSON_FORCE_INTENT_RESOLUTION: 'WATSON_FORCE_INTENT_RESOLUTION',
@@ -62,7 +61,6 @@ class BotiumConnectorWatson {
       if (!this.caps[Capabilities.WATSON_WORKSPACE_ID]) throw new Error('WATSON_WORKSPACE_ID capability required for V1')
     } else if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V2') {
       if (!this.caps[Capabilities.WATSON_ASSISTANT_ID]) throw new Error('WATSON_ASSISTANT_ID capability required for V2')
-      if (!this.caps[Capabilities.WATSON_ENVIRONMENT_ID]) throw new Error('WATSON_ENVIRONMENT_ID capability required for V2')
       if (this.caps[Capabilities.WATSON_COPY_WORKSPACE]) throw new Error('WATSON_COPY_WORKSPACE capability only valid for V1')
     } else {
       throw new Error('WATSON_ASSISTANT_VERSION capability has to be one of: V1,V2')
@@ -194,10 +192,7 @@ class BotiumConnectorWatson {
     }
     if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V2') {
       try {
-        const createSessionResponse = await promiseTimeout(this.assistant.createSession({
-          assistantId: this.caps[Capabilities.WATSON_ASSISTANT_ID],
-          environmentId: this.caps[Capabilities.WATSON_ENVIRONMENT_ID]
-        }), this.caps[Capabilities.WATSON_TIMEOUT])
+        const createSessionResponse = await promiseTimeout(this.assistant.createSession({ assistantId: this.caps[Capabilities.WATSON_ASSISTANT_ID] }), this.caps[Capabilities.WATSON_TIMEOUT])
         this.sessionId = createSessionResponse.result.session_id
         debug(`Created Watson session ${this.sessionId}`)
       } catch (err) {
@@ -247,7 +242,6 @@ class BotiumConnectorWatson {
       } else if (this.caps[Capabilities.WATSON_ASSISTANT_VERSION] === 'V2') {
         return {
           assistantId: this.caps[Capabilities.WATSON_ASSISTANT_ID],
-          environmentId: this.caps[Capabilities.WATSON_ENVIRONMENT_ID],
           sessionId: this.sessionId,
           input: {
             message_type: 'text',
