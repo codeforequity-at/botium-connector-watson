@@ -22,7 +22,7 @@ This connector processes info about NLP. So Intent/Entity asserters can be used.
 
 ## Requirements
 
-* __Node.js and NPM__
+* __Node.js 20+ and NPM__ (required by ibm-watson SDK v12)
 * a __IBM Watson Assistant__ chatbot, and user account with administrative rights
 * a __project directory__ on your workstation to hold test cases and Botium configuration
 
@@ -195,6 +195,11 @@ _This is only supported for Assistant SDK V1_
 
 ### WATSON_ASSISTANT_ID *
 The Assistant ID to use. You can find it in the IBM Watson Assistant Dashboard when clicking on "Settings" in the popup menu of an assistant in the Assistants overview list.
+
+_This is only supported for Assistant SDK V2_
+
+### WATSON_ENVIRONMENT_ID *
+The Environment ID to use (draft, live, or a custom staging environment). Required by ibm-watson SDK v10+ for Assistant V2 (`createSession` / `message`). You can find it in the assistant Environments settings / API details.
 
 _This is only supported for Assistant SDK V2_
 
